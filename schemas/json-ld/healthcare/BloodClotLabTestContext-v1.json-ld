@@ -5,38 +5,23 @@
     "type": "@type",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "schema": "http://schema.org/",
-    "credentialSubject": {
-      "@id": "https://www.w3.org/2018/credentials#credentialSubject",
-      "@type": "@id"
-    },
-    "testName": {
-      "@id": "schema:testName",
-      "@type": "xsd:string"
-    },
+    "cred": "https://www.w3.org/2018/credentials#",
+
+    "BloodClotLabTestCredential": "cred:BloodClotLabTestCredential",
+    "credentialSubject": "cred:credentialSubject",
+    "testName": "schema:testName",
+    "testResult": "schema:testResult",
     "D-dimer": "schema:D-dimer",
     "PlateletCount": "schema:PlateletCount",
     "ProthrombinTime": "schema:ProthrombinTime",
     "aPTT": "schema:aPTT",
     "FibrinogenLevel": "schema:FibrinogenLevel",
-    "value": {
-      "@id": "schema:value",
-      "@type": "xsd:string"
-    },
-    "unit": {
-      "@id": "schema:unit",
-      "@type": "xsd:string"
-    },
-    "referenceRange": {
-      "@id": "schema:referenceRange",
-      "@type": "xsd:string"
-    },
-    "interpretation": {
-      "@id": "schema:interpretation",
-      "@type": "xsd:string"
-    },
-    "testDate": {
-      "@id": "schema:testDate",
-      "@type": "xsd:dateTime"
-    }
+    "value": "schema:value",
+    "unit": "schema:unit",
+    "referenceRange": "schema:referenceRange",
+    "issuanceDate": "cred:issuanceDate",
+    "expirationDate": "cred:expirationDate",
+    "issuer": "cred:issuer",
+    "credentialSchema": "cred:credentialSchema"
   }
 }
