@@ -59,3 +59,19 @@ This folder contains the schema and context files for decentralized identity ver
 3. **Interoperability**: Both the schema and the context ensure that the credential can be understood and used not just within your own application, but also across different healthcare systems that adhere to similar standards.
 
 By using both, you ensure that your credentials are both structurally valid and semantically meaningful, adhering to best practices in decentralized identity and healthcare data management.
+
+
+## Published Schemas
+
+### JSON schema URL & JSON-LD Context
+
+#### BloodClotLabTestCredential-v1
+
+- [Latest version - Link to explorer](https://schema-builder.polygonid.me/schemas/36fbc535-f8d4-4919-a502-08c985f0387d)
+- [BloodClotLabTestCredential-v1](ipfs://QmW1Z33XkxzTVgervLeT7FVHPyusm2Fvnce7LusnZkePvR)
+- [BloodClotLabTestCredential-v1.1.1](ipfs://QmfJC2UxvvmRhW9dE78ywo3Em2qThmYNeyb6CDJbHDWaWr)
+  
+#### CholesterolLabTestCredential-v1
+
+- [CholesterolLabTestCredential-v1](ipfs://QmaUW59XbPkqjvoxhhF5V5TjqyukD7yyWqi9jUZgMSAYPC)
+- [JSON-LD, CholesterolLabTestCredential-v1](ipfs://QmP1GavowvEbCQZGsQSGvEn2UWAz5dnbYsMBXXx9rGe8vj)
