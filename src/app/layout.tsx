@@ -1,7 +1,7 @@
 import { Providers } from './providers'
 
 export const metadata = {
-  title: 'wagmi',
+  title: 'Web3 Patient Portal',
 }
 
 export default function RootLayout({

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "connectkit": "^1.4.0",
+    "encoding": "^0.1.13",
     "lokijs": "^1.5.12",
     "next": "^13.4.0",
     "pino-pretty": "^10.2.3",
