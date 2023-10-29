@@ -20,7 +20,7 @@ import { WriteContractPrepared } from '../components/WriteContractPrepared'
 export function Page() {
   return (
     <>
-      <h1>wagmi + ConnectKit + Next.js</h1>
+      <h1 className='text-xl p-4'>wagmi + ConnectKit + Next.js</h1>
 
       <ConnectKitButton />
 
