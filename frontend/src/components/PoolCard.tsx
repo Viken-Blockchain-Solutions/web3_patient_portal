@@ -7,7 +7,6 @@ interface PoolCardProps {
   startDate: string;
   endDate: string;
   funding: number;
-  // Add more FHIR or other standard data here
 }
 
 export default function PoolCard({ title, startDate, endDate, funding }: PoolCardProps) {

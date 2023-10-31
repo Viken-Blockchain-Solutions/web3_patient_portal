@@ -8,7 +8,7 @@ const LandingPage = () => {
     <div className='container mx-auto max-w-6xl p-8'>
       <h1 className='text-6xl mb-12 text-center font-semibold text-blue-700'>Welcome to Medical Research Hub</h1>
 
-      <section className='bg-blue-100 p-12 rounded-lg mb-12 shadow-lg'>
+      <section className='bg-blue-100 p-12 rounded-lg mb-12 shadow-lg border-1 border-blue-300'>
         <h2 className='text-4xl mb-6 font-medium text-blue-600'>For Research Institutes</h2>
         <p className='text-xl mb-6'>
           Are you looking to gather valuable medical data for your next groundbreaking research? Our platform allows you to initiate research pools, specify your domain in laboratory diagnostics, and allocate research funds. 
@@ -21,7 +21,7 @@ const LandingPage = () => {
         </Link>
       </section>
 
-      <section className='bg-green-100 p-12 rounded-lg shadow-lg'>
+      <section className='bg-green-100 p-12 rounded-lg shadow-lg border-1 border-green-300'>
         <h2 className='text-4xl mb-6 font-medium text-green-600'>For Patients</h2>
         <p className='text-xl mb-6'>
           Are you interested in contributing to medical research and earning from it? Explore our available research pools, contribute your Verifiable Credentials, and earn a share from the research funds.

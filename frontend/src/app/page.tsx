@@ -1,3 +1,4 @@
+
 import { Account } from '../components/Account'
 import { Balance } from '../components/Balance'
 import { BlockNumber } from '../components/BlockNumber'
@@ -16,6 +17,7 @@ import { WatchContractEvents } from '../components/WatchContractEvents'
 import { WatchPendingTransactions } from '../components/WatchPendingTransactions'
 import { WriteContract } from '../components/WriteContract'
 import { WriteContractPrepared } from '../components/WriteContractPrepared'
+import Menu from '../components/Menu'
 
 export function Page() {
   return (
@@ -23,7 +25,7 @@ export function Page() {
       <h1 className='text-xl p-4'>wagmi + ConnectKit + Next.js</h1>
 
       <ConnectKitButton />
-
+      <Menu />
       <Connected>
         <hr />
         <h2>Network</h2>

@@ -1,5 +1,5 @@
 import { Providers } from './providers'
-import '../public/globals.css'
+import './globals.css'
 
 export const metadata = {
   title: 'Web3 Patient Portal',
