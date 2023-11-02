@@ -1,19 +1,28 @@
-const { KYCAgeCredential } = require("./vcHelpers/KYCAgeCredential");
+const { CholesterolLabTestCredential } = require("./vcHelpers/CholesterolLabTestCredential");
 
 // design your own customised authentication requirement here using Query Language
 // https://0xpolygonid.github.io/tutorials/verifier/verification-library/zk-query-language/
 
-const humanReadableAuthReason = "Must be born before this year";
+const humanReadableAuthReason = "Lipid Panel LabResult Credential";
 
 const credentialSubject = {
-  birthday: {
-    // users must be born before this year
-    // birthday is less than Jan 1, 2023
-    $lt: 20230101,
-  },
+  "circuitId": "credentialAtomicQuerySigV2",
+  "id": 1698964266,
+  "query": {
+    "allowedIssuers": [
+      "*"
+    ],
+    "context": "ipfs://QmP1GavowvEbCQZGsQSGvEn2UWAz5dnbYsMBXXx9rGe8vj",
+    "credentialSubject": {
+      "testName": {
+        "$eq": "Lipid Panel"
+      }
+    },
+    "type": "CholesterolLabTestCredential"
+  }
 };
 
-const proofRequest = KYCAgeCredential(credentialSubject);
+const proofRequest = CholesterolLabTestCredential(credentialSubject);
 
 module.exports = {
   humanReadableAuthReason,
