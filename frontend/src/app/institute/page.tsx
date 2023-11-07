@@ -1,6 +1,7 @@
 // app/pages/InstituteDashboard.tsx
 'use client'
 import React, { useState } from 'react';
+import Menu from '../../components/Menu';
 
 const InstituteDashboard = () => {
   const [researchFund, setResearchFund] = useState<number>(0);
@@ -20,6 +21,7 @@ const InstituteDashboard = () => {
 
   return (
     <div className='container mx-auto max-w-6xl p-8'>
+      <Menu />
       <h1 className='text-4xl mb-8 font-semibold text-blue-700'>Institute Dashboard</h1>
       <div className='bg-blue-100 p-8 rounded-lg shadow-lg'>
         <h2 className='text-2xl mb-6 font-medium text-blue-600'>Initiate a Research Pool</h2>
