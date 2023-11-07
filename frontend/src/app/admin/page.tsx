@@ -54,7 +54,7 @@ const AdminPage = () => {
         setLoading(true);
         try {
             // Call your API to verify the DID
-            const response = await fetch(`${dockUrl}/api/verify-did/${did}`, { 
+            const response = await fetch(`${dockUrl}/verify-did/${did}`, { 
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const AdminPage = () => {
         setLoading(true);
         try {
             // Call your API to issue a credential
-            const response = await fetch(`${dockUrl}/api/issue-credential`, { 
+            const response = await fetch(`${dockUrl}/credentials`, { 
                 method: 'POST', 
                 headers: {
                     'Content-Type': 'application/json',
