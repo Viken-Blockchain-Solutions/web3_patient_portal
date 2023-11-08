@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { Button, Input } from "@nextui-org/react";
-import { labtest_credential } from "../../utils/schemas/prefilled_labtest_credential";
+import { Button } from "@nextui-org/react";
+import Menu from "../../components/Menu";
+import IssuedCredentialComponent from "../../components/IssuedCredential";
 const dockUrl = process.env.NEXT_PUBLIC_TEST_URL as string;
 const apiToken = process.env.NEXT_PUBLIC_TEST_API_KEY as string;
 // const apiToken = 'eyJzY29wZXMiOlsidGVzdCIsImFsbCJdLCJzdWIiOiIxMDg5MSIsInNlbGVjdGVkVGVhbUlkIjoiMTUwMTIiLCJjcmVhdG9ySWQiOiIxMDg5MSIsImlhdCI6MTY5OTMwNTE3MSwiZXhwIjo0Nzc4NjAxMTcxfQ.nUnHQyBE1qz59oKALpQtDehxRZal1-ozdA59YnVI3A2W9KrulEUs1Ltga3rKdKlRUjHrHd8XE61MlE2o9sdLCg';
@@ -19,7 +20,9 @@ const Notification = ({ message }: any) => (
 const AdminPage = () => {
   // State hooks for form inputs and responses
   const [did, setDid] = useState("");
+  const [oldDid, setOldDid] = useState("");
   const [didJob, setDidJob] = useState("");
+  const [verifiedDid, setVerifiedDid] = useState("");
   const [issuedCredential, setIssuedCredential] = useState();
   const [credential, setCredential] = useState<object | null>();
   const [presentation, setPresentation] = useState("");
@@ -38,6 +41,26 @@ const AdminPage = () => {
       if (response.status === 200) {
         const data = await response.json();
         console.log("getDid", { data });
+        data.find((did: any) => {
+          if (did.profile === null) setDid(did.did);
+        });
+      }
+    } catch (error) {
+      console.log("getDidError", error);
+    }
+  };
+
+  const setExcistingDid = async () => {
+    try {
+      const response = await fetch(`${dockUrl}/dids`, {
+        method: "GET",
+        headers: {
+          "DOCK-API-TOKEN": apiToken,
+        },
+      });
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log("setDid", { data });
         data.find((did: any) => {
           if (did.profile === null) setDid(did.did);
         });
@@ -90,9 +113,10 @@ const AdminPage = () => {
         }
       });
 
-      const data = await response.json();
-      console.log("verify did:", data);
+      const {status, id} = await response.json();
+      console.log("verify did:", status, id);
       // Handle the verification response
+      setVerifiedDid(status);
       setLoading(false);
     } catch (err) {
       setError("Failed to verify DID");
@@ -127,10 +151,11 @@ const AdminPage = () => {
     const credentialBody = {
       type: ["TestCredential"],
       subject: {
+        id: did,
         propOne: "propOne",
       },
       issuanceDate: new Date().toISOString(),
-      issuer: did,
+      issuer: process.env.NEXT_PUBLIC_ISSUER_DID as string,
     };
     setLoading(true);
     try {
@@ -231,10 +256,14 @@ const AdminPage = () => {
       <h1 className="text-2xl font-bold mb-6">
         Admin - DID and Credential Management
       </h1>
+      <Menu />
       {error && <Notification message={error} />}
       <div className="space-x-4 mb-6">
         <Button disabled={loading} onClick={getDid}>
           Get DID
+        </Button>
+        <Button disabled={loading} onClick={setExcistingDid}>
+          Set DID
         </Button>
         <Button disabled={loading} onClick={createDid}>
           Create DID
@@ -264,9 +293,13 @@ const AdminPage = () => {
       {/* Display the DID, Credential, and Presentation data */}
       <div>
         <h3 className="text-lg">DID: {did}</h3>
+        <h3 className="text-lg">DID Verified: {verifiedDid}</h3>
         {issuedCredential && (
-            //@ts-ignore
-          <h3 className="text-lg">issuedCredential: {issuedCredential.type}</h3>
+          <>
+            {/*@ts-expect-error */}
+            <h3 className="text-lg">issuedCredential: {issuedCredential.type}</h3>
+            <IssuedCredentialComponent credential={issuedCredential} />
+          </>
         )}
         <h3 className="text-lg">Presentation: {presentation}</h3>
       </div>
