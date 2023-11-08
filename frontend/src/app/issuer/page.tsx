@@ -194,8 +194,8 @@ const SchemasPage: React.FC = () => {
             <PreFilledCredential
                 // @ts-ignore
                 schema={selectedSchema}
-                issuerDid="did:dock:123456789abcdefghi"
-                dockUrl={process.env.NEXT_PUBLIC_TEST_URL as string}
+                issuerDid={process.env.NEXT_PUBLIC_ISSUER_DID as string}
+                dockUrl={dockUrl}
                 // @ts-ignore
                 apiToken={apiToken}
             />
