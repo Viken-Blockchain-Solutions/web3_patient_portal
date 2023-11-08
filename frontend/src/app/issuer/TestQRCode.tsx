@@ -1,7 +1,7 @@
 // Filename: app/admin/pages/TestQRCode.tsx
 'use client';
 import React, { useState } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
+//import { QRCodeSVG } from 'qrcode.react';
 import { Button } from '@nextui-org/react';
 
 const TestQRCode: React.FC = () => {
@@ -19,7 +19,7 @@ const TestQRCode: React.FC = () => {
             </Button>
             {showQR && (
                 <div className="mt-4">
-                    <QRCodeSVG value={testQRValue} />
+                    {/** <QRCodeSVG value={testQRValue} /> */}
                 </div>
             )}
         </div>

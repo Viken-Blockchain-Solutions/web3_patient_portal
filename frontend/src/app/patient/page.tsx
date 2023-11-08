@@ -44,7 +44,7 @@ const PatientPage = () => {
           <ol>
             <li>Here you can find various research pools that you can contribute to.</li>
             <li>By contributing your Verifiable Credentials, you can earn from the research funds allocated to each pool.</li>
-            <li>Browse through the available pools, check their details, and click 'Contribute' to participate.</li>
+            <li>Browse through the available pools, check their details, and click ´Contribute´ to participate.</li>
           </ol>
         </div>
       </div>

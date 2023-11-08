@@ -1,12 +1,12 @@
 // Filename: app/admin/components/PreFilledCredential.tsx
 'use client';
 import React, { useState } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
+
 import { Button } from '@nextui-org/react';
 import { SchemaDefinition } from '../../types';
 
 interface PreFilledCredentialProps {
-  schema: SchemaDefinition | null; 
+  schema: SchemaDefinition | any; 
   issuerDid: string;
   dockUrl: string;
   apiToken: string;
@@ -36,7 +36,7 @@ const PreFilledCredential: React.FC<PreFilledCredentialProps> = ({ schema, issue
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'DOCK-API-TOKEN': apiToken,
+          'DOCK-API-TOKEN': 'eyJzY29wZXMiOlsidGVzdCIsImFsbCJdLCJzdWIiOiIxMDg5MSIsInNlbGVjdGVkVGVhbUlkIjoiMTUwMTIiLCJjcmVhdG9ySWQiOiIxMDg5MSIsImlhdCI6MTY5OTMwNTE3MSwiZXhwIjo0Nzc4NjAxMTcxfQ.nUnHQyBE1qz59oKALpQtDehxRZal1-ozdA59YnVI3A2W9KrulEUs1Ltga3rKdKlRUjHrHd8XE61MlE2o9sdLCg',
         },
         body: JSON.stringify(preFilledData),
       });
@@ -65,7 +65,7 @@ const PreFilledCredential: React.FC<PreFilledCredentialProps> = ({ schema, issue
       )}
       {credentialQR && (
         <div className="mt-4">
-          <QRCodeSVG value={credentialQR} />
+      
         </div>
       )}
     </div>

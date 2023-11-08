@@ -1,12 +1,12 @@
 // Filename: app/admin/pages/SchemasPage.tsx
 'use client';
 import React, { useEffect, useState } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
+// import { QRCodeSVG } from 'qrcode.react';
 import { Button } from '@nextui-org/react';
 import TestQRCode from './TestQRCode';
 import PreFilledCredential from '../../components/PrefilledCredentials';
-const dockUrl = process.env.NEXT_PUBLIC_TEST_URL as string;
-const apiToken = 'eyJzY29wZXMiOlsidGVzdCIsImFsbCJdLCJzdWIiOiIxMDg5MSIsInNlbGVjdGVkVGVhbUlkIjoiMTUwMTIiLCJjcmVhdG9ySWQiOiIxMDg5MSIsImlhdCI6MTY5OTMwNTE3MSwiZXhwIjo0Nzc4NjAxMTcxfQ.nUnHQyBE1qz59oKALpQtDehxRZal1-ozdA59YnVI3A2W9KrulEUs1Ltga3rKdKlRUjHrHd8XE61MlE2o9sdLCg';
+
+import { dockUrl, apiToken } from '../layout';
 
 
 interface SchemaMetadata {
@@ -94,7 +94,7 @@ const SchemasPage: React.FC = () => {
                 }
                 const data = await response.json();
                 // Assuming the API returns an object with a 'schemas' key containing the array
-                if (data) {
+                if (data.data) {
                     console.log("data:", data.data)
                     setSchemas(data.data);
                 } else {
@@ -131,6 +131,7 @@ const SchemasPage: React.FC = () => {
         try {
             const response = await fetch(`${dockUrl}/credentials`, {
                 method: 'POST',
+                // @ts-ignore
                 headers: {
                     'Content-Type': 'application/json',
                     'DOCK-API-TOKEN': apiToken,
@@ -182,7 +183,7 @@ const SchemasPage: React.FC = () => {
                         </Button>
                         {credentialQR && (
                             <div className="mt-4">
-                                <QRCodeSVG value={credentialQR} />
+                                /
                             </div>
                         )}
                     </div>
@@ -191,9 +192,11 @@ const SchemasPage: React.FC = () => {
                     {selectedSchema && <SchemaCard schema={selectedSchema} />}
                 </div>
             <PreFilledCredential
+                // @ts-ignore
                 schema={selectedSchema}
-                issuerDid="did:dock:123456789abcdefghi"
-                dockUrl={process.env.NEXT_PUBLIC_TEST_URL as string}
+                issuerDid={process.env.NEXT_PUBLIC_ISSUER_DID as string}
+                dockUrl={dockUrl}
+                // @ts-ignore
                 apiToken={apiToken}
             />
             </div>
