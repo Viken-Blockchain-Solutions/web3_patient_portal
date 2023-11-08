@@ -3615,6 +3615,11 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+dotenv@^16.3.1:
+  version "16.3.1"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.3.1.tgz#369034de7d7e5b120972693352a3bf112172cc3e"
+  integrity sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==
+
 duplexify@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/duplexify/-/duplexify-4.1.2.tgz#18b4f8d28289132fa0b9573c898d9f903f81c7b0"
@@ -5538,6 +5543,11 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
+qr.js@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/qr.js/-/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
+  integrity sha512-c4iYnWb+k2E+vYpRimHqSu575b1/wKl4XFeJGpFmrJQz5I88v9aY2czh7s0w36srfCM1sXgC/xpoJz5dJfq+OQ==
+
 qrcode@1.5.3, qrcode@^1.5.0, qrcode@^1.5.1:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.5.3.tgz#03afa80912c0dccf12bc93f615a535aad1066170"
@@ -5653,6 +5663,13 @@ react-use-measure@^2.1.1:
   integrity sha512-nocZhN26cproIiIduswYpV5y5lQpSQS1y/4KuvUCjSKmw7ZWIS/+g3aFnX3WdBkyuGUtTLif3UTqnLLhbDoQig==
   dependencies:
     debounce "^1.2.1"
+
+react.qrcode@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react.qrcode/-/react.qrcode-1.0.2.tgz#0de02369eddba9cf56f7febf57e6305ab4f6faff"
+  integrity sha512-2l5k0DxeWs7cq5yNRmserSbkEsd9kh45YMRvs6SWXSOe+CbdgkJMcmStVmmBgnsjqUENGw4o1o18aN/OZZAqKQ==
+  dependencies:
+    qr.js "0.0.0"
 
 react@^18.2.0:
   version "18.2.0"
