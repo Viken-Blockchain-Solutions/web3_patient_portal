@@ -9,7 +9,7 @@
   "rules": {
     "@next/next/no-sync-scripts": "off",
     "comma-dangle": ["error", "never"],
-    "max-len": ["error", 800],
+    "max-len": ["error", 2200],
     "one-var": 0,
     "semi": ["error", "always"],
 

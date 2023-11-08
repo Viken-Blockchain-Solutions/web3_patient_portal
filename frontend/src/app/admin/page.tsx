@@ -82,28 +82,6 @@ const AdminPage = () => {
   const issueCredential = async () => {
     setLoading(true);
     try {
-      // Call your API to issue a credential
-      const response = await fetch(`${dockUrl}/credentials`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "DOCK-API-TOKEN": apiToken
-        },
-        body: JSON.stringify({ did })
-      });
-      const data = await response.json();
-      console.log("issue credential:", data.data);
-      setCredential(data);
-      setLoading(false);
-    } catch (err) {
-      setError("Failed to issue credential");
-      setLoading(false);
-    }
-  };
-  // Function to issue a credential
-  const issueCredential = async () => {
-    setLoading(true);
-    try {
       console.log("creating a signed credential");
       // Call your API to issue a credential
       const response = await fetch(`${dockUrl}/credentials`, {
