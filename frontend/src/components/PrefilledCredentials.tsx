@@ -6,7 +6,7 @@ import { Button } from '@nextui-org/react';
 import { SchemaDefinition } from '../../types';
 
 interface PreFilledCredentialProps {
-  schema: SchemaDefinition | null; 
+  schema: SchemaDefinition | any; 
   issuerDid: string;
   dockUrl: string;
   apiToken: string;
