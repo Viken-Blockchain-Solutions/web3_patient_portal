@@ -1,4 +1,4 @@
-{
+export const labtest_credential = {
     "@context": [
       "https://www.w3.org/2018/credentials/v1",
       {

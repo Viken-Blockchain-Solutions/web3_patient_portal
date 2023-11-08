@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { Button, Input } from '@nextui-org/react';
-
+import { labtest_credential } from '../../utils/schemas/prefilled_labtest_credential';
 const dockUrl = process.env.NEXT_PUBLIC_TEST_URL as string;
 const apiToken = 'eyJzY29wZXMiOlsidGVzdCIsImFsbCJdLCJzdWIiOiIxMDg5MSIsInNlbGVjdGVkVGVhbUlkIjoiMTUwMTIiLCJjcmVhdG9ySWQiOiIxMDg5MSIsImlhdCI6MTY5OTMwNTE3MSwiZXhwIjo0Nzc4NjAxMTcxfQ.nUnHQyBE1qz59oKALpQtDehxRZal1-ozdA59YnVI3A2W9KrulEUs1Ltga3rKdKlRUjHrHd8XE61MlE2o9sdLCg';
 
@@ -15,6 +15,7 @@ const Notification = ({ message }: any) => (
 const AdminPage = () => {
     // State hooks for form inputs and responses
     const [did, setDid] = useState('');
+    const [didJob, setDidJob] = useState('');
     const [credential, setCredential] = useState('');
     const [presentation, setPresentation] = useState('');
     const [loading, setLoading] = useState(false);
@@ -35,8 +36,10 @@ const AdminPage = () => {
         });
         const data = await response.json();
         if (response.ok) {
-            console.log("create did:", data.data)
-          setDid(data.data.did);
+            console.log("create did:", data)
+            console.log("create did.jobId:", data.id)
+          setDid(data.did);
+          setDidJob(data.id);
         } else {
           throw new Error(data.message || 'Failed to create DID');
         }
@@ -54,16 +57,16 @@ const AdminPage = () => {
         setLoading(true);
         try {
             // Call your API to verify the DID
-            const response = await fetch(`${dockUrl}/verify-did/${did}`, { 
+            const response = await fetch(`${dockUrl}/jobs/${didJob}`, { 
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'DOCK-API-TOKEN': apiToken,
-                  }, 
+                  },
                 });
 
             const data = await response.json();
-            console.log("verify did:", data.data)
+            console.log("verify did:", data)
             // Handle the verification response
             setLoading(false);
         } catch (err) {
@@ -76,6 +79,7 @@ const AdminPage = () => {
     const issueCredential = async () => {
         setLoading(true);
         try {
+            console.log("creating a signed credential")
             // Call your API to issue a credential
             const response = await fetch(`${dockUrl}/credentials`, { 
                 method: 'POST', 
@@ -83,10 +87,25 @@ const AdminPage = () => {
                     'Content-Type': 'application/json',
                     'DOCK-API-TOKEN': apiToken,
                   },
-                body: JSON.stringify({ did }) 
+                body: JSON.stringify({
+                    "credential": {
+                      "id": "http://example.com/39",
+                      "context": ["https://www.w3.org/2018/credentials/examples/v1"],
+                      "type": [
+                        "VerifiableCredential"
+                      ],
+                      "subject": {
+                          "id": `${did}`
+                      },
+                      "issuer": {
+                          "id": `${process.env.NEXT_PUBLIC_ISSUER_DID}`,
+                          "name": "VBS - Issuer",
+                      }
+                    }
+                  }) 
             });
             const data = await response.json();
-            console.log("issue credential:", data.data)
+            console.log("issue credential:", data)
             setCredential(data);
             setLoading(false);
         } catch (err) {
@@ -102,7 +121,7 @@ const AdminPage = () => {
             // Call your API to verify the credential
             const response = await fetch(`${dockUrl}/api/verify-credential`, { 
                 method: 'POST', 
-                body: JSON.stringify({ credential }),
+                body: JSON.stringify(credential),
                 headers: {
                     'Content-Type': 'application/json',
                     'DOCK-API-TOKEN': apiToken,
@@ -126,7 +145,7 @@ const AdminPage = () => {
             // Call your API to create a presentation
             const response = await fetch(`${dockUrl}/api/create-presentation`, { 
                 method: 'POST', 
-                body: JSON.stringify({ credential }),
+                body: JSON.stringify(credential),
                 headers: {
                     'Content-Type': 'application/json',
                     'DOCK-API-TOKEN': apiToken,
@@ -149,7 +168,7 @@ const AdminPage = () => {
             // Call your API to verify the presentation
             const response = await fetch(`${dockUrl}/api/verify-presentation`, { 
                 method: 'POST', 
-                body: JSON.stringify({ presentation }),
+                body: JSON.stringify(presentation),
                 headers: {
                     'Content-Type': 'application/json',
                     'DOCK-API-TOKEN': apiToken,

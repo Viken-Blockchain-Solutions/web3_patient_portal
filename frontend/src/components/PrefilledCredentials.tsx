@@ -36,7 +36,7 @@ const PreFilledCredential: React.FC<PreFilledCredentialProps> = ({ schema, issue
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'DOCK-API-TOKEN': apiToken,
+          'DOCK-API-TOKEN': 'eyJzY29wZXMiOlsidGVzdCIsImFsbCJdLCJzdWIiOiIxMDg5MSIsInNlbGVjdGVkVGVhbUlkIjoiMTUwMTIiLCJjcmVhdG9ySWQiOiIxMDg5MSIsImlhdCI6MTY5OTMwNTE3MSwiZXhwIjo0Nzc4NjAxMTcxfQ.nUnHQyBE1qz59oKALpQtDehxRZal1-ozdA59YnVI3A2W9KrulEUs1Ltga3rKdKlRUjHrHd8XE61MlE2o9sdLCg',
         },
         body: JSON.stringify(preFilledData),
       });
