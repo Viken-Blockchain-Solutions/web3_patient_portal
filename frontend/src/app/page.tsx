@@ -19,7 +19,7 @@ import { WriteContract } from '../components/WriteContract'
 import { WriteContractPrepared } from '../components/WriteContractPrepared'
 import Menu from '../components/Menu'
 
-export function Page() {
+const Page: React.FC = () => {
   return (
     <>
       <h1 className='text-xl p-4'>wagmi + ConnectKit + Next.js</h1>
