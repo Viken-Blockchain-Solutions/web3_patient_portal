@@ -1,7 +1,7 @@
 // Filename: app/admin/components/PreFilledCredential.tsx
 'use client';
 import React, { useState } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
+
 import { Button } from '@nextui-org/react';
 import { SchemaDefinition } from '../../types';
 
@@ -65,7 +65,7 @@ const PreFilledCredential: React.FC<PreFilledCredentialProps> = ({ schema, issue
       )}
       {credentialQR && (
         <div className="mt-4">
-          <QRCodeSVG value={credentialQR} />
+      
         </div>
       )}
     </div>
