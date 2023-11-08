@@ -19,13 +19,9 @@ const Notification = ({ message }: any) => (
 const AdminPage = () => {
   // State hooks for form inputs and responses
   const [did, setDid] = useState("");
-<<<<<<< Updated upstream
   const [didJob, setDidJob] = useState("");
-  const [credential, setCredential] = useState("");
-=======
   const [issuedCredential, setIssuedCredential] = useState();
   const [credential, setCredential] = useState<object | null>();
->>>>>>> Stashed changes
   const [presentation, setPresentation] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -146,27 +142,6 @@ const AdminPage = () => {
           "Content-Type": "application/json",
           "DOCK-API-TOKEN": apiToken
         },
-<<<<<<< Updated upstream
-        body: JSON.stringify({
-          credential: {
-            id: "http://example.com/39",
-            context: ["https://www.w3.org/2018/credentials/examples/v1"],
-            type: ["VerifiableCredential"],
-            subject: {
-              id: `${did}`
-            },
-            issuer: {
-              id: `${process.env.NEXT_PUBLIC_ISSUER_DID}`,
-              name: "VBS - Issuer"
-            }
-          }
-        })
-      });
-      const data = await response.json();
-      console.log("issue credential:", data);
-      setCredential(data);
-      setLoading(false);
-=======
         body: JSON.stringify({ credential: credentialBody }),
       });
       if (response.status === 200) {
@@ -175,7 +150,6 @@ const AdminPage = () => {
         setIssuedCredential(_credential);
         setLoading(false);
       }
->>>>>>> Stashed changes
     } catch (err) {
       setError("Failed to issue credential");
       setLoading(false);
@@ -189,11 +163,7 @@ const AdminPage = () => {
       // Call your API to verify the credential
       const response = await fetch(`${dockUrl}/verify`, {
         method: "POST",
-<<<<<<< Updated upstream
-        body: JSON.stringify(credential),
-=======
         body: JSON.stringify(issuedCredential),
->>>>>>> Stashed changes
         headers: {
           "Content-Type": "application/json",
           "DOCK-API-TOKEN": apiToken
@@ -295,6 +265,7 @@ const AdminPage = () => {
       <div>
         <h3 className="text-lg">DID: {did}</h3>
         {issuedCredential && (
+            //@ts-ignore
           <h3 className="text-lg">issuedCredential: {issuedCredential.type}</h3>
         )}
         <h3 className="text-lg">Presentation: {presentation}</h3>
