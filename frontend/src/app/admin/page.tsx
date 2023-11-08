@@ -19,11 +19,37 @@ const Notification = ({ message }: any) => (
 const AdminPage = () => {
   // State hooks for form inputs and responses
   const [did, setDid] = useState("");
+<<<<<<< Updated upstream
   const [didJob, setDidJob] = useState("");
   const [credential, setCredential] = useState("");
+=======
+  const [issuedCredential, setIssuedCredential] = useState();
+  const [credential, setCredential] = useState<object | null>();
+>>>>>>> Stashed changes
   const [presentation, setPresentation] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // fetch dids and setDid based on profile == null, testing purposes only
+  const getDid = async () => {
+    try {
+      const response = await fetch(`${dockUrl}/dids`, {
+        method: "GET",
+        headers: {
+          "DOCK-API-TOKEN": apiToken,
+        },
+      });
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log("getDid", { data });
+        data.find((did: any) => {
+          if (did.profile === null) setDid(did.did);
+        });
+      }
+    } catch (error) {
+      console.log("getDidError", error);
+    }
+  };
 
   const createDid = async () => {
     setLoading(true);
@@ -78,8 +104,38 @@ const AdminPage = () => {
     }
   };
 
+  // get credentials
+  const getCredentials = async () => {
+    try {
+      const response = await fetch(`${dockUrl}/credentials`, {
+        method: "GET",
+        headers: {
+          "DOCK-API-TOKEN": apiToken,
+        },
+      });
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log("getCredentials", { data });
+        data.find((_credential: any) => {
+          if (_credential.type === "TestCredential") setCredential(_credential);
+        });
+      }
+    } catch (error) {
+      console.log("getCredentials:error", error);
+    }
+  };
   // Function to issue a credential
   const issueCredential = async () => {
+    if (did === "")
+      return console.log("no [did], need one to issue credential");
+    const credentialBody = {
+      type: ["TestCredential"],
+      subject: {
+        propOne: "propOne",
+      },
+      issuanceDate: new Date().toISOString(),
+      issuer: did,
+    };
     setLoading(true);
     try {
       console.log("creating a signed credential");
@@ -90,6 +146,7 @@ const AdminPage = () => {
           "Content-Type": "application/json",
           "DOCK-API-TOKEN": apiToken
         },
+<<<<<<< Updated upstream
         body: JSON.stringify({
           credential: {
             id: "http://example.com/39",
@@ -109,6 +166,16 @@ const AdminPage = () => {
       console.log("issue credential:", data);
       setCredential(data);
       setLoading(false);
+=======
+        body: JSON.stringify({ credential: credentialBody }),
+      });
+      if (response.status === 200) {
+        const _credential = await response.json();
+        console.log("issue credential success:", { _credential });
+        setIssuedCredential(_credential);
+        setLoading(false);
+      }
+>>>>>>> Stashed changes
     } catch (err) {
       setError("Failed to issue credential");
       setLoading(false);
@@ -120,9 +187,13 @@ const AdminPage = () => {
     setLoading(true);
     try {
       // Call your API to verify the credential
-      const response = await fetch(`${dockUrl}/api/verify-credential`, {
+      const response = await fetch(`${dockUrl}/verify`, {
         method: "POST",
+<<<<<<< Updated upstream
         body: JSON.stringify(credential),
+=======
+        body: JSON.stringify(issuedCredential),
+>>>>>>> Stashed changes
         headers: {
           "Content-Type": "application/json",
           "DOCK-API-TOKEN": apiToken
@@ -130,7 +201,7 @@ const AdminPage = () => {
       });
 
       const data = await response.json();
-      console.log("verify credential:", data.data);
+      console.log("verify credential:success", { data });
       // Handle the verification response
       setLoading(false);
     } catch (err) {
@@ -192,16 +263,22 @@ const AdminPage = () => {
       </h1>
       {error && <Notification message={error} />}
       <div className="space-x-4 mb-6">
+        <Button disabled={loading} onClick={getDid}>
+          Get DID
+        </Button>
         <Button disabled={loading} onClick={createDid}>
           Create DID
         </Button>
         <Button disabled={loading || !did} onClick={verifyDid}>
           Verify DID
         </Button>
+        <Button disabled={loading} onClick={getCredentials}>
+          Get Credentials
+        </Button>
         <Button disabled={loading || !did} onClick={issueCredential}>
           Issue Credential
         </Button>
-        <Button disabled={loading || !credential} onClick={verifyCredential}>
+        <Button disabled={loading || !issuedCredential} onClick={verifyCredential}>
           Verify Credential
         </Button>
         <Button disabled={loading || !credential} onClick={createPresentation}>
@@ -217,7 +294,9 @@ const AdminPage = () => {
       {/* Display the DID, Credential, and Presentation data */}
       <div>
         <h3 className="text-lg">DID: {did}</h3>
-        <h3 className="text-lg">Credential: {credential}</h3>
+        {issuedCredential && (
+          <h3 className="text-lg">issuedCredential: {issuedCredential.type}</h3>
+        )}
         <h3 className="text-lg">Presentation: {presentation}</h3>
       </div>
     </div>
