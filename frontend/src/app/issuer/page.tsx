@@ -2,6 +2,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
+import { Button } from '@nextui-org/react';
+import TestQRCode from './TestQRCode';
+import PreFilledCredential from '../../components/PrefilledCredentials';
 const dockUrl = process.env.NEXT_PUBLIC_TEST_URL as string;
 const apiToken = 'eyJzY29wZXMiOlsidGVzdCIsImFsbCJdLCJzdWIiOiIxMDg5MSIsInNlbGVjdGVkVGVhbUlkIjoiMTUwMTIiLCJjcmVhdG9ySWQiOiIxMDg5MSIsImlhdCI6MTY5OTMwNTE3MSwiZXhwIjo0Nzc4NjAxMTcxfQ.nUnHQyBE1qz59oKALpQtDehxRZal1-ozdA59YnVI3A2W9KrulEUs1Ltga3rKdKlRUjHrHd8XE61MlE2o9sdLCg';
 
@@ -34,20 +37,49 @@ interface SchemaItem {
     created: string;
 }
 
+const renderProperty = (property: any, value: any) => {
+    if (value.type === 'object') {
+        return (
+            <div key={property} className='border-1 p-5 rounded-lg border-gray-300 mt-1'>
+                <p className='text-base'>
+                    <span className='font-semibold'>{value.title || property}:</span>
+                </p>
+                <p className='text-xs leading-6'>{value.description}</p>
+                {Object.entries(value.properties || {}).map(([nestedKey, nestedValue]) =>
+                    renderProperty(nestedKey, nestedValue)
+                )}
+            </div>
+        );
+
+    } else {
+        return (
+            <div key={property} className='p-4 rounded-lg shadow-md'>
+                <p className='text-base pt-1'>
+                    <span className='font-semibold'>{value.title || property}:</span>
+                </p>
+                <p className='text-xs leading-6 pb-1'>{value.description}</p>
+            </div>
+        );
+    }
+};
+
 const SchemaCard: React.FC<{ schema: SchemaDefinition }> = ({ schema }) => {
-    // Implement the SchemaCard component
+    console.log("Schema:", schema);
+
     return (
-        <div className="border rounded-lg p-4">
-            <h3 className="text-lg font-medium">{schema.name}</h3>
-            <p>{schema.description}</p>
-            {/* Render more schema details here */}
+        <div className="grid rounded-lg p-3 gap-3">
+            <h3 className="text-lg font-bold leading-5">{schema.name}</h3>
+            <p className='text-xs leading-6'>{schema.description}</p>
+            {Object.entries(schema.properties).map(([key, value]) =>
+                renderProperty(key, value)
+            )}
         </div>
     );
 };
 
 const SchemasPage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [schemas, setSchemas] = useState<SchemaItem[]>([]);
+    const [schemas, setSchemas] = useState<SchemaItem[] | null>(null);
     const [selectedSchemaId, setSelectedSchemaId] = useState<string>('');
     const [selectedSchema, setSelectedSchema] = useState<SchemaDefinition | null>(null);
     const [credentialQR, setCredentialQR] = useState<string>('');
@@ -68,23 +100,22 @@ const SchemasPage: React.FC = () => {
                 } else {
                     // Handle the case where data.schemas is not an array
                     console.error('Data is not an array:', data);
-                    setSchemas([]); // Set to an empty array or handle accordingly
+                    setSchemas(null); // Set to an empty array or handle accordingly
                 }
             } catch (error) {
                 console.error('Failed to fetch schemas:', error);
-                setSchemas([]); // Fallback to an empty array in case of error
+                setSchemas(null); // Fallback to an empty array in case of error
             } finally {
                 setIsLoading(false);
             }
         };
-
-
 
         fetchData();
     }, []);
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const schemaId = event.target.value;
+        console.log("schemaId:", schemaId);
         setSelectedSchemaId(schemaId);
         const schemaItem = schemas?.find((schema) => schema.id === schemaId);
         setSelectedSchema(schemaItem ? schemaItem.schema : null);
@@ -105,20 +136,7 @@ const SchemasPage: React.FC = () => {
                     'DOCK-API-TOKEN': apiToken,
                 },
                 body: JSON.stringify({
-                    "credential": {
-                        "id": "http://example.com/39",
-                        "context": ["https://www.w3.org/2018/credentials/examples/v1"],
-                        "type": [
-                            "VerifiableCredential"
-                        ],
-                        "subject": {
-                            "id": "did:dock:5ELhyt6HMBqBsurH2cYtnYQC2n4BEJkvXwCsiwgegHv3EXiD"
-                        },
-                        "issuer": {
-                            "id": "did:dock:5ELhyt6HMBqBsurH2cYtnYQC2n4BEJkvXwCsiwgegHv3EXiD",
-                            "name": "VBS - Issuer"
-                        }
-                    }
+                    schemaId: selectedSchemaId
                 }),
             });
 
@@ -158,23 +176,29 @@ const SchemasPage: React.FC = () => {
                         ))}
                     </select>
 
+                    <div className="mt-8">
+                        <Button onClick={issueCredential} className="mt-4">
+                            Issue Credential
+                        </Button>
+                        {credentialQR && (
+                            <div className="mt-4">
+                                <QRCodeSVG value={credentialQR} />
+                            </div>
+                        )}
+                    </div>
                 </div>
-                <div className="w-1/2">
+                <div className="w-3/4">
                     {selectedSchema && <SchemaCard schema={selectedSchema} />}
                 </div>
+            <PreFilledCredential
+                schema={selectedSchema}
+                issuerDid="did:dock:123456789abcdefghi"
+                dockUrl={process.env.NEXT_PUBLIC_TEST_URL as string}
+                apiToken={apiToken}
+            />
             </div>
-
             {/* New row for issuing the credential */}
-            <div className="mt-8">
-                <button onClick={issueCredential} className="mt-4">
-                    Issue Credential
-                </button>
-                {credentialQR && (
-                    <div className="mt-4">
-                        <QRCodeSVG value={credentialQR} />
-                    </div>
-                )}
-            </div>
+
         </div>
     );
 };
