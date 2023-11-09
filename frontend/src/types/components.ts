@@ -1,4 +1,5 @@
 // Define the types for the credential's properties
+
 // used on src/components/IssuedCredential
 export type Proof = {
   type: string;
@@ -11,7 +12,7 @@ export type Proof = {
 export type CredentialSubject = {
   [key: string]: any;
 };
-
+// used on /admin, /components/IssuedCredential
 export interface Credential {
   "@context": Array<any>;
   id: string;
