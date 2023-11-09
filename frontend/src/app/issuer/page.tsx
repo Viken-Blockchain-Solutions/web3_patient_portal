@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 // import { QRCodeSVG } from 'qrcode.react';
 import { Button } from '@nextui-org/react';
-import TestQRCode from './TestQRCode';
 import PreFilledCredential from '../../components/PrefilledCredentials';
 
 import { dockUrl, apiToken } from '../layout';
@@ -192,12 +191,7 @@ const SchemasPage: React.FC = () => {
                     {selectedSchema && <SchemaCard schema={selectedSchema} />}
                 </div>
             <PreFilledCredential
-                // @ts-ignore
                 schema={selectedSchema}
-                issuerDid={process.env.NEXT_PUBLIC_ISSUER_DID as string}
-                dockUrl={dockUrl}
-                // @ts-ignore
-                apiToken={apiToken}
             />
             </div>
             {/* New row for issuing the credential */}
