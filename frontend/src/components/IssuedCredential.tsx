@@ -1,33 +1,15 @@
 import React from "react";
 import { Card, CardHeader } from "@nextui-org/react";
 import Image from "next/image";
+import {
+  // Proof,
+  // CredentialSubject,
+  Credential
+} from "../types/components";
 
-// Define the types for the credential's properties
-type Proof = {
-  type: string;
-  created: string;
-  verificationMethod: string;
-  proofPurpose: string;
-  jws: string;
-};
-
-type CredentialSubject = {
-  [key: string]: any;
-};
-
-type Credential = {
-  "@context": Array<any>;
-  id: string;
-  type: Array<string>;
-  credentialSubject: CredentialSubject;
-  issuanceDate: string;
-  issuer: any;
-  proof: Proof;
-};
-
-type VerifiedCredentialProps = {
+interface VerifiedCredentialProps {
   credential: Credential;
-};
+}
 
 // The VerifiedCredentialComponent functional component
 const IssuedCredentialComponent: React.FC<VerifiedCredentialProps> = ({
