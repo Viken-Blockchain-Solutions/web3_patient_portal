@@ -1,6 +1,14 @@
 // components/PoolCard.tsx
 import React from "react";
-import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image } from "@nextui-org/react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Divider,
+  // Link,
+  Image
+} from "@nextui-org/react";
 
 interface PoolCardProps {
   title: string;
@@ -9,7 +17,12 @@ interface PoolCardProps {
   funding: number;
 }
 
-export default function PoolCard({ title, startDate, endDate, funding }: PoolCardProps) {
+export default function PoolCard({
+  title,
+  startDate,
+  endDate,
+  funding
+}: PoolCardProps) {
   return (
     <Card className="max-w-[400px]">
       <CardHeader className="flex gap-3">
@@ -32,7 +45,7 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
       </CardBody>
       <Divider />
       <CardFooter>
-        <button className='p-2 bg-green-600 text-white rounded-lg hover:bg-green-700'>
+        <button className="p-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
           Contribute
         </button>
       </CardFooter>

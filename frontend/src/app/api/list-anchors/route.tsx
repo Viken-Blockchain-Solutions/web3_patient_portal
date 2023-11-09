@@ -8,7 +8,7 @@ export async function GET() {
   const res = await fetch(`${dockUrl}/anchors`, {
     headers: {
       "Content-Type": "application/json",
-      "DOCK-API-TOKEN": `"${dockApiKey}"`
+      "DOCK-API-TOKEN": `${dockApiKey}`
     }
   });
 

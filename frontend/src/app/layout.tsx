@@ -1,11 +1,8 @@
-import { Providers } from './providers'
-import './globals.css'
-
-export const dockUrl = process.env.NEXT_PUBLIC_TEST_URL as string;
-export const apiToken = process.env.NEXT_PUBLIC_TEST_API_TOKEN;
+import { Providers } from "./providers";
+import "./globals.css";
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode
 }) {
@@ -17,5 +14,5 @@ export default function RootLayout({
         </Providers>
       </body>
     </html>
-  )
+  );
 }

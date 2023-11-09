@@ -1,11 +1,11 @@
 // app/pages/InstituteDashboard.tsx
-'use client'
-import React, { useState } from 'react';
-import Menu from '../../components/Menu';
+"use client";
+import React, { useState } from "react";
+import Menu from "../../components/Menu";
 
 const InstituteDashboard = () => {
   const [researchFund, setResearchFund] = useState<number>(0);
-  const [selectedSchema, setSelectedSchema] = useState<string>('');
+  const [selectedSchema, setSelectedSchema] = useState<string>("");
 
   const handleFundChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setResearchFund(Number(e.target.value));

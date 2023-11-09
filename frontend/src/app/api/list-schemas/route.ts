@@ -9,12 +9,12 @@ export async function GET() {
   const res = await fetch(`${dockUrl}/schemas`, {
     headers: {
       "Content-Type": "application/json",
-      "DOCK-API-TOKEN": `"${dockApiKey}"`
+      "DOCK-API-TOKEN": `${dockApiKey}`
     }
   });
 
   const data = await res.json();
   //console.log(`${dockUrl}/schemas:`, data)
-  console.log("schemas:", await data.length);
+  console.log("list-schemas:route:", await data.length);
   return NextResponse.json({ data });
 }

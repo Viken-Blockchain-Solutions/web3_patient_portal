@@ -10,7 +10,7 @@ export async function GET() {
   const res = await fetch(`${dockUrl}/dids`, {
     headers: {
       "Content-Type": "application/json",
-      "DOCK-API-TOKEN": `"${dockApiKey}"`
+      "DOCK-API-TOKEN": `${dockApiKey}`
     }
   });
   const data = await res.json();
