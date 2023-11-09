@@ -7,7 +7,6 @@ import PreFilledCredential from '../../components/PrefilledCredentials';
 
 import { dockUrl, apiToken } from '../layout';
 
-
 interface SchemaMetadata {
     jsonLdContext: string;
     jsonSchema: string;
