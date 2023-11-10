@@ -150,6 +150,13 @@ const main = async () => {
     // a DID we control as a recipient DID
     const decryptData = await apiPost(`${NEXT_PUBLIC_TEST_URL}/messaging/decrypt`, didcommMessage);
     console.log('Decrypted message:', decryptData)
+
+    return {
+        credentials,
+        didcommMessage,
+        qrUrl,
+        decryptData,
+    };
 }
 
 const LaboratoryPage = () => {
@@ -194,7 +201,7 @@ const LaboratoryPage = () => {
         </button>
         <div className="mt-4">
             <h2 className="text-lg font-semibold">Output:</h2>
-            <pre className="p-4 bg-gray-100 rounded-md">{output}</pre>
+            <pre className="text-xs p-4 bg-gray-100 rounded-md text-ellipsis">{output}</pre>
         </div>
     </div>
 );
