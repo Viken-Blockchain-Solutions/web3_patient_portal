@@ -1,31 +1,39 @@
 'use client';
 import React, { useState } from 'react';
 import { v4 } from 'uuid';
+const API_KEY = process.env.NEXT_PUBLIC_TEST_API_KEY as string;
+const NEXT_PUBLIC_ISSUER_DID = process.env.NEXT_PUBLIC_ISSUER_DID;
+const NEXT_PUBLIC_RECEIVER_DID = process.env.NEXT_PUBLIC_RECEIVER_DID;
+const NEXT_PUBLIC_TEST_URL = process.env.NEXT_PUBLIC_TEST_URL;
 
-const { NEXT_PUBLIC_TEST_API_KEY, NEXT_PUBLIC_ISSUER_DID, NEXT_PUBLIC_RECEIVER_DID, NEXT_PUBLIC_TEST_URL } = process.env;
+console.log('NEXT_PUBLIC_TEST_API_KEY- client:', API_KEY);
+console.log('NEXT_PUBLIC_ISSUER_DID - client:', NEXT_PUBLIC_ISSUER_DID);
+console.log('NEXT_PUBLIC_RECEIVER_DID - client:', NEXT_PUBLIC_RECEIVER_DID);
+console.log('NEXT_PUBLIC_TEST_URL - client:', NEXT_PUBLIC_TEST_URL);
 
 // We can send multiple credentials in one message
 const CREDENTIAL_COUNT = 1;
 
 // Helper method to POST to the API
-async function apiPost(url: string, body: any) {
-    const response = await fetch(`${NEXT_PUBLIC_TEST_URL}/credentials`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'DOCK-API-TOKEN': NEXT_PUBLIC_TEST_API_KEY as string,
-        },
-        body: JSON.stringify(body),
+async function apiPost(url: any, body: any) {
+    const result = await fetch(url, {
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json',
+        'DOCK-API-TOKEN': API_KEY,
+      },
+      body: JSON.stringify(body),
+      method: 'POST'
     });
-
-    const data = await response.json();
-
-    if (response.status >= 400) {
-        throw new Error(`API Error: ${data}`);
+  
+    const data = await result.json();
+  
+    if (result.status >= 400) {
+      throw new Error(`API Error: ${data}`);
     }
-
+  
     return data;
-}
+  }
 
 // Gets credentials to send, they could be pulled from DB or previous response
 // for the sample we will just issue a credential with the API
@@ -34,30 +42,60 @@ async function getCredentials() {
     for (let i = 0; i < CREDENTIAL_COUNT; i++) {
         const credential = await apiPost(`${NEXT_PUBLIC_TEST_URL}/credentials`, {
             distribute: false, // Ensure distribute is false because were manually sending later
-            persistent: true, // Ensure persistent is true so we can send the message later
-            "credential": {
-                "id": `urn:uuid:${v4()}`, // Replace {{uuid}} with an actual UUID
-                "@context": [
-                    "https://www.w3.org/2018/credentials/v1",
-                    "https://schema.dock.io/LabTestVerification-V1699459342994.json-ld"
-                ],
-                "type": [
+            credential: {
+                id: `urn:uuid:${v4()}`,
+                name: 'Lab Test Verification',
+                description: 'A verifiable credential for a lab test result.',
+                type: [
                     "VerifiableCredential",
                     "LabTestVerification"
                 ],
-                "issuer": {
-                    "id": NEXT_PUBLIC_ISSUER_DID,
-                    "name": "VBS - Labs"
+                issuer: {
+                    id: NEXT_PUBLIC_ISSUER_DID,
+                    name: "VBS - Labs"
                 },
-                "issuanceDate": new Date().toISOString(),
-                "credentialSubject": {
-                    "id": NEXT_PUBLIC_RECEIVER_DID,
-                    "testName": "Lipid Panel",
-                    "results": {
-                        "totalCholesterol": {
-                            "value": "150",
-                            "unit": "mg/dL",
-                            "referenceRange": "50-250 mg/dL"
+                subject: {
+                    id: NEXT_PUBLIC_RECEIVER_DID,
+                    testName: 'Lipid Panel',
+                    results: {
+                        totalCholesterol: {
+                            value: '150',
+                            unit: 'mg/dL',
+                            referenceRange: '50-250 mg/dL'
+                        }
+                    }
+                }
+            }
+        });
+      
+
+        /* const credential = await apiPost(`${NEXT_PUBLIC_TEST_URL}/credentials`, {
+            distribute: false, // Ensure distribute is false because we're manually sending later
+            credential: {
+                id: `urn:uuid:${v4()}`, // Replace {{uuid}} with an actual UUID
+                name: "Lab Test Verification",
+                description: "A verifiable credential for a lab test result."
+                type: [
+                    "VerifiableCredential",
+                    "LabTestVerification"
+                ],
+                @context: [
+                    "https://www.w3.org/2018/credentials/v1",
+                    "https://schema.dock.io/LabTestVerification-V1699459342994.json-ld"
+                ],
+                issuer: {
+                    id: NEXT_PUBLIC_ISSUER_DID,
+                    name: "VBS - Labs"
+                },
+                issuanceDate: new Date().toISOString(),
+                credentialSubject: {
+                    id: NEXT_PUBLIC_RECEIVER_DID,
+                    testName: 'Lipid Panel',
+                    results: {
+                        totalCholesterol: {
+                            value: '150',
+                            unit: 'mg/dL',
+                            referenceRange: '50-250 mg/dL'
                         }
                     }
                 },
@@ -65,10 +103,9 @@ async function getCredentials() {
                     "id": "https://schema.dock.io/LabTestVerification-V1-1699459342994.json",
                     "type": "JsonSchemaValidator2018"
                 },
-                "name": "Lab Test Verification",
-                "description": "A verifiable credential for a lab test result."
             }
-        });
+        }); */
+        
 
         credentials.push(credential);
     }
@@ -77,8 +114,8 @@ async function getCredentials() {
 }
 
 // Entrypoint, will get credentials, create a didcomm message and then send that message
-async function main() {
-    if (!NEXT_PUBLIC_TEST_API_KEY) {
+const main = async () => {
+    if (!API_KEY) {
         throw new Error('Setup .env file');
     }
 
@@ -115,8 +152,8 @@ async function main() {
     console.log('Decrypted message:', decryptData)
 }
 
-export const LaboratoryPage = () => {
-    const [receiver, setReceiver] = useState(NEXT_PUBLIC_RECEIVER_DID);
+const LaboratoryPage = () => {
+    const [receiver, setReceiver] = useState(NEXT_PUBLIC_RECEIVER_DID || '');
     const [output, setOutput] = useState('');
 
     const handleMain = async () => {
@@ -162,3 +199,5 @@ export const LaboratoryPage = () => {
     </div>
 );
 };
+
+export default LaboratoryPage;
