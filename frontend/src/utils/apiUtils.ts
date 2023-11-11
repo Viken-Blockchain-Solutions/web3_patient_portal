@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const API_KEY = process.env.NEXT_PUBLIC_TEST_API_KEY as string;
 const NEXT_PUBLIC_TEST_URL = process.env.NEXT_PUBLIC_TEST_URL;
@@ -11,12 +11,12 @@ interface ApiPostParams {
 export async function apiPost({ url, body }: ApiPostParams) {
   const result = await fetch(url, {
     headers: {
-      'accept': 'application/json',
-      'content-type': 'application/json',
-      'DOCK-API-TOKEN': API_KEY,
+      "accept": "application/json",
+      "content-type": "application/json",
+      "DOCK-API-TOKEN": API_KEY
     },
     body: JSON.stringify(body),
-    method: 'POST'
+    method: "POST"
   });
 
   const data = await result.json();
@@ -38,18 +38,18 @@ export async function getCredentials(issuerDid: string, receiverDid: string) {
         persistent: true,
         credential: {
           id: `urn:uuid:${uuidv4()}`,
-          name: `Lab Test Verification`,
-          description: 'A verifiable credential for a lab test result.',
+          name: "Lab Test Verification",
+          description: "A verifiable credential for a lab test result.",
           type: ["VerifiableCredential", "LabTestVerification"],
           issuer: { id: issuerDid, name: "VBS - Labs" },
           subject: {
             id: receiverDid,
-            testName: 'Lipid Panel',
+            testName: "Lipid Panel",
             results: {
               totalCholesterol: {
-                value: '150',
-                unit: 'mg/dL',
-                referenceRange: '50-250 mg/dL'
+                value: "150",
+                unit: "mg/dL",
+                referenceRange: "50-250 mg/dL"
               }
             }
           }
