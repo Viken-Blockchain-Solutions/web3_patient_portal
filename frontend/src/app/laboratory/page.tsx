@@ -1,210 +1,123 @@
 'use client';
 import React, { useState } from 'react';
-import { v4 } from 'uuid';
-const API_KEY = process.env.NEXT_PUBLIC_TEST_API_KEY as string;
+import QRCodeGenerator from '../../components/QRCodeGenerator';
+import { apiPost, getCredentials } from '../../utils/apiUtils';
+import logoImage from '../../public/assets/images/vbs-medical-research-hub.png';
+import Image from 'next/image';
+
 const NEXT_PUBLIC_ISSUER_DID = process.env.NEXT_PUBLIC_ISSUER_DID;
-const NEXT_PUBLIC_RECEIVER_DID = process.env.NEXT_PUBLIC_RECEIVER_DID;
+const NEXT_PUBLIC_DADOGG_DID = process.env.NEXT_PUBLIC_DADOGG_DID;
+const NEXT_PUBLIC_THECIL_DID = process.env.NEXT_PUBLIC_THECIL_DID;
 const NEXT_PUBLIC_TEST_URL = process.env.NEXT_PUBLIC_TEST_URL;
 
-console.log('NEXT_PUBLIC_TEST_API_KEY- client:', API_KEY);
-console.log('NEXT_PUBLIC_ISSUER_DID - client:', NEXT_PUBLIC_ISSUER_DID);
-console.log('NEXT_PUBLIC_RECEIVER_DID - client:', NEXT_PUBLIC_RECEIVER_DID);
-console.log('NEXT_PUBLIC_TEST_URL - client:', NEXT_PUBLIC_TEST_URL);
-
-// We can send multiple credentials in one message
-const CREDENTIAL_COUNT = 1;
-
-// Helper method to POST to the API
-async function apiPost(url: any, body: any) {
-    const result = await fetch(url, {
-      headers: {
-        'accept': 'application/json',
-        'content-type': 'application/json',
-        'DOCK-API-TOKEN': API_KEY,
-      },
-      body: JSON.stringify(body),
-      method: 'POST'
-    });
-  
-    const data = await result.json();
-  
-    if (result.status >= 400) {
-      throw new Error(`API Error: ${data}`);
-    }
-  
-    return data;
-  }
-
-// Gets credentials to send, they could be pulled from DB or previous response
-// for the sample we will just issue a credential with the API
-async function getCredentials() {
-    const credentials = [];
-    for (let i = 0; i < CREDENTIAL_COUNT; i++) {
-        const credential = await apiPost(`${NEXT_PUBLIC_TEST_URL}/credentials`, {
-            distribute: false, // Ensure distribute is false because were manually sending later
-            credential: {
-                id: `urn:uuid:${v4()}`,
-                name: 'Lab Test Verification',
-                description: 'A verifiable credential for a lab test result.',
-                type: [
-                    "VerifiableCredential",
-                    "LabTestVerification"
-                ],
-                issuer: {
-                    id: NEXT_PUBLIC_ISSUER_DID,
-                    name: "VBS - Labs"
-                },
-                subject: {
-                    id: NEXT_PUBLIC_RECEIVER_DID,
-                    testName: 'Lipid Panel',
-                    results: {
-                        totalCholesterol: {
-                            value: '150',
-                            unit: 'mg/dL',
-                            referenceRange: '50-250 mg/dL'
-                        }
-                    }
-                }
-            }
-        });
-      
-
-        /* const credential = await apiPost(`${NEXT_PUBLIC_TEST_URL}/credentials`, {
-            distribute: false, // Ensure distribute is false because we're manually sending later
-            credential: {
-                id: `urn:uuid:${v4()}`, // Replace {{uuid}} with an actual UUID
-                name: "Lab Test Verification",
-                description: "A verifiable credential for a lab test result."
-                type: [
-                    "VerifiableCredential",
-                    "LabTestVerification"
-                ],
-                @context: [
-                    "https://www.w3.org/2018/credentials/v1",
-                    "https://schema.dock.io/LabTestVerification-V1699459342994.json-ld"
-                ],
-                issuer: {
-                    id: NEXT_PUBLIC_ISSUER_DID,
-                    name: "VBS - Labs"
-                },
-                issuanceDate: new Date().toISOString(),
-                credentialSubject: {
-                    id: NEXT_PUBLIC_RECEIVER_DID,
-                    testName: 'Lipid Panel',
-                    results: {
-                        totalCholesterol: {
-                            value: '150',
-                            unit: 'mg/dL',
-                            referenceRange: '50-250 mg/dL'
-                        }
-                    }
-                },
-                "credentialSchema": {
-                    "id": "https://schema.dock.io/LabTestVerification-V1-1699459342994.json",
-                    "type": "JsonSchemaValidator2018"
-                },
-            }
-        }); */
-        
-
-        credentials.push(credential);
-    }
-
-    return credentials;
-}
-
-// Entrypoint, will get credentials, create a didcomm message and then send that message
-const main = async () => {
-    if (!API_KEY) {
-        throw new Error('Setup .env file');
-    }
-
-    // Get credentials to send
-    const credentials = await getCredentials();
-    console.log('Creating DIDComm message with', credentials.length, ' credentials')
-
-    // Create an encrypted didcomm message
-    const didcommMessage = await apiPost(`${NEXT_PUBLIC_TEST_URL}/messaging/encrypt`, {
-        senderDid: NEXT_PUBLIC_ISSUER_DID,
-        recipientDids: [NEXT_PUBLIC_RECEIVER_DID, NEXT_PUBLIC_ISSUER_DID],
-        type: 'issue', // Message type is important for the wallet to recognize it
-        payload: {
-            // You can set this domain to be whatever you like, or base it from a DID/issuer profile
-            domain: 'api.dock.io',
-
-            // Credentials is an array of signed VCs
-            credentials,
-        }
-    });
-
-    // Finally, send the message to the user's wallets/generate QR
-    // you can optionally skip this step and distribute the didcomm message another way
-    const { qrUrl } = await apiPost(`${NEXT_PUBLIC_TEST_URL}/messaging/send`, {
-        to: NEXT_PUBLIC_RECEIVER_DID,
-        message: didcommMessage.jwe,
-    });
-
-    console.log('Sent message, QR url can be used also:', qrUrl);
-
-    // For debugging, we can show the decrypted contents since we specified
-    // a DID we control as a recipient DID
-    const decryptData = await apiPost(`${NEXT_PUBLIC_TEST_URL}/messaging/decrypt`, didcommMessage);
-    console.log('Decrypted message:', decryptData)
-
-    return {
-        credentials,
-        didcommMessage,
-        qrUrl,
-        decryptData,
-    };
+if (!NEXT_PUBLIC_ISSUER_DID || !NEXT_PUBLIC_DADOGG_DID || !NEXT_PUBLIC_THECIL_DID || !NEXT_PUBLIC_TEST_URL) {
+    throw new Error('Missing required environment variables');
 }
 
 const LaboratoryPage = () => {
-    const [receiver, setReceiver] = useState(NEXT_PUBLIC_RECEIVER_DID || '');
-    const [output, setOutput] = useState('');
+    const [receiverDID, setReceiverDID] = useState('');
+    const [qrUrl, setQrUrl] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [isQRGenerated, setIsQRGenerated] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleMain = async () => {
+    const handleIssueTestResult = async () => {
         try {
-            const result = await main();
-            setOutput(JSON.stringify(result, null, 2));
-        } catch (error: any) {
-            setOutput(`Error: ${error.message}`);
+            setIsLoading(true);
+            setIsQRGenerated(false);
+            setError('');
+
+            const credentials = await getCredentials(NEXT_PUBLIC_ISSUER_DID, receiverDID);
+            const didcommMessage = await apiPost({
+                url: `${NEXT_PUBLIC_TEST_URL}/messaging/encrypt`,
+                body: {
+                    senderDid: NEXT_PUBLIC_ISSUER_DID,
+                    recipientDids: [receiverDID],
+                    type: 'issue',
+                    payload: { domain: 'api.dock.io', credentials }
+                }
+            });
+
+            const { qrUrl: qrUrlResponse } = await apiPost({
+                url: `${NEXT_PUBLIC_TEST_URL}/messaging/send`,
+                body: { to: receiverDID, message: didcommMessage.jwe }
+            });
+
+            setQrUrl(qrUrlResponse);
+            setIsQRGenerated(true);
+        } catch (error) {
+            setError(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
         <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">Laboratory</h1>
-        <div className="mb-4">
-            <label htmlFor="receiver" className="block text-sm font-medium text-gray-700">Receiver DID:</label>
-            <input
-                type="text"
-                id="receiver"
-                value={receiver}
-                onChange={(e) => setReceiver(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-            <select
-                onChange={(e) => setReceiver(e.target.value)}
-                value={receiver}
-                className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            >
-                <option value={NEXT_PUBLIC_RECEIVER_DID}>{NEXT_PUBLIC_RECEIVER_DID}</option>
-                {/* Add other options here if needed */}
-            </select>
+            <header className="text-center mb-12">
+                <div className="flex flex-row justify-center gap-6">
+                    <Image src={logoImage} alt="Laboratory Logo" width={125} height={125} className="mb-2 rounded-full" />
+                    <h1 className="text-2xl font-bold text-blue-600 mt-2">Lab Test Results</h1>
+                </div>
+            </header>
+
+            <section className="mb-8 max-w-md mx-auto bg-white p-4 rounded-lg shadow-lg">
+                <h2 className="text-lg font-semibold text-gray-700 mb-4">How It Works</h2>
+                <p className="text-sm text-gray-600 mb-4">
+                    This portal serves as a <span className='text-blue-400'>`proof of concept`</span> for a pioneering approach in healthcare data management and research. By utilizing Decentralized Identifiers (DIDs), we demonstrate how you can securely share and monetize your healthcare data, while contributing to medical research.
+                </p>
+                <p className="text-sm text-gray-600 mb-4">
+                    Here's your role in this innovative ecosystem: Enter or select your DID to receive your lab results as a Verifiable Credential. This digital format ensures the confidentiality and integrity of your medical data on the blockchain.
+                </p>
+                <p className="text-sm text-gray-600 mb-4">
+                    Once issued, scan the generated QR code with your digital wallet to access your encrypted lab results. In addition to obtaining your results, you have the option to anonymously contribute your data to research pools, supporting medical advancements and receiving financial incentives.
+                </p>
+
+                <label htmlFor="receiverDID" className="block text-lg font-semibold text-gray-700 mb-2">
+                    Enter or Select Your DID:
+                </label>
+                <input
+                    type="text"
+                    id="receiverDID"
+                    value={receiverDID}
+                    onChange={(e) => setReceiverDID(e.target.value)}
+                    className="block w-full px-3 py-2 mb-3 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                    placeholder="Enter your unique DID here"
+                />
+                <select
+                    onChange={(e) => setReceiverDID(e.target.value)}
+                    value={receiverDID}
+                    className="block w-full px-3 py-2 mb-3 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                >
+                    <option value="">Select a DID</option>
+                    <option value={NEXT_PUBLIC_DADOGG_DID}>DADOGG DID</option>
+                    <option value={NEXT_PUBLIC_THECIL_DID}>THECIL DID</option>
+                </select>
+                <button
+                    onClick={handleIssueTestResult}
+                    disabled={isLoading || !receiverDID}
+                    className={`inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700 focus:ring focus:ring-blue-300 focus:ring-opacity-50 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                >
+                    {isLoading ? 'Generating...' : 'Issue Test Result'}
+                </button>
+                {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+            </section>
+
+            <section className={`mt-8 ${!isQRGenerated && 'hidden'} max-w-md mx-auto bg-white p-4 rounded-lg shadow-lg`}>
+                {qrUrl && (
+                    <>
+                        <div className="flex justify-center">
+                            <QRCodeGenerator url={qrUrl} />
+                        </div>
+                        <p className="mt-4 text-center text-sm text-gray-600">
+                            If you haven't received the lab result in your Dock wallet, you can scan the QR code above to access it.                        </p>
+                    </>
+                )}
+            </section>
         </div>
-        <button 
-            onClick={handleMain}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-            Execute
-        </button>
-        <div className="mt-4">
-            <h2 className="text-lg font-semibold">Output:</h2>
-            <pre className="text-xs p-4 bg-gray-100 rounded-md text-ellipsis">{output}</pre>
-        </div>
-    </div>
-);
+    );
+
+
 };
 
 export default LaboratoryPage;
