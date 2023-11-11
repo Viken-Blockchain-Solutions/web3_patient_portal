@@ -1,5 +1,6 @@
 import { Providers } from "./providers";
 import "./globals.css";
+import Menu from "../components/Menu";
 
 export default function RootLayout({
   children
@@ -9,6 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className='body'>
+        <div>
+          <Menu />
+        </div>
         <Providers>
           {children}
         </Providers>
