@@ -1,8 +1,8 @@
 // app/pages/LandingPage.tsx
-'use client'
-import React from 'react';
-import Link from 'next/link';
-import Menu from '../../components/Menu';
+"use client";
+import React from "react";
+import Link from "next/link";
+import Menu from "../../components/Menu";
 
 const LandingPage = () => {
   return (

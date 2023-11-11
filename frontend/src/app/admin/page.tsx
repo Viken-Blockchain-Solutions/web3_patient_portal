@@ -3,9 +3,12 @@ import React, { useState } from "react";
 import { Button } from "@nextui-org/react";
 import Menu from "../../components/Menu";
 import IssuedCredentialComponent from "../../components/IssuedCredential";
-const dockUrl = process.env.NEXT_PUBLIC_TEST_URL as string;
-const apiToken = process.env.NEXT_PUBLIC_TEST_API_KEY as string;
-// const apiToken = 'eyJzY29wZXMiOlsidGVzdCIsImFsbCJdLCJzdWIiOiIxMDg5MSIsInNlbGVjdGVkVGVhbUlkIjoiMTUwMTIiLCJjcmVhdG9ySWQiOiIxMDg5MSIsImlhdCI6MTY5OTMwNTE3MSwiZXhwIjo0Nzc4NjAxMTcxfQ.nUnHQyBE1qz59oKALpQtDehxRZal1-ozdA59YnVI3A2W9KrulEUs1Ltga3rKdKlRUjHrHd8XE61MlE2o9sdLCg';
+import { Credential } from "../../types/components";
+
+const [dockUrl, dockApiKey] = [
+  process.env.NEXT_PUBLIC_TEST_URL,
+  process.env.NEXT_PUBLIC_TEST_API_KEY
+];
 
 const Notification = ({ message }: any) => (
   <div
@@ -20,10 +23,10 @@ const Notification = ({ message }: any) => (
 const AdminPage = () => {
   // State hooks for form inputs and responses
   const [did, setDid] = useState("");
-  const [oldDid, setOldDid] = useState("");
+  // const [oldDid, setOldDid] = useState("");
   const [didJob, setDidJob] = useState("");
   const [verifiedDid, setVerifiedDid] = useState("");
-  const [issuedCredential, setIssuedCredential] = useState();
+  const [issuedCredential, setIssuedCredential] = useState<Credential | undefined>();
   const [credential, setCredential] = useState<object | null>();
   const [presentation, setPresentation] = useState("");
   const [loading, setLoading] = useState(false);
@@ -35,8 +38,8 @@ const AdminPage = () => {
       const response = await fetch(`${dockUrl}/dids`, {
         method: "GET",
         headers: {
-          "DOCK-API-TOKEN": apiToken,
-        },
+          "DOCK-API-TOKEN": dockApiKey as string
+        }
       });
       if (response.status === 200) {
         const data = await response.json();
@@ -55,8 +58,8 @@ const AdminPage = () => {
       const response = await fetch(`${dockUrl}/dids`, {
         method: "GET",
         headers: {
-          "DOCK-API-TOKEN": apiToken,
-        },
+          "DOCK-API-TOKEN": dockApiKey as string
+        }
       });
       if (response.status === 200) {
         const data = await response.json();
@@ -79,7 +82,7 @@ const AdminPage = () => {
         body: JSON.stringify({ type: "dock", keyType: "ed25519" }),
         headers: {
           "Content-Type": "application/json",
-          "DOCK-API-TOKEN": apiToken
+          "DOCK-API-TOKEN": dockApiKey as string
         }
       });
       const data = await response.json();
@@ -109,11 +112,11 @@ const AdminPage = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "DOCK-API-TOKEN": apiToken
+          "DOCK-API-TOKEN": dockApiKey as string
         }
       });
 
-      const {status, id} = await response.json();
+      const { status, id } = await response.json();
       console.log("verify did:", status, id);
       // Handle the verification response
       setVerifiedDid(status);
@@ -130,8 +133,8 @@ const AdminPage = () => {
       const response = await fetch(`${dockUrl}/credentials`, {
         method: "GET",
         headers: {
-          "DOCK-API-TOKEN": apiToken,
-        },
+          "DOCK-API-TOKEN": dockApiKey as string
+        }
       });
       if (response.status === 200) {
         const data = await response.json();
@@ -152,10 +155,10 @@ const AdminPage = () => {
       type: ["TestCredential"],
       subject: {
         id: did,
-        propOne: "propOne",
+        propOne: "propOne"
       },
       issuanceDate: new Date().toISOString(),
-      issuer: process.env.NEXT_PUBLIC_ISSUER_DID as string,
+      issuer: process.env.NEXT_PUBLIC_ISSUER_DID as string
     };
     setLoading(true);
     try {
@@ -165,9 +168,9 @@ const AdminPage = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "DOCK-API-TOKEN": apiToken
+          "DOCK-API-TOKEN": dockApiKey as string
         },
-        body: JSON.stringify({ credential: credentialBody }),
+        body: JSON.stringify({ credential: credentialBody })
       });
       if (response.status === 200) {
         const _credential = await response.json();
@@ -191,7 +194,7 @@ const AdminPage = () => {
         body: JSON.stringify(issuedCredential),
         headers: {
           "Content-Type": "application/json",
-          "DOCK-API-TOKEN": apiToken
+          "DOCK-API-TOKEN": dockApiKey as string
         }
       });
 
@@ -215,7 +218,7 @@ const AdminPage = () => {
         body: JSON.stringify(credential),
         headers: {
           "Content-Type": "application/json",
-          "DOCK-API-TOKEN": apiToken
+          "DOCK-API-TOKEN": dockApiKey as string
         }
       });
       const data = await response.json();
@@ -238,7 +241,7 @@ const AdminPage = () => {
         body: JSON.stringify(presentation),
         headers: {
           "Content-Type": "application/json",
-          "DOCK-API-TOKEN": apiToken
+          "DOCK-API-TOKEN": dockApiKey as string
         }
       });
       const data = await response.json();
@@ -277,7 +280,10 @@ const AdminPage = () => {
         <Button disabled={loading || !did} onClick={issueCredential}>
           Issue Credential
         </Button>
-        <Button disabled={loading || !issuedCredential} onClick={verifyCredential}>
+        <Button
+          disabled={loading || !issuedCredential}
+          onClick={verifyCredential}
+        >
           Verify Credential
         </Button>
         <Button disabled={loading || !credential} onClick={createPresentation}>
@@ -296,8 +302,10 @@ const AdminPage = () => {
         <h3 className="text-lg">DID Verified: {verifiedDid}</h3>
         {issuedCredential && (
           <>
-            {/*@ts-expect-error */}
-            <h3 className="text-lg">issuedCredential: {issuedCredential.type}</h3>
+            <h3 className="text-lg">
+              issuedCredential: {issuedCredential.type}
+            </h3>
+            {/* ts-ignore */}
             <IssuedCredentialComponent credential={issuedCredential} />
           </>
         )}

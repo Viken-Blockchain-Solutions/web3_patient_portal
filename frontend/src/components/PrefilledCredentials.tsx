@@ -7,6 +7,9 @@ import { SchemaDefinition } from '../../types';
 
 interface PreFilledCredentialProps {
   schema: SchemaDefinition | any; 
+  issuerDid: string;
+  dockUrl: string;
+  apiToken: string;
 }
 
 const PreFilledCredential: React.FC<PreFilledCredentialProps> = ({ schema }: any) => {
@@ -61,7 +64,7 @@ const PreFilledCredential: React.FC<PreFilledCredentialProps> = ({ schema }: any
 
     try {
       const response = await fetch(`${dockUrl}/credentials`, {
-        method: 'POST',
+        method: "POST",
         headers: {
           'Content-Type': 'application/json',
           'DOCK-API-TOKEN': apiToken as string,
@@ -92,11 +95,7 @@ const PreFilledCredential: React.FC<PreFilledCredentialProps> = ({ schema }: any
           Issue Credential
         </Button>
       )}
-      {credentialQR && (
-        <div className="mt-4">
-      
-        </div>
-      )}
+      {credentialQR && <div className="mt-4"></div>}
     </div>
   );
 };
