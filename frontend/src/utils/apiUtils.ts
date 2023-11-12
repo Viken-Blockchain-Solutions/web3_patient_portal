@@ -5,7 +5,7 @@ const NEXT_PUBLIC_TEST_URL = process.env.NEXT_PUBLIC_TEST_URL;
 
 interface ApiPostParams {
   url: string;
-  body: object;
+  body?: object | null;
 }
 
 export async function apiPost({ url, body }: ApiPostParams) {
@@ -28,14 +28,37 @@ export async function apiPost({ url, body }: ApiPostParams) {
   return data;
 }
 
+export async function apiGet({ url }: ApiPostParams) {
+  // Fetch the data from the provided URL
+  const response = await fetch(url, {
+    headers: {
+      "accept": "application/json",
+      "content-type": "application/json",
+      "DOCK-API-TOKEN": API_KEY
+    },
+    method: "GET"
+  });
+
+  // Parse the JSON response
+  const data = await response.json();
+  console.log("apiGet:", data);
+
+  // Check if the response status code indicates an error
+  if (!response.ok) {
+    throw new Error(`API Error: ${response.status} - ${data.message || JSON.stringify(data)}`);
+  }
+
+  return data;
+}
+
 export async function getCredentials(issuerDid: string, receiverDid: string) {
+  console.log("getCredentials", { issuerDid, receiverDid });
   const credentials = [];
   for (let i = 0; i < 1; i++) {
     const credential = await apiPost({
       url: `${NEXT_PUBLIC_TEST_URL}/credentials`,
       body: {
         distribute: false,
-        persistent: true,
         credential: {
           id: `urn:uuid:${uuidv4()}`,
           name: "Lab Test Verification",
