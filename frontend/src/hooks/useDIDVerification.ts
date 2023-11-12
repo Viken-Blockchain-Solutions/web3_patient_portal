@@ -94,7 +94,7 @@ export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
     }, 5000); // Polling every 5 seconds
 
     return () => clearInterval(intervalId);
-  }, [proofRequestId]);
+  }, [proofRequestId, checkProofRequestStatus()]);
 
   console.log("useDIDVerification", {
     proofRequestId,
