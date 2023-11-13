@@ -1,6 +1,7 @@
 // In /hooks/useDIDVerification.js
 import { useState, useEffect } from "react";
 import { apiPost, apiGet } from "../utils/apiUtils";
+import { dockUrl } from "../utils/envVariables";
 
 export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -55,7 +56,7 @@ export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
 
     try {
       const statusResponse = await apiGet({
-        url: `${process.env.NEXT_PUBLIC_TEST_URL}/proof-requests/${proofRequestId}`
+        url: `${dockUrl}/proof-requests/${proofRequestId}`
       });
       // console.log("Status Response:", statusResponse);
       const isVerified = statusResponse.verified;
@@ -74,9 +75,9 @@ export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
 
     try {
       const dataResponse = await apiGet({
-        url: `${process.env.NEXT_PUBLIC_TEST_URL}/proof-requests/${proofRequestId}`
+        url: `${dockUrl}/proof-requests/${proofRequestId}`
       });
-      //console.log("Data Response presentation:", dataResponse.presentation);
+      // console.log("Data Response presentation:", dataResponse.presentation);
       const holder = dataResponse.presentation?.holder;
       const credentials = dataResponse.presentation?.credentials;
 
@@ -94,7 +95,7 @@ export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
     }, 5000); // Polling every 5 seconds
 
     return () => clearInterval(intervalId);
-  }, [proofRequestId, checkProofRequestStatus()]);
+  });
 
   console.log("useDIDVerification", {
     proofRequestId,

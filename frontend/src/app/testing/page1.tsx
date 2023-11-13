@@ -1,4 +1,4 @@
-"use client";
+/* "use client";
 import React, { useState } from "react";
 import QRCodeGenerator from "../../components/QRCodeGenerator";
 import { apiPost, getCredentials } from "../../utils/apiUtils";
@@ -14,7 +14,7 @@ if (!NEXT_PUBLIC_ISSUER_DID || !NEXT_PUBLIC_DADOGG_DID || !NEXT_PUBLIC_THECIL_DI
   throw new Error("Missing required environment variables");
 }
 
-const LaboratoryPage = () => {
+const TestingPage = () => {
   const [receiverDID, setReceiverDID] = useState("");
   const [qrUrl, setQrUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -75,7 +75,7 @@ const LaboratoryPage = () => {
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
 
-            {/* Modal Content */}
+
             <div className="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
@@ -158,4 +158,4 @@ const LaboratoryPage = () => {
 
 };
 
-export default LaboratoryPage;
+export default TestingPage; */
