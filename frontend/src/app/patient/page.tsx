@@ -2,7 +2,6 @@
 "use client";
 import React from "react";
 import PoolCard from "../../components/PoolCard";
-import Menu from "../../components/Menu";
 
 // Mockup of some research pools
 const researchPools = [
@@ -36,7 +35,6 @@ const PatientPage = () => {
       <h1 className="text-4xl mb-8 font-semibold text-blue-700">
         Patient Dashboard
       </h1>
-      <Menu />
 
       <div className="mb-8 p-4 bg-blue-100 rounded-lg">
         <h2 className="text-2xl font-medium text-blue-600 mb-4">

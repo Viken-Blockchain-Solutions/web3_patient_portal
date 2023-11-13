@@ -13,8 +13,8 @@ const Menu = () => {
       <Link href="/admin" className="text-blue-500">
         Admin
       </Link>
-      <Link href="/issuer" className="text-blue-500">
-        Issuer
+      <Link href="/laboratory" className="text-blue-500">
+        Laboratory
       </Link>
       <Link href="/patient" className="text-blue-500">
         User

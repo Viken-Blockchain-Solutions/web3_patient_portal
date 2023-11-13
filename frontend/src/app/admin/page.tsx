@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { Button } from "@nextui-org/react";
-import Menu from "../../components/Menu";
 import IssuedCredentialComponent from "../../components/IssuedCredential";
 import { Credential } from "../../types/components";
 
@@ -23,7 +22,6 @@ const Notification = ({ message }: any) => (
 const AdminPage = () => {
   // State hooks for form inputs and responses
   const [did, setDid] = useState("");
-  // const [oldDid, setOldDid] = useState("");
   const [didJob, setDidJob] = useState("");
   const [verifiedDid, setVerifiedDid] = useState("");
   const [issuedCredential, setIssuedCredential] = useState<Credential | undefined>();
@@ -259,7 +257,6 @@ const AdminPage = () => {
       <h1 className="text-2xl font-bold mb-6">
         Admin - DID and Credential Management
       </h1>
-      <Menu />
       {error && <Notification message={error} />}
       <div className="space-x-4 mb-6">
         <Button disabled={loading} onClick={getDid}>
