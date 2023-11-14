@@ -31,15 +31,12 @@ import { ConnectKitButton } from "../components/ConnectKitButton";
 import { Connected } from "../components/Connected";
 import { NetworkSwitcher } from "../components/NetworkSwitcher";
 
-import Menu from "../components/Menu";
-
 const Page: React.FC = () => {
   return (
     <>
       <h1 className='text-xl p-4'>wagmi + ConnectKit + Next.js</h1>
 
       <ConnectKitButton />
-      <Menu />
       <Connected>
         <hr />
         <h2>Network</h2>

@@ -16,7 +16,7 @@ const LandingPage = () => {
         <p className='text-xl mb-6'>
           With your credential, you can securely contribute to research initiatives and be part of groundbreaking medical discoveries. Your participation is encrypted, ensuring your privacy while allowing you to contribute to the advancement of medicine.
         </p>
-        <Link href='/issuer' className='inline-block mt-4 p-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700'>
+        <Link href='/laboratory' className='inline-block mt-4 p-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700'>
           Receive Credential
         </Link>
         <Link href='/patient' className='inline-block mt-4 ml-4 p-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700'>
