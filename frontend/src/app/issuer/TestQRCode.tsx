@@ -2,7 +2,6 @@
 //import { QRCodeSVG } from 'qrcode.react';
 "use client";
 import React, { useState } from "react";
-import { Button } from "@nextui-org/react";
 
 const TestQRCode: React.FC = () => {
   const [showQR, setShowQR] = useState(false);
@@ -14,9 +13,9 @@ const TestQRCode: React.FC = () => {
 
   return (
     <div className="p-4">
-      <Button onClick={handleGenerateQR} className="my-4">
+      <button onClick={handleGenerateQR} className="my-4">
         Generate Test QR Code
-      </Button>
+      </button>
       {showQR && (
         <div className="mt-4">{/** <QRCodeSVG value={testQRValue} /> */}</div>
       )}

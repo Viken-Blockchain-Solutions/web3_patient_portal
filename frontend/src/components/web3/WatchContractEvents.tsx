@@ -4,8 +4,8 @@ import { useState } from "react";
 import type { Log } from "viem";
 import { useContractEvent } from "wagmi";
 
-import { usdcContractConfig, wagmiContractConfig } from "./contracts";
-import { stringify } from "../utils/stringify";
+import { usdcContractConfig, wagmiContractConfig } from "../homepage/contracts";
+import { stringify } from "../../utils/stringify";
 
 export function WatchContractEvents() {
   const [usdcLogs, setUsdcLogs] = useState<Log[]>([]);

@@ -2,7 +2,6 @@
 "use client";
 import React, { useState } from "react";
 
-import { Button } from "@nextui-org/react";
 import { SchemaDefinition } from "../../types";
 
 interface PreFilledCredentialProps {
@@ -65,9 +64,9 @@ const PreFilledCredential: React.FC<PreFilledCredentialProps> = ({
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <Button onClick={issueCredential} disabled={!schema}>
+        <button onClick={issueCredential} disabled={!schema}>
           Issue Credential
-        </Button>
+        </button>
       )}
       {credentialQR && <div className="mt-4"></div>}
     </div>

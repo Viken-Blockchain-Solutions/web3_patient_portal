@@ -1,5 +1,4 @@
 import React from "react";
-import { Card, CardHeader } from "@nextui-org/react";
 import Image from "next/image";
 import {
   // Proof,
@@ -16,11 +15,11 @@ const IssuedCredentialComponent: React.FC<VerifiedCredentialProps> = ({
   credential
 }) => {
   return (
-    <Card className="max-w-fit mt-5" shadow="md" radius="md">
+    <div className="max-w-fit mt-5 shadow-md" >
       <div className="p-5 border rounded shadow-md bg-white">
-        <CardHeader>
-          <h2 className="text-lg font-bold">Verified Credential</h2>
-        </CardHeader>
+
+        <h2 className="text-lg font-bold">Verified Credential</h2>
+
         <div className="mt-2">
           <strong className="font-bold">ID:</strong> {credential.id}
         </div>
@@ -69,7 +68,7 @@ const IssuedCredentialComponent: React.FC<VerifiedCredentialProps> = ({
           </pre>
         </div>
       </div>
-    </Card>
+    </div>
   );
 };
 

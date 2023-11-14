@@ -1,7 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "@nextui-org/react";
-import Menu from "../../components/Menu";
 import IssuedCredentialComponent from "../../components/IssuedCredential";
 import { Credential } from "../../types/components";
 
@@ -259,42 +257,41 @@ const AdminPage = () => {
       <h1 className="text-2xl font-bold mb-6">
         Admin - DID and Credential Management
       </h1>
-      <Menu />
       {error && <Notification message={error} />}
       <div className="space-x-4 mb-6">
-        <Button disabled={loading} onClick={getDid}>
+        <button disabled={loading} onClick={getDid}>
           Get DID
-        </Button>
-        <Button disabled={loading} onClick={setExcistingDid}>
+        </button>
+        <button disabled={loading} onClick={setExcistingDid}>
           Set DID
-        </Button>
-        <Button disabled={loading} onClick={createDid}>
+        </button>
+        <button disabled={loading} onClick={createDid}>
           Create DID
-        </Button>
-        <Button disabled={loading || !did} onClick={verifyDid}>
+        </button>
+        <button disabled={loading || !did} onClick={verifyDid}>
           Verify DID
-        </Button>
-        <Button disabled={loading} onClick={getCredentials}>
+        </button>
+        <button disabled={loading} onClick={getCredentials}>
           Get Credentials
-        </Button>
-        <Button disabled={loading || !did} onClick={issueCredential}>
+        </button>
+        <button disabled={loading || !did} onClick={issueCredential}>
           Issue Credential
-        </Button>
-        <Button
+        </button>
+        <button
           disabled={loading || !issuedCredential}
           onClick={verifyCredential}
         >
           Verify Credential
-        </Button>
-        <Button disabled={loading || !credential} onClick={createPresentation}>
+        </button>
+        <button disabled={loading || !credential} onClick={createPresentation}>
           Create Presentation
-        </Button>
-        <Button
+        </button>
+        <button
           disabled={loading || !presentation}
           onClick={verifyPresentation}
         >
           Verify Presentation
-        </Button>
+        </button>
       </div>
       {/* Display the DID, Credential, and Presentation data */}
       <div>

@@ -8,9 +8,9 @@ import {
   useWaitForTransaction
 } from "wagmi";
 
-import { wagmiContractConfig } from "./contracts";
-import { useDebounce } from "../hooks/useDebounce";
-import { stringify } from "../utils/stringify";
+import { wagmiContractConfig } from "../homepage/contracts";
+import { useDebounce } from "../../hooks/useDebounce";
+import { stringify } from "../../utils/stringify";
 
 export function WriteContractPrepared() {
   const [tokenId, setTokenId] = useState("");

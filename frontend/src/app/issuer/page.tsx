@@ -4,7 +4,6 @@
 
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button } from "@nextui-org/react";
 import PreFilledCredential from "../../components/PrefilledCredentials";
 
 const [dockUrl, dockApiKey] = [
@@ -188,9 +187,9 @@ const SchemasPage: React.FC = () => {
           </select>
 
           <div className="mt-8">
-            <Button onClick={issueCredential} className="mt-4">
+            <button onClick={issueCredential} className="mt-4">
               Issue Credential
-            </Button>
+            </button>
             {credentialQR && <div className="mt-4">/</div>}
           </div>
         </div>
