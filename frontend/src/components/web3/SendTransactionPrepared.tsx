@@ -8,7 +8,7 @@ import {
   useWaitForTransaction
 } from "wagmi";
 
-import { useDebounce } from "../hooks/useDebounce";
+import { useDebounce } from "../../hooks/useDebounce";
 
 export function SendTransactionPrepared() {
   const [to, setTo] = useState("");

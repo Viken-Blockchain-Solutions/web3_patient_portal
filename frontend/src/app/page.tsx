@@ -1,58 +1,34 @@
-// import { Balance } from "../components/Balance";
-// import { BlockNumber } from "../components/BlockNumber";
-// import { ReadContract } from "../components/ReadContract";
-// import { ReadContracts } from "../components/ReadContracts";
-// import { ReadContractsInfinite } from "../components/ReadContractsInfinite";
-// import { SendTransaction } from "../components/SendTransaction";
-// import { SendTransactionPrepared } from "../components/SendTransactionPrepared";
-// import { SignMessage } from "../components/SignMessage";
-// import { SignTypedData } from "../components/SignTypedData";
-// import { Token } from "../components/Token";
-// import { WatchContractEvents } from "../components/WatchContractEvents";
-// import { WatchPendingTransactions } from "../components/WatchPendingTransactions";
-// import { WriteContract } from "../components/WriteContract";
-// import { WriteContractPrepared } from "../components/WriteContractPrepared";import { Balance } from "../components/Balance";
-// import { BlockNumber } from "../components/BlockNumber";
-// import { ReadContract } from "../components/ReadContract";
-// import { ReadContracts } from "../components/ReadContracts";
-// import { ReadContractsInfinite } from "../components/ReadContractsInfinite";
-// import { SendTransaction } from "../components/SendTransaction";
-// import { SendTransactionPrepared } from "../components/SendTransactionPrepared";
-// import { SignMessage } from "../components/SignMessage";
-// import { SignTypedData } from "../components/SignTypedData";
-// import { Token } from "../components/Token";
-// import { WatchContractEvents } from "../components/WatchContractEvents";
-// import { WatchPendingTransactions } from "../components/WatchPendingTransactions";
-// import { WriteContract } from "../components/WriteContract";
-// import { WriteContractPrepared } from "../components/WriteContractPrepared";
+// app/pages/LandingPage.tsx
+"use client";
+import React from "react";
+import Header from "../components/homepage/Header";
+import About from "../components/homepage/About";
+import Steps from "../components/homepage/Steps";
+import ResearchPools from "../components/homepage/ResearchPools";
+import Link from "next/link";
 
-import { Account } from "../components/Account";
-import { ConnectKitButton } from "../components/ConnectKitButton";
-import { Connected } from "../components/Connected";
-import { NetworkSwitcher } from "../components/NetworkSwitcher";
+const LandingPage = () => {
+    return (
+        <div className='mx-auto'>
 
-import Menu from "../components/Menu";
+            <Header />
 
-const Page: React.FC = () => {
-  return (
-    <>
-      <h1 className='text-xl p-4'>wagmi + ConnectKit + Next.js</h1>
+            <About />
 
-      <ConnectKitButton />
-      <Menu />
-      <Connected>
-        <hr />
-        <h2>Network</h2>
-        <NetworkSwitcher />
-        <br />
-        <hr />
-        <h2>Account</h2>
-        <Account />
-        <br />
-        <hr />
-      </Connected>
-    </>
-  );
+            <Steps />
+
+            <ResearchPools />
+
+            <div className="w-1/4 mx-auto pb-10">
+                <Link className="w-full" href="/dashboard">
+                    <button className="btn-primary text-2xl w-full font-semibold">
+                        Get Started!
+                    </button>
+                </Link>
+            </div>
+
+        </div>
+    );
 };
 
-export default Page;
+export default LandingPage;
