@@ -20,7 +20,7 @@ const LandingPage = () => {
             <ResearchPools />
 
             <div className="w-1/4 mx-auto pb-10">
-                <Link className="w-full" href="/access">
+                <Link className="w-full" href="/dashboard">
                     <button className="btn-primary text-2xl w-full font-semibold">
                         Get Started!
                     </button>
