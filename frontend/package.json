@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "@nextui-org/react": "^2.1.13",
     "@types/uuid": "^9.0.7",
     "connectkit": "^1.4.0",

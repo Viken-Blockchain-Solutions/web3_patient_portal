@@ -1,33 +1,25 @@
-"use client";
+// "use client";
 import { useState } from "react";
 import { DIDVerification } from "../../components/DIDVerification";
 import { LabHeader } from "../../components/LabHeader";
 import { HowItWorksSection } from "../../components/HowItWorks";
-import { QRCodeGenerator } from "../../components/QRCodeGenerator";
 import { IssueVCLabButton } from "../../components/IssueVCLabButton";
+import { ModalComponent } from "../../components/ModalComponent";
 
 const LaboratoryPage = () => {
-  const [qrUrl, setQrUrl] = useState("");
+/*   const [qrUrl, setQrUrl] = useState("");
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isHolderDIDVerified, setIsHolderDIDVerified] = useState(false);
-  const [holderDID, setHolderDID] = useState("");
+  const [holderDID, setHolderDID] = useState(""); */
 
   return (
     <div className="container mx-auto p-4">
       <LabHeader />
-
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <QRCodeGenerator
-            url={qrUrl}
-          />
-        </div>
-      )}
-
       <section className="mb-8 max-w-md mx-auto bg-white p-4 rounded-lg shadow-lg">
         <HowItWorksSection />
-        {isHolderDIDVerified ? (
+        <ModalComponent buttonText="Receive Credential" />
+        {/* {!isHolderDIDVerified ? (
           <IssueVCLabButton
             props={{
               holderDID,
@@ -39,9 +31,10 @@ const LaboratoryPage = () => {
           <DIDVerification
             setHolderDID={setHolderDID}
             setIsHolderDIDVerified={setIsHolderDIDVerified}
+            setQrUrl={setQrUrl}
           />
         )}
-        {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+        {error && <p className="mt-2 text-sm text-red-600">{error}</p>} */}
       </section>
     </div>
   );
