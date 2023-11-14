@@ -2,7 +2,252 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --purple: #6f63ff;
+    --grey: rgb(94, 94, 94);
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url("../public/Satoshi-Light.ttf") format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url("../public/Satoshi-Regular.ttf") format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url("../public/Satoshi-Medium.ttf") format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url("../public/Satoshi-Bold.ttf") format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url("../public/Satoshi-Black.ttf") format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
 .body {
-    margin: 15px;
+    font-family: Satoshi !important;
     height: 100vh;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.main {
+    margin: auto;
+    margin-top: 50px;
+}
+
+h1 {
+    font-weight: 700;
+}
+
+h2, h3, h4 {
+    font-weight: 600;
+}
+
+p {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.title {
+    font-weight: 700;
+    color: var(--purple);
+}
+
+.desktopMenu {
+    display: flex;
+}
+
+.mobileMenu {
+    display: none;
+}
+
+
+.mobileMenu {
+    color: white !important;
+}
+
+.icon {
+    width: 85px;
+}
+
+.logo {
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.verifyLogo {
+    width: 60px !important;
+    height: auto !important;
+}
+
+nav {
+    z-index: 2;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    margin: auto;
+    overflow: hidden;
+    animation: expandWidth 2s ease-in-out 1;
+}
+
+nav .btn-primary, nav .title {
+    opacity: 1;
+    overflow: hidden;
+    animation: showHidden 2.5s ease-in-out 1;
+}
+
+nav ul {
+    padding: 10px 10px;
+    min-height: 50px;
+    max-height: 50px;
+}
+
+.btn-primary {
+    background-color: var(--purple);
+    border-radius: 50px;
+    padding: 6px 25px;
+    color: white;
+}
+
+.btn-primary-transparent {
+    background-color: white;
+    border: solid 3px var(--purple);
+    border-radius: 50px;
+    padding: 6px 25px;
+    color: var(--purple);
+}
+
+.btn-primary:hover {
+    background-color: #a8a4d6;
+}
+
+.divider {
+    max-width: 150px;
+    margin: 20px auto;
+    background-color: var(--purple);
+    height: 2px;
+}
+
+.header {
+    margin: 20px 0px;
+    padding: 30px 40px;
+    min-height: 60vh;
+    place-items: center;
+    margin: auto;
+}
+
+.headerImg {
+    width: 100%;
+}
+
+.text-main {
+    color: var(--purple);
+}
+
+.text-grey {
+    color: var(--grey);
+}
+
+.bg-purple {
+    background-color: #a8a4d6;
+}
+
+.bg-purple-light {
+    background-color: #c5c2e0;
+}
+
+.bg-purple-dark {
+    background-color: #6f63ff;
+}
+
+.ta-c {
+    text-align: center !important;
+    text-align: -webkit-center !important;
+}
+
+.ta-r {
+    text-align: right !important;
+    text-align: -webkit-right !important;
+}
+
+.ta-l {
+    text-align: left !important;
+    text-align: -webkit-left !important;
+}
+
+.stepImg {
+    width: 100%;
+}
+
+.light-card {
+    place-items: center;
+    margin: 20px;
+    height: 170px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 1px 3px 21px -10px black;
+}
+
+.pool-card {
+    transition: 0.5s;
+    cursor: pointer;
+    place-items: center;
+    margin: 10px;
+    height: 60px;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+.pool-card:hover {
+    border: solid 1px rgb(163, 163, 163);
+    transform: scale(1.1);
+}
+
+.swing {
+    transform-origin: top center;
+    animation: swing 2s infinite;
+}
+
+.vh-40 {
+    height: 60vh;
+}
+
+.accessIput {
+    width: 100%;
+    border-radius: 10px;
+    background-color: white;
+    padding: 8px 15px;
+}
+
+@media screen and (max-width: 1200px) {
+    .desktopMenu {
+        display: none !important;
+    }
+
+    .mobileMenu {
+        display: flex !important;
+    }
+
+    .hideMenu {
+        display: none !important;
+    }
 }

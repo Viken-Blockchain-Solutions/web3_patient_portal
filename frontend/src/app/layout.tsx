@@ -1,6 +1,8 @@
-import { Providers } from "./providers";
+"use client";
 import "./globals.css";
-import { Menu } from "../components/Menu";
+import "./animation.css";
+import { Providers } from "./providers";
+import Navbar from "../components/NavBar";
 
 export default function RootLayout({
   children
@@ -10,11 +12,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className='body'>
-        <div>
-          <Menu />
-        </div>
         <Providers>
-          {children}
+          <Navbar />
+          <div className='main'>
+            {children}
+          </div>
         </Providers>
       </body>
     </html>

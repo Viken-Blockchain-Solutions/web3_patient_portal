@@ -3,7 +3,7 @@
 import { parseEther } from "viem";
 import { useSendTransaction, useWaitForTransaction } from "wagmi";
 
-import { stringify } from "../utils/stringify";
+import { stringify } from "../../utils/stringify";
 
 export function SendTransaction() {
   const { data, error, isLoading, isError, sendTransaction } =

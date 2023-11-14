@@ -4,7 +4,7 @@ import { useState } from "react";
 import { BaseError } from "viem";
 import { type Address, useContractRead } from "wagmi";
 
-import { wagmiContractConfig } from "./contracts";
+import { wagmiContractConfig } from "../homepage/contracts";
 
 export function ReadContract() {
   return (
