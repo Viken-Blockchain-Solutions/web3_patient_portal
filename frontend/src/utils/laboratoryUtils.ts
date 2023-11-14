@@ -103,10 +103,8 @@ const signedLabCredential = async (issuerDid: string, receiverDid: string) => {
   const labCredential = await apiPost({
     url: `${dockUrl}/credentials`,
     body: {
-      distribute: true,
       persist: true,
       password: "1234",
-      algorithm: "dockbbs+",
       credential: {
         id: `https://creds-testnet.dock.io/${uuidv4()}`,
         name: "Lab Test Verification",
@@ -120,13 +118,13 @@ const signedLabCredential = async (issuerDid: string, receiverDid: string) => {
           name: "VBS - Labs"
         },
         subject: {
-          id: receiverDid,
+          id: `${receiverDid}`,
           testName: "Lipid Panel",
           results: {
             totalCholesterol: {
-              referenceRange: "50-250 mg/dL",
               value: "150",
-              unit: "mg/dL"
+              unit: "mg/dL",
+              referenceRange: "50-250 mg/dL"
             }
           }
         }

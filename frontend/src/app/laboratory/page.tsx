@@ -23,17 +23,16 @@ const LaboratoryPage = () => {
         </div>
         {credentialId && (
           <div className="p-4 mt-4 rounded-md bg-green-100">
-            <p className="text-green-800">Credential issued successfully!</p>
-            <p className="text-green-800">Credential ID:
-              <Link
-                href={credentialId}
-                className="text-blue-800"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                          View Credential
-              </Link>
-            </p>
+            <h3 className="text-green-800 text-lg font-semibold">Your Lab Result was created successfully!</h3>
+            <p className="text-green-800">Follow this link to scan your QRcode to import your Lab Result into your Dock Wallet:</p>
+            <Link
+              href={credentialId}
+              className="text-blue-800 font-bold"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Credential
+            </Link>
           </div>
         )}
         {error && (

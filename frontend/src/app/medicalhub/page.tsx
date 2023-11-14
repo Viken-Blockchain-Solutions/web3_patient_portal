@@ -7,24 +7,10 @@ import PoolCard from "../../components/PoolCard";
 const researchPools = [
   {
     id: 1,
-    title: "Blood Clot Research",
+    title: "Lipid Panel - Research",
     startDate: "2023-01-01",
     endDate: "2023-12-31",
     funding: 10000
-  },
-  {
-    id: 2,
-    title: "Cholesterol Level Study",
-    startDate: "2023-02-01",
-    endDate: "2023-11-30",
-    funding: 15000
-  },
-  {
-    id: 3,
-    title: "Diabetes Monitoring",
-    startDate: "2023-03-01",
-    endDate: "2023-09-30",
-    funding: 8000
   }
   // Add more research pools here
 ];
