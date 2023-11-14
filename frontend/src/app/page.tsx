@@ -8,27 +8,27 @@ import ResearchPools from "../components/homepage/ResearchPools";
 import Link from "next/link";
 
 const LandingPage = () => {
-    return (
-        <div className='mx-auto'>
+  return (
+    <div className='mx-auto'>
 
-            <Header />
+      <Header />
 
-            <About />
+      <About />
 
-            <Steps />
+      <Steps />
 
-            <ResearchPools />
+      <ResearchPools />
 
-            <div className="w-1/4 mx-auto pb-10">
-                <Link className="w-full" href="/dashboard">
-                    <button className="btn-primary text-2xl w-full font-semibold">
+      <div className="w-1/4 mx-auto pb-10">
+        <Link className="w-full" href="/dashboard">
+          <button className="btn-primary text-2xl w-full font-semibold">
                         Get Started!
-                    </button>
-                </Link>
-            </div>
+          </button>
+        </Link>
+      </div>
 
-        </div>
-    );
+    </div>
+  );
 };
 
 export default LandingPage;

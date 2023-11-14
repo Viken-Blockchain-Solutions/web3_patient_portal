@@ -1,7 +1,7 @@
 // components/PoolCard.tsx
 import React from "react";
 import Image from "next/image";
-import avatarLogo from '../public/assets/images/verifyed.png'
+import avatarLogo from "../public/assets/images/verifyed.png";
 
 interface PoolCardProps {
   title: string;
