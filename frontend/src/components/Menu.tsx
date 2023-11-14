@@ -9,7 +9,7 @@ export const Menu = () => {
       <Link href="/laboratory" className="text-blue-500">
       Laboratory
       </Link>
-      <Link href="/patient" className="text-blue-500">
+      <Link href="/medicalhub" className="text-blue-500">
       Medical Hub
       </Link>
     </div>

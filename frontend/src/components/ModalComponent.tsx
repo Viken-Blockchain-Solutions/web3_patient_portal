@@ -1,30 +1,57 @@
+// frontend/src/components/ModalComponent.tsx
 "use client";
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { issueTestResult } from "../utils/laboratoryUtils";
 
+type ModalComponentProps = {
+  buttonText: string;
+  receiverDID: string;
+  error: string;
+  qrUrl: string;
+  credentialIssued: boolean;
+  setCredentialId: (id: string) => void;
+  setCredentialIssued: (issued: boolean) => void;
+  setReceiverDID: (did: string) => void;
+  setError: (error: string) => void;
+  setQrUrl: (url: string) => void;
+};
+
 export default function ModalComponent({
   buttonText,
   receiverDID,
+  qrUrl,
+  credentialIssued,
+  setCredentialId,
+  setCredentialIssued,
   setReceiverDID,
+  setError,
   setQrUrl
-}: {
-  buttonText: string,
-  receiverDID: string,
-  setReceiverDID: any,
-  setQrUrl: any
-}) {
+}: ModalComponentProps) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const cancelButtonRef = useRef(null);
 
   const handleSubmit = async (receiverDID: string) => {
+    if (receiverDID.trim() === "") {
+      setError("DID cannot be empty");
+      return;
+    }
     setIsLoading(true);
     setError("");
     const response = await issueTestResult(receiverDID, setIsLoading, setError, setQrUrl);
-    return response;
+    console.log("Response:", response);
+    console.log("QRUrl:", qrUrl);
+    setIsLoading(false);
+
+    if (response.credentialId) {
+      setCredentialId(response.credentialId);
+      setCredentialIssued(true);
+      setOpen(false);
+    } else {
+      setError("Failed to issue credential");
+    }
   };
 
   return (
@@ -102,6 +129,7 @@ export default function ModalComponent({
                       onClick={() => {
                         handleSubmit(receiverDID);
                       }}
+                      disabled={credentialIssued} // Disable the button if credential has been issued
                     >
                     Get Verified Credential
                     </button>

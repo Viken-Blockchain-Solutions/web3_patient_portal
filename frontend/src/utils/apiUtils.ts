@@ -17,7 +17,7 @@ export async function apiPost({ url, body }: ApiPostParams) {
   });
 
   const data = await result.json();
-  console.log("apiPost:", data);
+  // console.log("apiPost:", data);
 
   if (result.status >= 400) {
     throw new Error(`API Error: ${result.status} ${data.message}`);
@@ -37,7 +37,7 @@ export async function apiGet({ url }: ApiPostParams) {
   });
 
   const data = await response.json();
-  console.log("apiGet:", data);
+  // console.log("apiGet:", data);
 
   if (!response.ok) {
     throw new Error(`API Error: ${response.status} - ${data.message || JSON.stringify(data)}`);

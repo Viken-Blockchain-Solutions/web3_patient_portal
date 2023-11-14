@@ -1,14 +1,5 @@
 // components/PoolCard.tsx
-import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Divider,
-  // Link,
-  Image
-} from "@nextui-org/react";
+import Image from "next/image";
 
 interface PoolCardProps {
   title: string;
@@ -24,31 +15,24 @@ export default function PoolCard({
   funding
 }: PoolCardProps) {
   return (
-    <Card className="max-w-[400px]">
-      <CardHeader className="flex gap-3">
+    <div className="max-w-[400px] border border-gray-200 rounded-lg p-4 shadow-md">
+      <div className="flex items-center gap-3">
         <Image
-          alt="nextui logo"
-          height={40}
-          radius="sm"
-          src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
-          width={40}
+          src=""
+          alt="Pool Logo"
+          className="h-10 w-10 rounded-full"
         />
         <div className="flex flex-col">
-          <p className="text-md">{title}</p>
-          <p className="text-small text-default-500">Start Date: {startDate}</p>
-          <p className="text-small text-default-500">End Date: {endDate}</p>
+          <p className="text-lg font-semibold">{title}</p>
+          <p className="text-sm text-gray-500">Start Date: {startDate}</p>
+          <p className="text-sm text-gray-500">End Date: {endDate}</p>
         </div>
-      </CardHeader>
-      <Divider />
-      <CardBody>
-        <p>Funding: ${funding}</p>
-      </CardBody>
-      <Divider />
-      <CardFooter>
-        <button className="p-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-          Contribute
-        </button>
-      </CardFooter>
-    </Card>
+      </div>
+      <hr className="my-4 border-t border-gray-200" />
+      <p className="text-lg font-semibold">Funding: ${funding}</p>
+      <button className="mt-4 p-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+        Contribute
+      </button>
+    </div>
   );
 }

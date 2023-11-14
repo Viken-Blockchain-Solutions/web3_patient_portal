@@ -19,21 +19,18 @@ const LandingPage = () => {
         <Link href='/laboratory' className='inline-block mt-4 p-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700'>
           Receive Credential
         </Link>
-        <Link href='/patient' className='inline-block mt-4 ml-4 p-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700'>
-          Contribute to Pools
-        </Link>
       </section>
 
       <section className='bg-green-100 p-12 rounded-lg mb-12 shadow-lg border-1 border-green-300'>
-        <h2 className='text-4xl mb-6 font-medium text-green-600'>For Patients</h2>
+        <h2 className='text-4xl mb-6 font-medium text-green-600'>For Users</h2>
         <p className='text-xl mb-6'>
           Are you interested in contributing to medical research and earning from it? Explore our available research pools, contribute your Verifiable Credentials, and earn a share from the research funds.
         </p>
         <p className='text-xl mb-6'>
           Your data is encrypted and secure, and you have full control over who can access it. Contribute to the future of medicine while earning from it.
         </p>
-        <Link href='/patient' className='inline-block mt-4 p-4 bg-green-600 text-white rounded-lg hover:bg-green-700'>
-          Go to Patient Dashboard
+        <Link href='/medicalhub' className='inline-block mt-4 ml-4 p-4 bg-green-600 text-white rounded-lg hover:bg-indigo-700'>
+          Contribute to Pools
         </Link>
       </section>
 

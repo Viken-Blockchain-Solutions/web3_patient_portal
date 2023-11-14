@@ -29,7 +29,7 @@ const researchPools = [
   // Add more research pools here
 ];
 
-const PatientPage = () => {
+const MedicalHubPage = () => {
   return (
     <div className="container mx-auto max-w-6xl p-8">
       <h1 className="text-4xl mb-8 font-semibold text-blue-700">
@@ -75,4 +75,4 @@ const PatientPage = () => {
   );
 };
 
-export default PatientPage;
+export default MedicalHubPage;
