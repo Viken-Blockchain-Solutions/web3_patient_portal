@@ -55,7 +55,7 @@ export const issueTestResult = async (
       url: `${dockUrl}/messaging/encrypt`,
       body: encryptionPayload
     });
-    // console.log("Received encrypted message:", didcommMessage);
+    console.log("Received encrypted message:", didcommMessage);
 
     const sendMessagePayload = {
       to: receiverDID,
@@ -67,7 +67,7 @@ export const issueTestResult = async (
       url: `${dockUrl}/messaging/send`,
       body: sendMessagePayload
     });
-    // console.log("Received QR URL response:", qrUrlResponse);
+    console.log("Received QR URL response:", qrUrlResponse);
 
     setQrUrl(qrUrlResponse);
 

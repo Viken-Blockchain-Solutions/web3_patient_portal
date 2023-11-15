@@ -1,7 +1,14 @@
+"use client";
+import { useEffect } from "react";
 import { useQRCode } from "next-qrcode";
 
-export const QRCodeGenerator = ({ url }: any) => {
+export const QRCodeGenerator = ({ url, setQrCodeGenerated }: any) => {
   const { Canvas } = useQRCode();
+
+  useEffect(() => {
+    setQrCodeGenerated(true);
+  });
+
   return (
     <Canvas
       text={url}

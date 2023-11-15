@@ -11,6 +11,6 @@ export async function GET() {
 
   const data = await res.json();
   //console.log(`${dockUrl}/schemas:`, data)
-  console.log("list-schemas:route:", await data.length);
+  console.log("list-schemas:", await data);
   return NextResponse.json({ data });
 }

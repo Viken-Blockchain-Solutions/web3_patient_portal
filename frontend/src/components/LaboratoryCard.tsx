@@ -1,0 +1,91 @@
+"use client";
+import { useState } from "react";
+import Image from "next/image";
+import Potion from "../public/assets/images/potion.png";
+import ModalComponent from "../components/ModalComponent";
+import Link from "next/link";
+
+const LaboratoryCard = () => {
+  const [qrURL, setQrUrl] = useState("");
+  const [error, setError] = useState("");
+  const [credentialIssued, setCredentialIssued] = useState(false);
+  const [credential, setCredentialId] = useState("");
+  const [receiverDID, setReceiverDID] = useState("");
+
+  console.log(credential);
+  return (
+    <div className="">
+      <section className='container w-full bg-green-100 p-8 my-5 m-w-90 rounded-lg shadow-lg sm:mx-auto place-items-center'>
+        <h1 className='text-2xl mb-4 font-extrabold font-medium text-green-800 flex items-center place-items-center'>
+          <Image className=" swing" src={Potion} height={60} width={60} sizes="100%" alt="Potion" priority />Laboratory</h1>
+        {!qrURL ? (
+          <div>
+            <h2 className='text-md mb-3 font-extrabold text-green-500'>For Patients</h2>
+            <p className='text-md mb-3'>
+                Are you interested in contributing to medical research and earning from it? Explore our available research pools, contribute your Verifiable Credentials, and earn a share from the research funds.
+            </p>
+            <p className='text-md mb-3'>
+                Your data is encrypted and secure, and you have full control over who can access it.
+                Contribute to the future of medicine while earning from it.
+            </p>
+          </div>
+        ) : (
+          <div className="p-4 mt-4 rounded-md justify-center items-center bg-green-100">
+            <div className="p-4 mt-4 rounded-md justify-center items-center bg-green-100">
+              <table className="min-w-full divide-y divide-gray-200 rounded-md">
+                <thead className="bg-green-50">
+                  <tr>
+                    <th colSpan={2} className="px-6 py-4 text-left text-sm font-semibold text-green-800">
+                      <p className="text-md leading-6 pb-1">
+                        Follow the link below to view your lab results.
+                      </p>
+                      <p className="text-md leading-6 pb-1">
+                        Scan the QR code on the page to import the <span className="text-green-800 underline font-semibold">Verifiable Credential</span> into your <span className="text-green-800 underline font-semibold">DOCK WALLET</span>.
+                      </p>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    Lab Results Link
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <Link href={credential} target="_blank" rel="noopener noreferrer" className="text-green-800 underline font-semibold">
+                      Access Lab Results
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    Password
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    1234
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+        )}
+        <ModalComponent
+          buttonText="REQUEST LAB RESULTS"
+          receiverDID={receiverDID}
+          error={error}
+          credentialIssued={credentialIssued}
+          setCredentialId={setCredentialId}
+          setCredentialIssued={setCredentialIssued}
+          setReceiverDID={setReceiverDID}
+          setError={setError}
+          setQrUrl={setQrUrl}
+        />
+
+      </section>
+    </div>
+  );
+};
+
+export default LaboratoryCard;
