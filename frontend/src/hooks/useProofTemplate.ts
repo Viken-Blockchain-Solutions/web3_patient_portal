@@ -1,9 +1,9 @@
-// In /hooks/useDIDVerification.js
-import { useState, useEffect } from "react";
+"use Client";
 import { apiPost, apiGet } from "../utils/apiUtils";
+import { useState, useEffect } from "react";
 import { dockUrl } from "../utils/envVariables";
 
-export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
+export const useProofTemplate = (setQrCodeUrl: any, setError: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [proofRequestId, setProofRequestId] = useState(null);
   const [proofRequestStatus, setProofRequestStatus] = useState(null);
@@ -11,35 +11,24 @@ export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
   const [holderDID, setHolderDID] = useState("");
   const [holderCredentials, setHolderCredentials] = useState([]);
 
-  const generateDIDVerificationQR = async () => {
+  const proofRequestBody = {
+    "nonce": "123456",
+    "domain": "dock.io"
+  };
+
+  const generateProofRequestQR = async () => {
     setIsLoading(true);
     setError("");
 
-    const proofRequestBody = {
-      name: "Proof Request",
-      purpose: "Prove identity",
-      request: {
-        input_descriptors: [{
-          id: "ProofOfIdentity",
-          name: "Subject Id Proof Request",
-          purpose: "Provide your did to receive your LabResults",
-          constraints: {
-            fields: [{
-              path: ["$.credentialSubject.id"]
-            }]
-          }
-        }]
-      }
-    };
-
     try {
       const response = await apiPost({
-        url: `${dockUrl}/proof-requests`,
+        url: `${dockUrl}/proof-templates/9e752f3c-1e6d-41e7-bd7d-0a3290ef0ebe/request`,
         body: proofRequestBody
       });
-      // console.log("Response:", response);
-      if (response.qr) {
-        setQrCodeUrl(response.qr);
+      console.log("Response:", await response.qr);
+      const _qrCodeUrl = await response.qr;
+      if (_qrCodeUrl) {
+        setQrCodeUrl(_qrCodeUrl);
         setProofRequestId(response.id);
       } else {
         throw new Error("QR Code URL not found in response");
@@ -58,7 +47,7 @@ export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
       const statusResponse = await apiGet({
         url: `${dockUrl}/proof-requests/${proofRequestId}`
       });
-      // console.log("Status Response:", statusResponse);
+      console.log("Status Response:", statusResponse);
       const isVerified = statusResponse.verified;
       setProofRequestStatus(isVerified);
 
@@ -95,9 +84,9 @@ export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
     }, 5000); // Polling every 5 seconds
 
     return () => clearInterval(intervalId);
-  });
+  }, [proofRequestId]);
 
-  console.log("useDIDVerification", {
+  console.log("useProofRequest:", {
     proofRequestId,
     proofRequestStatus,
     proofData,
@@ -110,6 +99,6 @@ export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
     proofRequestStatus,
     holderDID,
     holderCredentials,
-    generateDIDVerificationQR
+    generateProofRequestQR
   };
 };
