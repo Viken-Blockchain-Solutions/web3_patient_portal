@@ -84,7 +84,7 @@ export const useProofTemplate = (setQrCodeUrl: any, setError: any) => {
     }, 5000); // Polling every 5 seconds
 
     return () => clearInterval(intervalId);
-  }, [proofRequestId]);
+  });
 
   console.log("useProofRequest:", {
     proofRequestId,

@@ -49,6 +49,7 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
         </button>
         <div>
           {qrCodeUrl && <QRCodeGenerator qrCodeUrl={qrCodeUrl} />}
+          {error && <p>{error}</p>}
         </div>
       </div>
     </div>
