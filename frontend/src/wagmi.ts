@@ -9,7 +9,7 @@ const walletConnectProjectId = process.env
 const alchemyApiKey = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY as string;
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [mainnet, polygonMumbai, polygonZkEvmTestnet],
+  [polygonMumbai, polygonZkEvmTestnet, mainnet],
   [alchemyProvider({ apiKey: alchemyApiKey }), publicProvider()]
 );
 

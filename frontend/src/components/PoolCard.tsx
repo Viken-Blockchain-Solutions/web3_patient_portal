@@ -1,14 +1,9 @@
-// components/PoolCard.tsx
-import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Divider,
-  // Link,
-  Image
-} from "@nextui-org/react";
+"use client";
+import React, { useState } from "react";
+import Image from "next/image";
+import avatarLogo from "../public/assets/images/verifyed.png";
+import { ProofTemplateVerification } from "./ProofTemplateVerification";
+import HolderCredentialsModal from "./HolderCredentialsModal";
 
 interface PoolCardProps {
   title: string;
@@ -17,38 +12,54 @@ interface PoolCardProps {
   funding: number;
 }
 
-export default function PoolCard({
-  title,
-  startDate,
-  endDate,
-  funding
-}: PoolCardProps) {
+export default function PoolCard({ title, startDate, endDate, funding }: PoolCardProps) {
+  const [isContributeClicked, setIsContributeClicked] = useState(false);
+  const [holderCredentials, setHolderCredentials] = useState<any>(null); // State to store holder's credentials
+  const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null); // State to store proof verification status
+
+  const handleContributeClick = () => {
+    setIsContributeClicked(true);
+  };
+
   return (
-    <Card className="max-w-[400px]">
-      <CardHeader className="flex gap-3">
+    <div className="max-w-[400px]">
+      <div className="flex gap-3 place-items-center">
         <Image
-          alt="nextui logo"
-          height={40}
-          radius="sm"
-          src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
-          width={40}
+          alt="avatar"
+          width={50}
+          height={50}
+          className="verifyLogo"
+          src={avatarLogo}
+          priority
         />
         <div className="flex flex-col">
-          <p className="text-md">{title}</p>
-          <p className="text-small text-default-500">Start Date: {startDate}</p>
-          <p className="text-small text-default-500">End Date: {endDate}</p>
+          <p className="text-lg">{title}</p>
         </div>
-      </CardHeader>
-      <Divider />
-      <CardBody>
+      </div>
+      <hr className="divider" />
+      <p className="text-small text-default-500">Start Date: {startDate}</p>
+      <p className="text-small text-default-500">End Date: {endDate}</p>
+      <div className="my-4">
         <p>Funding: ${funding}</p>
-      </CardBody>
-      <Divider />
-      <CardFooter>
-        <button className="p-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+      </div>
+
+      <div>
+        <button className="btn-primary" onClick={handleContributeClick}>
           Contribute
         </button>
-      </CardFooter>
-    </Card>
+
+        {isContributeClicked && (
+          <ProofTemplateVerification
+            setHolderCredentials={setHolderCredentials}
+            setIsProofVerified={setIsProofVerified}
+          />
+        )}
+
+        {/* Optionally, display the holder's credentials and verification status */}
+        {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
+        {/*holderCredentials && <div>Holder´s Credentials: {JSON.stringify(holderCredentials)}</div>*/}
+        {holderCredentials && <HolderCredentialsModal holderCredentials={holderCredentials} />}
+      </div>
+    </div>
   );
 }
