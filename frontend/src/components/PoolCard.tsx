@@ -1,9 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import avatarLogo from "../public/assets/images/verifyed.png";
-import { useProofTemplate } from "../hooks/useProofTemplate";
-import { QRCodeGenerator } from "./QRCodeGenerator";
+import ProofTemplateVerification from "./ProofTemplateVerification";
 
 interface PoolCardProps {
   title: string;
@@ -13,13 +12,10 @@ interface PoolCardProps {
 }
 
 export default function PoolCard({ title, startDate, endDate, funding }: PoolCardProps) {
-  const [qrCodeUrl, setQrCodeUrl] = useState("");
-  const [error, setError] = useState("");
+  const [isContributeClicked, setIsContributeClicked] = React.useState(false);
 
-  const { generateProofRequestQR } = useProofTemplate(setQrCodeUrl, setError);
-
-  const handleContributeClick = async () => {
-    await generateProofRequestQR();
+  const handleContributeClick = () => {
+    setIsContributeClicked(true);
   };
 
   return (
@@ -32,7 +28,7 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
           className="verifyLogo"
           src={avatarLogo}
         />
-        <div className="flex flex-col ">
+        <div className="flex flex-col">
           <p className="text-lg">{title}</p>
         </div>
       </div>
@@ -47,10 +43,13 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
         <button className="btn-primary" onClick={handleContributeClick}>
           Contribute
         </button>
-        <div>
-          {qrCodeUrl && <QRCodeGenerator qrCodeUrl={qrCodeUrl} />}
-          {error && <p>{error}</p>}
-        </div>
+
+        {isContributeClicked && (
+          <ProofTemplateVerification
+            setHolderCredentials={() => {}} // Replace with your function
+            setIsProofVerified={() => {}}  // Replace with your function
+          />
+        )}
       </div>
     </div>
   );
