@@ -20,6 +20,7 @@ export const ProofTemplateVerification = ({ setHolderCredentials, setIsProofVeri
     console.log("holderDID updated:", holderDID);
     console.log("holderCredentials updated:", holderCredentials);
     console.log("proofRequestStatus updated:", proofRequestStatus);
+    console.log("qrCodeGenerated updated:", qrCodeGenerated);
 
     if (holderDID) {
       setHolderCredentials(holderCredentials);
