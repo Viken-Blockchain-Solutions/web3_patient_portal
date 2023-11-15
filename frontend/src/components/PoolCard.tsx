@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import avatarLogo from "../public/assets/images/verifyed.png";
 import { ProofTemplateVerification } from "./ProofTemplateVerification";
+import HolderCredentialsModal from "./HolderCredentialsModal";
 
 interface PoolCardProps {
   title: string;
@@ -55,8 +56,9 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
         )}
 
         {/* Optionally, display the holder's credentials and verification status */}
-        {holderCredentials && <div>Holder´s Credentials: {JSON.stringify(holderCredentials)}</div>}
         {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
+        {/*holderCredentials && <div>Holder´s Credentials: {JSON.stringify(holderCredentials)}</div>*/}
+        {holderCredentials && <HolderCredentialsModal holderCredentials={holderCredentials} />}
       </div>
     </div>
   );

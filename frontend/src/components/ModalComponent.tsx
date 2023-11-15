@@ -58,7 +58,7 @@ export default function ModalComponent({
     <div>
       <button
         type="button"
-        className="bg-blue-100 hover:bg-blue-200 text-black py-2 px-4 rounded"
+        className="bg-blue-100  text-black py-2 px-4 rounded"
         onClick={() => setOpen(true)}
         disabled={isLoading}
       >

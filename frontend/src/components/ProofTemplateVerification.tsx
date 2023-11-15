@@ -7,7 +7,6 @@ export const ProofTemplateVerification = ({ setHolderCredentials, setIsProofVeri
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [error, setError] = useState("");
 
-  // Use the custom hook here
   const {
     isLoading,
     proofRequestStatus,
@@ -42,28 +41,17 @@ export const ProofTemplateVerification = ({ setHolderCredentials, setIsProofVeri
         {isLoading ? "Generating QR Code..." : "Step 1: Generate QR Code"}
       </button>
 
-      {qrCodeUrl && (
-        <>
-          <QRCodeGenerator url={qrCodeUrl} />
-          {console.log("QR Code URL:", qrCodeUrl)}
-        </>
-      )}
+      {qrCodeUrl && <QRCodeGenerator url={qrCodeUrl} />}
 
       {proofRequestStatus !== null && (
-        <>
-          <p className="mt-4 text-lg text-gray-700">
-            Proof Request Verified:
-            {proofRequestStatus ? <span className="text-green-500">Yes</span> : <span className="text-red-500">No</span>}
-          </p>
-          {console.log("Proof Request Status:", proofRequestStatus)}
-        </>
+        <p className="mt-4 text-lg text-gray-700">
+          Proof Request Verified:
+          {proofRequestStatus ? <span className="text-green-500">Yes</span> : <span className="text-red-500">No</span>}
+        </p>
       )}
 
-      {error && (
-        <>
-          <p className="mt-4 text-lg text-red-500">{error}</p>
-          {!qrCodeUrl && console.log("Error:", error)}
-        </>
+      {error && proofRequestStatus !== true && (
+        <p className="mt-4 text-lg text-red-500">{error}</p>
       )}
     </div>
   );
