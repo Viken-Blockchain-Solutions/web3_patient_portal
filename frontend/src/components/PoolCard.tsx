@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import avatarLogo from "../public/assets/images/verifyed.png";
-import ProofTemplateVerification from "./ProofTemplateVerification";
+import { ProofTemplateVerification } from "./ProofTemplateVerification";
 
 interface PoolCardProps {
   title: string;
@@ -12,7 +12,9 @@ interface PoolCardProps {
 }
 
 export default function PoolCard({ title, startDate, endDate, funding }: PoolCardProps) {
-  const [isContributeClicked, setIsContributeClicked] = React.useState(false);
+  const [isContributeClicked, setIsContributeClicked] = useState(false);
+  const [holderCredentials, setHolderCredentials] = useState<any>(null); // State to store holder's credentials
+  const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null); // State to store proof verification status
 
   const handleContributeClick = () => {
     setIsContributeClicked(true);
@@ -27,6 +29,7 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
           height={50}
           className="verifyLogo"
           src={avatarLogo}
+          priority
         />
         <div className="flex flex-col">
           <p className="text-lg">{title}</p>
@@ -46,10 +49,14 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
 
         {isContributeClicked && (
           <ProofTemplateVerification
-            setHolderCredentials={() => {}} // Replace with your function
-            setIsProofVerified={() => {}}  // Replace with your function
+            setHolderCredentials={setHolderCredentials}
+            setIsProofVerified={setIsProofVerified}
           />
         )}
+
+        {/* Optionally, display the holder's credentials and verification status */}
+        {holderCredentials && <div>Holder´s Credentials: {JSON.stringify(holderCredentials)}</div>}
+        {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
       </div>
     </div>
   );
