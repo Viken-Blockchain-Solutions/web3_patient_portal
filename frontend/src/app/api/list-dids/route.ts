@@ -1,10 +1,7 @@
 // app/api/list-dids/route.ts
 // import { DIDProfiles } from '@/types';
 import { NextResponse } from "next/server";
-const [dockUrl, dockApiKey] = [
-  process.env.NEXT_PUBLIC_TEST_URL,
-  process.env.NEXT_PUBLIC_TEST_API_KEY
-];
+import { dockUrl, dockApiKey } from "../../../utils/envVariables";
 
 export async function GET() {
   const res = await fetch(`${dockUrl}/dids`, {
