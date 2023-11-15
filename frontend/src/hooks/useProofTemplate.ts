@@ -1,22 +1,33 @@
+// src/utils/hooks/useProofTemplate.ts
 "use Client";
+import { useState, useEffect, useCallback } from "react";
 import { apiPost, apiGet } from "../utils/apiUtils";
-import { useState, useEffect } from "react";
 import { dockUrl } from "../utils/envVariables";
 
-export const useProofTemplate = (setQrCodeUrl: any, setError: any) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [proofRequestId, setProofRequestId] = useState(null);
-  const [proofRequestStatus, setProofRequestStatus] = useState(null);
-  const [proofData, setProofData] = useState(null);
-  const [holderDID, setHolderDID] = useState("");
-  const [holderCredentials, setHolderCredentials] = useState([]);
+interface ProofRequest {
+  id: string | null;
+  status: boolean | null;
+  data: any | null;
+  holderDID: string;
+  credentials: any[];
+}
+
+export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: (error: string) => void) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [proofRequest, setProofRequest] = useState<ProofRequest>({
+    id: null,
+    status: null,
+    data: null,
+    holderDID: "",
+    credentials: []
+  });
 
   const proofRequestBody = {
     "nonce": "123456",
     "domain": "dock.io"
   };
 
-  const generateProofRequestQR = async () => {
+  const generateProofRequestQR = useCallback(async () => {
     setIsLoading(true);
     setError("");
 
@@ -25,11 +36,11 @@ export const useProofTemplate = (setQrCodeUrl: any, setError: any) => {
         url: `${dockUrl}/proof-templates/9e752f3c-1e6d-41e7-bd7d-0a3290ef0ebe/request`,
         body: proofRequestBody
       });
-      console.log("Response:", await response.qr);
-      const _qrCodeUrl = await response.qr;
-      if (_qrCodeUrl) {
-        setQrCodeUrl(_qrCodeUrl);
-        setProofRequestId(response.id);
+
+      const qrCodeUrl = response.qr;
+      if (qrCodeUrl) {
+        setQrCodeUrl(qrCodeUrl);
+        setProofRequest({ ...proofRequest, id: response.id });
       } else {
         throw new Error("QR Code URL not found in response");
       }
@@ -38,45 +49,44 @@ export const useProofTemplate = (setQrCodeUrl: any, setError: any) => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [proofRequest, setQrCodeUrl, setError]);
 
-  const checkProofRequestStatus = async () => {
-    if (!proofRequestId) return;
+  const fetchProofData = useCallback(async () => {
+    if (!proofRequest.id) return;
+
+    try {
+      const dataResponse = await apiGet({
+        url: `${dockUrl}/proof-requests/${proofRequest.id}`
+      });
+
+      const holder = dataResponse.presentation?.holder;
+      const credentials = dataResponse.presentation?.credentials;
+
+      setProofRequest({ ...proofRequest, data: dataResponse, holderDID: holder, credentials });
+    } catch (err) {
+      setError(`Error fetching proof data: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
+    }
+  }, [proofRequest, setError]);
+
+  const checkProofRequestStatus = useCallback(async () => {
+    if (!proofRequest.id) return;
 
     try {
       const statusResponse = await apiGet({
-        url: `${dockUrl}/proof-requests/${proofRequestId}`
+        url: `${dockUrl}/proof-requests/${proofRequest.id}`
       });
-      console.log("Status Response:", statusResponse);
-      const isVerified = statusResponse.verified;
-      setProofRequestStatus(isVerified);
 
-      if (isVerified && !proofData) {
-        await fetchProofData();
+      const isVerified = statusResponse.verified;
+      if (isVerified !== proofRequest.status) {
+        setProofRequest({ ...proofRequest, status: isVerified });
+        if (isVerified && !proofRequest.data) {
+          await fetchProofData();
+        }
       }
     } catch (err) {
       setError(`Error checking proof request status: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
     }
-  };
-
-  const fetchProofData = async () => {
-    if (!proofRequestId) return;
-
-    try {
-      const dataResponse = await apiGet({
-        url: `${dockUrl}/proof-requests/${proofRequestId}`
-      });
-      // console.log("Data Response presentation:", dataResponse.presentation);
-      const holder = dataResponse.presentation?.holder;
-      const credentials = dataResponse.presentation?.credentials;
-
-      setProofData(dataResponse);
-      setHolderDID(holder);
-      setHolderCredentials(credentials);
-    } catch (err) {
-      setError(`Error fetching proof data: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
-    }
-  };
+  }, [proofRequest, fetchProofData, setError]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -84,21 +94,13 @@ export const useProofTemplate = (setQrCodeUrl: any, setError: any) => {
     }, 5000); // Polling every 5 seconds
 
     return () => clearInterval(intervalId);
-  });
-
-  console.log("useProofRequest:", {
-    proofRequestId,
-    proofRequestStatus,
-    proofData,
-    holderDID,
-    holderCredentials
-  });
+  }, [checkProofRequestStatus]);
 
   return {
     isLoading,
-    proofRequestStatus,
-    holderDID,
-    holderCredentials,
+    proofRequestStatus: proofRequest.status,
+    holderDID: proofRequest.holderDID,
+    holderCredentials: proofRequest.credentials,
     generateProofRequestQR
   };
 };
