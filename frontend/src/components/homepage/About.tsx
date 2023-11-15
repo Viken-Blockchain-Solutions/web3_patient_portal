@@ -32,7 +32,7 @@ export default function About() {
           <div className="mt-5">
             <p >
                             Decentralized identity is like having a digital ID card, but with a cool twist.
-              <br />It's called self-sovereign identity because you're in charge.
+              <br />It´s called self-sovereign identity because you´re in charge.
               <br />Instead of a big organization holding your ID, you own and control it yourself.
             </p>
           </div>

@@ -1,7 +1,9 @@
-// components/PoolCard.tsx
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import avatarLogo from "../public/assets/images/verifyed.png";
+import { useProofTemplate } from "../hooks/useProofTemplate";
+import { QRCodeGenerator } from "./QRCodeGenerator";
 
 interface PoolCardProps {
   title: string;
@@ -10,12 +12,16 @@ interface PoolCardProps {
   funding: number;
 }
 
-export default function PoolCard({
-  title,
-  startDate,
-  endDate,
-  funding
-}: PoolCardProps) {
+export default function PoolCard({ title, startDate, endDate, funding }: PoolCardProps) {
+  const [qrCodeUrl, setQrCodeUrl] = useState("");
+  const [error, setError] = useState("");
+
+  const { generateProofRequestQR } = useProofTemplate(setQrCodeUrl, setError);
+
+  const handleContributeClick = async () => {
+    await generateProofRequestQR();
+  };
+
   return (
     <div className="max-w-[400px]">
       <div className="flex gap-3 place-items-center">
@@ -38,9 +44,13 @@ export default function PoolCard({
       </div>
 
       <div>
-        <button className="btn-primary">
+        <button className="btn-primary" onClick={handleContributeClick}>
           Contribute
         </button>
+        <div>
+          {qrCodeUrl && <QRCodeGenerator qrCodeUrl={qrCodeUrl} />}
+          {error && <p>{error}</p>}
+        </div>
       </div>
     </div>
   );

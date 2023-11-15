@@ -1,30 +1,27 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import QRCodeGenerator from "./QRCodeGenerator";
+import { useEffect, useState } from "react";
+import { QRCodeGenerator } from "./QRCodeGenerator";
 import { useDIDVerification } from "../hooks/useDIDVerification";
 
-export const DIDVerification = ({ setHolderDID, setIsHolderDIDVerified }: any ) => {
+export const DIDVerification = ({ setHolderDID, setIsHolderDIDVerified }: any) => {
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [error, setError] = useState("");
-  const [_holderCredentials, setHolderCredentials] = useState([]);
 
   // Use the custom hook here
   const {
     isLoading,
     proofRequestStatus,
     holderDID,
-    holderCredentials,
     generateDIDVerificationQR
   } = useDIDVerification(setQrCodeUrl, setError);
 
   useEffect(() => {
     if (holderDID) {
       setHolderDID(holderDID);
-      setHolderCredentials(holderCredentials);
       setIsHolderDIDVerified(true);
     }
 
-  }, [holderDID, setHolderDID, holderCredentials, setIsHolderDIDVerified]);
+  }, [holderDID, setHolderDID, setIsHolderDIDVerified]);
 
   return (
     <div className="flex flex-col items-center">
@@ -42,20 +39,7 @@ export const DIDVerification = ({ setHolderDID, setIsHolderDIDVerified }: any ) 
           {proofRequestStatus ? <span className="text-green-500">Yes</span> : <span className="text-red-500">No</span>}
         </p>
       )}
-
-      {holderDID && (
-        <div className="mt-4 bg-gray-100 p-4 rounded-lg shadow">
-          <h3 className="text-lg font-semibold">Holder DID:</h3>
-          <p className="text-gray-600">{holderDID}</p>
-        </div>
-      )}
-
-      {_holderCredentials && _holderCredentials.length > 0 && (
-        <div className="mt-4 bg-gray-100 p-4 rounded-lg shadow overflow-x-auto">
-          <h3 className="text-lg font-semibold">Holder Credentials:</h3>
-          <pre>{JSON.stringify(_holderCredentials, null, 2)}</pre>
-        </div>
-      )}
+      {holderDID && (setIsHolderDIDVerified(true))}
 
       {error && <p className="mt-4 text-lg text-red-500">{error}</p>}
     </div>

@@ -1,4 +1,4 @@
-// app/pages/PatientPage.tsx
+// app/pages/PoolsPage.tsx
 "use client";
 import React from "react";
 import PoolCard from "../../components/PoolCard";

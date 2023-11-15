@@ -1,10 +1,7 @@
-import React from "react";
 import { useQRCode } from "next-qrcode";
 
-function QRCodeGenerator(props:{url:string}) {
+export const QRCodeGenerator = ({ url }: any) => {
   const { Canvas } = useQRCode();
-  const url: string = props.url;
-
   return (
     <Canvas
       text={url}
@@ -20,6 +17,4 @@ function QRCodeGenerator(props:{url:string}) {
       }}
     />
   );
-}
-
-export default QRCodeGenerator;
+};

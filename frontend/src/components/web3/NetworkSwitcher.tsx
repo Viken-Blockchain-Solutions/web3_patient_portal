@@ -19,7 +19,7 @@ export function NetworkSwitcher() {
           Switch to:{" "}
           {chains.map((x) =>
             x.id === chain?.id ? null : (
-              <button key={x.id} onClick={() => switchNetwork(x.id)}>
+              <button key={x.id} onClick={() => switchNetwork(x.id)} className=" text-black font-bold py-2 px-4 rounded border-2 border-black bg-blue-500">
                 {x.name}
                 {isLoading && x.id === pendingChainId && " (switching)"}
               </button>
