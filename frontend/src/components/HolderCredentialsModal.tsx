@@ -3,17 +3,12 @@ import React, { useState } from "react";
 import Modal from "./Modal"; // Ensure this path is correct
 
 interface Credential {
-  id: string;
-  name: string;
-  type: string[];
+  // ... other fields
   issuer: {
     id: string;
     logo: string;
     name: string;
   };
-  "@context": Array<string | Record<string, string>>;
-  description: string;
-  issuanceDate: string;
   credentialSubject: {
     id: string;
     testName: string;
@@ -40,13 +35,23 @@ const HolderCredentialsModal: React.FC<HolderCredentialsModalProps> = ({ holderC
 
   return (
     <>
-      <button onClick={toggleModal} className="bg-blue-400 text-white px-4 py-2 rounded">
+      <button onClick={toggleModal} className="btn-modal-trigger">
         View Holder´s Credentials
       </button>
 
       <Modal isOpen={isModalOpen} closeModal={toggleModal}>
         <h2 className="text-lg font-bold">Holder´s Credentials</h2>
-        <pre className="mt-4 text-sm text-gray-600">{JSON.stringify(holderCredentials, null, 2)}</pre>
+        <div className="mt-4 text-sm text-gray-600">
+          {holderCredentials.map((credential, index) => (
+            <div key={index} className="mb-4">
+              <h3 className="text-md font-semibold">Credential {index + 1}</h3>
+              <h4 className="text-md">Issuer:</h4>
+              <pre>{JSON.stringify(credential.issuer, null, 2)}</pre>
+              <h4 className="text-md">Credential Subject:</h4>
+              <pre>{JSON.stringify(credential.credentialSubject, null, 2)}</pre>
+            </div>
+          ))}
+        </div>
       </Modal>
     </>
   );
