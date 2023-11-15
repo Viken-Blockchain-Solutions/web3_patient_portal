@@ -93,8 +93,13 @@ export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: 
       checkProofRequestStatus();
     }, 5000); // Polling every 5 seconds
 
+    if (proofRequest.status === true) {
+      clearInterval(intervalId);
+    }
+
     return () => clearInterval(intervalId);
-  }, [checkProofRequestStatus]);
+  }, [checkProofRequestStatus, proofRequest.status]);
+
 
   return {
     isLoading,

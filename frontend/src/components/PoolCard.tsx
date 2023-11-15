@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import avatarLogo from "../public/assets/images/verifyed.png";
-import { useProofTemplate } from "../hooks/useProofTemplate";
-import { QRCodeGenerator } from "./QRCodeGenerator";
+import { ProofTemplateVerification } from "./ProofTemplateVerification";
+import HolderCredentialsModal from "./HolderCredentialsModal";
 
 interface PoolCardProps {
   title: string;
@@ -13,13 +13,12 @@ interface PoolCardProps {
 }
 
 export default function PoolCard({ title, startDate, endDate, funding }: PoolCardProps) {
-  const [qrCodeUrl, setQrCodeUrl] = useState("");
-  const [error, setError] = useState("");
+  const [isContributeClicked, setIsContributeClicked] = useState(false);
+  const [holderCredentials, setHolderCredentials] = useState<any>(null); // State to store holder's credentials
+  const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null); // State to store proof verification status
 
-  const { generateProofRequestQR } = useProofTemplate(setQrCodeUrl, setError);
-
-  const handleContributeClick = async () => {
-    await generateProofRequestQR();
+  const handleContributeClick = () => {
+    setIsContributeClicked(true);
   };
 
   return (
@@ -31,8 +30,9 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
           height={50}
           className="verifyLogo"
           src={avatarLogo}
+          priority
         />
-        <div className="flex flex-col ">
+        <div className="flex flex-col">
           <p className="text-lg">{title}</p>
         </div>
       </div>
@@ -47,10 +47,18 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
         <button className="btn-primary" onClick={handleContributeClick}>
           Contribute
         </button>
-        <div>
-          {qrCodeUrl && <QRCodeGenerator qrCodeUrl={qrCodeUrl} />}
-          {error && <p>{error}</p>}
-        </div>
+
+        {isContributeClicked && (
+          <ProofTemplateVerification
+            setHolderCredentials={setHolderCredentials}
+            setIsProofVerified={setIsProofVerified}
+          />
+        )}
+
+        {/* Optionally, display the holder's credentials and verification status */}
+        {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
+        {/*holderCredentials && <div>Holder´s Credentials: {JSON.stringify(holderCredentials)}</div>*/}
+        {holderCredentials && <HolderCredentialsModal holderCredentials={holderCredentials} />}
       </div>
     </div>
   );
