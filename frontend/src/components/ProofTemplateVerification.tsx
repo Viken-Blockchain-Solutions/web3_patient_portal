@@ -5,6 +5,7 @@ import { useProofTemplate } from "../hooks/useProofTemplate";
 
 export const ProofTemplateVerification = ({ setHolderCredentials, setIsProofVerified }: any) => {
   const [qrCodeUrl, setQrCodeUrl] = useState("");
+  const [qrCodeGenerated, setQrCodeGenerated] = useState(false);
   const [error, setError] = useState("");
 
   const {
