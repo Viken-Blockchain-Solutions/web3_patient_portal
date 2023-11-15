@@ -41,7 +41,7 @@ export const ProofTemplateVerification = ({ setHolderCredentials, setIsProofVeri
         {isLoading ? "Generating QR Code..." : "Step 1: Generate QR Code"}
       </button>
 
-      {qrCodeUrl && <QRCodeGenerator url={qrCodeUrl} />}
+      {qrCodeUrl && <QRCodeGenerator url={qrCodeUrl} setQrCodeGenerated={setQrCodeGenerated} />}
 
       {proofRequestStatus !== null && (
         <p className="mt-4 text-lg text-gray-700">
