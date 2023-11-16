@@ -7,7 +7,7 @@ export const handleContribution = async (contribution: Contribution) => {
     console.log("This contribution has already been made.");
     throw new Error("This contribution has already been made.");
   }
-
+  console.log("from handleContribution:", handleContribution);
   const addedContribution = await addContribution(contribution);
   console.log("Success, contribution added:", addedContribution);
   return addedContribution;

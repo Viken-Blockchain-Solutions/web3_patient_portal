@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { apiPost, apiGet } from "../utils/apiUtils";
 import { dockUrl } from "../utils/envVariables";
+import { checkAndAddContributor } from "../utils/db/contributors";
 
 interface ProofRequest {
   id: string | null;
@@ -61,7 +62,7 @@ export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: 
 
       const holder = dataResponse.presentation?.holder;
       const credentials = dataResponse.presentation?.credentials;
-
+      checkAndAddContributor(holder);
       setProofRequest({ ...proofRequest, data: dataResponse, holderDID: holder, credentials });
     } catch (err) {
       setError(`Error fetching proof data: ${err instanceof Error ? err.message : "Unknown error occurred"}`);

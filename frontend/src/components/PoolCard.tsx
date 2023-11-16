@@ -31,9 +31,8 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
   }, [isProofVerified, holderCredentials]);
 
   const onUserContribution = async () => {
-    console.log("Starting OnUserContribution!");
+
     if (isProofVerified && holderCredentials && holderCredentials.length > 0) {
-      console.log("isProofVerified and holderCredentials are true!");
 
       for (const credential of holderCredentials) {
         console.log(`Handling Credential with ID: ${credential.id}`);
