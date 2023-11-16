@@ -21,7 +21,7 @@ export const updateContribution = async (credential_id: string, updates: Partial
   return data;
 };
 
-export const getContributionByDate = async (contributor_id: string, credential_id: string) => {
+export const getContributionByCredentialID = async (contributor_id: string, credential_id: string) => {
   const { data, error } = await supabase
     .from("contributions")
     .select("*")

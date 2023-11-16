@@ -16,7 +16,7 @@ interface PoolCardProps {
 
 export default function PoolCard({ title, startDate, endDate, funding }: PoolCardProps) {
   const [isContributeClicked, setIsContributeClicked] = useState(false);
-  const [holderCredentials, setHolderCredentials] = useState<any>(null);
+  const [holderCredentials, setHolderCredentials] = useState<any>([]);
   const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null);
   const [contributionStatus, setContributionStatus] = useState<string>("");
 
@@ -31,29 +31,40 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
   }, [isProofVerified, holderCredentials]);
 
   const onUserContribution = async () => {
-    if (isProofVerified && holderCredentials) {
-      const contributionData: Contribution = {
-        credential_id: holderCredentials.credential_id,
-        contributor_id: holderCredentials.contributor_id,
-        test_name: holderCredentials.test_name,
-        issuer_id: holderCredentials.issuer_id,
-        issuer_name: holderCredentials.issuer_name,
-        issuer_logo: holderCredentials.issuer_logo,
-        cholesterol_value: holderCredentials.cholesterol_value,
-        cholesterol_unit: holderCredentials.cholesterol_unit,
-        cholesterol_reference_range: holderCredentials.cholesterol_reference_range
-      };
+    console.log("Starting OnUserContribution!");
+    if (isProofVerified && holderCredentials && holderCredentials.length > 0) {
+      console.log("isProofVerified and holderCredentials are true!");
 
-      try {
-        await handleContribution(contributionData);
-        setContributionStatus("Success: Your contribution has been added.");
-      } catch (error) {
-        if (error instanceof Error) {
-          setContributionStatus(`Error: ${error.message}`);
-        } else {
-          setContributionStatus("Error: An unknown error occurred");
+      for (const credential of holderCredentials) {
+        console.log(`Handling Credential with ID: ${credential.id}`);
+        const contributionData: Contribution = {
+          credential_id: credential.id as string,
+          contributor_id: credential.credentialSubject.id as string,
+          test_name: credential.credentialSubject.testName,
+          issuer_id: credential.issuer.id,
+          issuer_name: credential.issuer.name,
+          issuer_logo: credential.issuer.logo,
+          cholesterol_value: credential.credentialSubject.results.totalCholesterol.value,
+          cholesterol_unit: credential.credentialSubject.results.totalCholesterol.unit,
+          cholesterol_reference_range: credential.credentialSubject.results.totalCholesterol.referenceRange
+        };
+
+        console.log("Contribution Data:", contributionData);
+
+        try {
+          console.log("Adding Contribution to DB...");
+          await handleContribution(contributionData);
+          console.log("Success: Contribution has been added for credential ID:", credential.id);
+        } catch (error) {
+          console.error("An error was encountered while adding your contribution for credential ID:", credential.id, error);
+          if (error instanceof Error) {
+            console.error("Error message:", error.message);
+          }
         }
       }
+
+      // Update status after all contributions have been processed
+      setContributionStatus("All contributions processed.");
     }
   };
 
@@ -92,7 +103,7 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
         )}
 
         {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
-        {holderCredentials && <HolderCredentialsModal holderCredentials={holderCredentials} />}
+        {isProofVerified && <HolderCredentialsModal holderCredentials={holderCredentials} />}
       </div>
     </div>
   );

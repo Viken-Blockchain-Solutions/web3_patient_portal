@@ -84,6 +84,7 @@ export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: 
         }
       }
     } catch (err) {
+      console.log(err);
       setError(`Error checking proof request status: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
     }
   }, [proofRequest, fetchProofData, setError]);
