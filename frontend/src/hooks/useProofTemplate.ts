@@ -60,9 +60,9 @@ export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: 
         url: `${dockUrl}/proof-requests/${proofRequest.id}`
       });
 
-      const holder = dataResponse.presentation?.holder;
+      const holder: string = dataResponse.presentation?.holder;
       const credentials = dataResponse.presentation?.credentials;
-      checkAndAddContributor(holder);
+      await checkAndAddContributor(holder);
       setProofRequest({ ...proofRequest, data: dataResponse, holderDID: holder, credentials });
     } catch (err) {
       setError(`Error fetching proof data: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
