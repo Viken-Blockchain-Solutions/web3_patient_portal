@@ -2,6 +2,7 @@
 import { dockIssuerDid, dockUrl } from "./envVariables";
 import { apiPost } from "./apiUtils";
 import { v4 as uuidv4 } from "uuid";
+import { getRandomNumber } from "../utils/tools";
 
 export const issueTestResult = async (
   receiverDID: string,
@@ -122,7 +123,7 @@ const signedLabCredential = async (issuerDid: string, receiverDid: string) => {
           testName: "Lipid Panel",
           results: {
             totalCholesterol: {
-              value: "150",
+              value: `${getRandomNumber()}`,
               unit: "mg/dL",
               referenceRange: "50-250 mg/dL"
             }
