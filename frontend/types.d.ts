@@ -8,4 +8,5 @@ export interface Contribution {
   cholesterol_value: string;
   cholesterol_unit: string;
   cholesterol_reference_range: string;
+  pool_id: string;
 }

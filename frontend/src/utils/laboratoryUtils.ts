@@ -10,13 +10,11 @@ export const issueTestResult = async (
   setError: any,
   setQrUrl: any
 ) => {
-  // console.log("issueTestResult called with receiverDID:", receiverDID);
 
   try {
     setIsLoading(true);
     setError("");
 
-    // console.log("Requesting signed lab credential");
     const {
       id,
       credentialSubject,

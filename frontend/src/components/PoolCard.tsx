@@ -28,7 +28,8 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
     if (isProofVerified) {
       onUserContribution();
     }
-  }, [isProofVerified, holderCredentials]);
+
+  });
 
   const onUserContribution = async () => {
 
@@ -45,7 +46,8 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
           issuer_logo: credential.issuer.logo,
           cholesterol_value: credential.credentialSubject.results.totalCholesterol.value,
           cholesterol_unit: credential.credentialSubject.results.totalCholesterol.unit,
-          cholesterol_reference_range: credential.credentialSubject.results.totalCholesterol.referenceRange
+          cholesterol_reference_range: credential.credentialSubject.results.totalCholesterol.referenceRange,
+          pool_id: "e93cc9c8-22c6-412b-bba8-6e4f57de72f8"
         };
 
         console.log("Contribution Data:", contributionData);
