@@ -39,7 +39,7 @@ export default function About() {
         </section>
 
         <section className='lg:w-1/2 w-full'>
-          <Image className="headerImg" src={HomeImg} height={60} width={60} sizes="100%" alt={"organization"} />
+          <Image className="headerImg" src={HomeImg} height={60} width={60} sizes="100%" alt={"organization"} priority />
         </section>
       </div>
 
@@ -55,7 +55,7 @@ export default function About() {
 
         <section className='lg:w-1/3'>
           <div className="light-card">
-            <Image src={Key} height={60} width={60} sizes="100%" alt={"key"} />
+            <Image src={Key} height={60} width={60} sizes="100%" alt={"key"} priority />
             <p className="font-normal">
               <span className="font-medium">Control your private data</span>
               <br />
@@ -67,7 +67,7 @@ export default function About() {
         <section className='lg:w-1/3'>
           <div className="light-card bg-purple-dark">
             <div>
-              <Image src={Locker} height={60} width={60} sizes="100%" alt={"Locker"} />
+              <Image src={Locker} height={60} width={60} sizes="100%" alt={"Locker"} priority />
               <p className="text-white font-normal">
                 <span className="font-medium">Zero-Knowledge Proofs</span>
                 <br />
@@ -81,7 +81,7 @@ export default function About() {
 
         <section className='lg:w-1/3 '>
           <div className="light-card">
-            <Image src={Papers} height={60} width={60} sizes="100%" alt={"Locker"} />
+            <Image src={Papers} height={60} width={60} sizes="100%" alt={"Locker"} priority />
             <p className="font-normal">
               <span className="font-medium">Contribute</span>
               <br />

@@ -26,7 +26,7 @@ export default function Header() {
       </section>
 
       <section className='lg:w-1/2 w-full'>
-        <Image className="headerImg" src={HomeImg} height={60} width={60} sizes="100%" alt={"organization"} />
+        <Image className="headerImg" src={HomeImg} height={60} width={60} sizes="100%" alt={"organization"} priority />
       </section>
 
     </div>

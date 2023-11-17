@@ -19,7 +19,7 @@ export default function Navbar() {
             <Link href="/">
               <span className='items-center flex gap-2 flex'>
                 <span className="logo">
-                  <Image alt={"logo"} width={35} height={35} src={LogoUri} />
+                  <Image alt={"logo"} width={35} height={35} src={LogoUri} priority />
                 </span>
                 <span className="hidden title md:flex">
                   Medical Research  <span className="text-black ml-1">Hub</span>
@@ -41,7 +41,7 @@ export default function Navbar() {
           <li className='w-1/4 pt-1 ta-r'>
             <Link href={"/"}>
               <span className="logo ta-r">
-                <Image alt={"logo"} width={50} height={50} src={LogoUri} />
+                <Image alt={"logo"} width={50} height={50} src={LogoUri} priority />
               </span>
             </Link>
           </li>

@@ -13,7 +13,7 @@ export default function HomeCards() {
       </div>
       <section className='m-auto lg:w-1/2 w-full bg-indigo-100 p-8 my-5 m-w-90 rounded-lg shadow-lg sm:mb-5 sm:mx-auto'>
         <h1 className='text-2xl mb-4 font-extrabold font-medium text-indigo-600 flex items-center'>
-          <Image src={Book} height={50} width={50} alt={"book"} />
+          <Image src={Book} height={50} width={50} alt={"book"} priority />
             Research Pools
         </h1>
         <h2 className='text-md mb-3 font-extrabold font-medium text-indigo-500' >Contribute by verifiedying your digital credential</h2>

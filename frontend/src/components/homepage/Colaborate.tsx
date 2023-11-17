@@ -11,7 +11,7 @@ export default function Colaborate() {
         </h1>
         <hr className="divider" />
       </div>
-      <Image className="stepImg mx-auto" src={Colab} height={60} width={60} sizes="100%" alt={"colaborate"} />
+      <Image className="stepImg mx-auto" src={Colab} height={60} width={60} sizes="100%" alt={"colaborate"} priority />
     </div>
   );
 }
