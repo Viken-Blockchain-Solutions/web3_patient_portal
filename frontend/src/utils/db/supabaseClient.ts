@@ -3,3 +3,4 @@ import { supabaseKey, supabaseUrl } from "../envVariables";
 import { createClient } from "@supabase/supabase-js";
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
+console.log("connected to db:", supabase);
