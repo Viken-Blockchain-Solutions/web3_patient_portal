@@ -12,7 +12,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className='sticky top-5 w-full rounded-full flex shadow-lg items-center min-w-screen p-1 bg-purple'>
+      <nav className='navbar sticky top-5 w-full rounded-full flex shadow-lg items-center min-w-screen p-1 bg-purple'>
 
         <ul className='desktopMenu bg-white rounded-full w-full h-8 gap-4 lg items-center  justify-between sm:flex text-black'>
           <li className='flex gap-4 items-center'>
@@ -22,13 +22,13 @@ export default function Navbar() {
                   <Image alt={"logo"} width={35} height={35} src={LogoUri} />
                 </span>
                 <span className="hidden title md:flex">
-                                    Medical Research  <span className="text-black ml-1">Hub</span>
+                  Medical Research  <span className="text-black ml-1">Hub</span>
                 </span>
               </span>
             </Link>
           </li>
           <li className='flex gap-4 items-center'>
-            <Link href="/access" className="btn-primary">Access</Link>
+            <Link href="/dashboard" className="btn-primary">Access</Link>
           </li>
         </ul>
 
@@ -52,7 +52,7 @@ export default function Navbar() {
       <ul className={`${showMenu ? "" : "hideMenu"} mobileMenu sticky p-1 top-20 rounded-md bg-purple w-full z-10 flex-col p-3`}>
 
         <li>
-          <Link onClick={() => setShowMenu(false)} href="/access" className="px-2">Access</Link>
+          <Link onClick={() => setShowMenu(false)} href="/dashboard" className="px-2">Access</Link>
         </li>
 
       </ul>

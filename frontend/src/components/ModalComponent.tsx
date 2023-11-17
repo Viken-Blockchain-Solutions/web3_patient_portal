@@ -1,32 +1,31 @@
-// frontend/src/components/ModalComponent.tsx
 "use client";
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { IdentificationIcon } from "@heroicons/react/24/outline";
 import { issueTestResult } from "../utils/laboratoryUtils";
+import { userStore } from "../../stores/appStore";
+import QrReader from "./dashboard/QrReader";
 
 type ModalComponentProps = {
   buttonText: string;
-  receiverDID: string;
   error: string;
   credentialIssued: boolean;
   setCredentialId: (id: string) => void;
   setCredentialIssued: (issued: boolean) => void;
-  setReceiverDID: (did: string) => void;
   setError: (error: string) => void;
   setQrUrl: (url: string) => void;
 };
 
 export default function ModalComponent({
   buttonText,
-  receiverDID,
   credentialIssued,
   setCredentialId,
   setCredentialIssued,
-  setReceiverDID,
   setError,
   setQrUrl
 }: ModalComponentProps) {
+  const userDid = userStore((state: any) => state.Did);
+  const setDid = userStore((state: any) => state.setDid);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const cancelButtonRef = useRef(null);
@@ -98,11 +97,11 @@ export default function ModalComponent({
                         </Dialog.Title>
                         <div className="mt-2">
                           <h3>
-                          Your role in this ecosystem is straightforward:
+                            Your role in this ecosystem is straightforward:
                           </h3>
                           <ol className="text-sm text-gray-500 py-2">
                             <li>
-                            Step 1. Enter or select your DID to receive your lab results as a Verifiable Credential.
+                              Step 1. Enter or select your DID to receive your lab results as a Verifiable Credential.
                             </li>
                           </ol>
                         </div>
@@ -111,11 +110,17 @@ export default function ModalComponent({
                             type="text"
                             placeholder="Enter your DID"
                             name="did"
-                            value={receiverDID}
-                            onChange={(e) => setReceiverDID(e.target.value)}
+                            value={userDid}
+                            onChange={(e) => setDid(e.target.value)}
                             className="border border-indigo-300 rounded-lg p-2 font-normal w-full"
                           />
                         </label>
+                        <p className="mt-3">
+                          Or scann it from your <span className="text-main"> Dock Wallet App </span>
+                          <br />
+                          <span className="text-gray-500">(open Dock Wallet App in your mobile, you can find your DID on clicking on bottom link DIDs)</span>
+                        </p>
+                        <QrReader />
                       </div>
                     </div>
                   </div>
@@ -124,7 +129,7 @@ export default function ModalComponent({
                       type="button"
                       className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
                       onClick={() => {
-                        handleSubmit(receiverDID);
+                        handleSubmit(userDid);
                       }}
                       disabled={isLoading || credentialIssued}
                     >
@@ -140,7 +145,7 @@ export default function ModalComponent({
                       onClick={() => setOpen(false)}
                       ref={cancelButtonRef}
                     >
-                    Cancel
+                      Cancel
                     </button>
                   </div>
                 </Dialog.Panel>

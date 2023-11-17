@@ -4,7 +4,7 @@ import Book from "../../public/assets/images/book.png";
 export default function ResearchPools() {
 
   return (
-    <div className="pb-10 vh-40">
+    <div className="pb-10">
       <div className="text-center my-10 pt-10 mt-10 m-auto">
         <h1 className="text-3xl mb-3">
                     Research Pools

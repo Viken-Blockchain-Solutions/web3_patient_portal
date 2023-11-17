@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import avatarLogo from "../public/assets/images/verifyed.png";
+import Docs from "../public/assets/images/docs.png";
+import { ProofTemplateVerification } from "./ProofTemplateVerification";
 import HolderCredentialsModal from "./HolderCredentialsModal";
 import { ProofTemplateVerification } from "./ProofTemplateVerification";
 import { Contribution } from "../../types";
@@ -9,12 +10,13 @@ import { handleContribution } from "../utils/db/handleContribution";
 
 interface PoolCardProps {
   title: string;
+  content: string;
   startDate: string;
   endDate: string;
   funding: number;
 }
 
-export default function PoolCard({ title, startDate, endDate, funding }: PoolCardProps) {
+export default function PoolCard({ title, startDate, endDate, funding, content }: PoolCardProps) {
   const [isContributeClicked, setIsContributeClicked] = useState(false);
   const [holderCredentials, setHolderCredentials] = useState<any>([]);
   const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null);
@@ -80,42 +82,63 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
   };
 
   return (
-    <div className="max-w-[400px]">
-      <div className="flex gap-3 place-items-center">
-        <Image
-          alt="avatar"
-          width={50}
-          height={50}
-          className="verifyLogo"
-          src={avatarLogo}
-          priority
-        />
-        <div className="flex flex-col">
-          <p className="text-lg">{title}</p>
+    <>
+      <div className="p-4 rounded-lg  bg-slate-100 w-full relative pt-2">
+
+        <div className="flex pt-2">
+          <div className="flex flex-col">
+            <p className="text-lg inline-flex place-items-center">
+              <Image
+                alt="avatar"
+                width={40}
+                height={40}
+                sizes="100%"
+                className="verifyLogo"
+                src={Docs}
+                priority
+              />
+              {title}</p>
+          </div>
+        </div>
+        <hr className="divider" />
+        <p>
+          About:
+        </p>
+        <p className="text-gray-600">
+          {content}
+        </p>
+
+        <div className="my-4">
+          <p className="text-main font-bold">Reward: ${funding}</p>
+        </div>
+
+        <div>
+          <button className="btn-primary w-full" onClick={handleContributeClick}>
+            Contribute
+          </button>
+
+          {isContributeClicked && (
+            <ProofTemplateVerification
+              setHolderCredentials={setHolderCredentials}
+              setIsProofVerified={setIsProofVerified}
+            />
+          )}
+          {/* Optionally, display the holder's credentials and verification status */}
+          {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
+          {/*holderCredentials && <div>Holder´s Credentials: {JSON.stringify(holderCredentials)}</div>*/}
+          {holderCredentials && <HolderCredentialsModal holderCredentials={holderCredentials} />}
         </div>
       </div>
-      <hr className="divider" />
-      <p className="text-small text-default-500">Start Date: {startDate}</p>
-      <p className="text-small text-default-500">End Date: {endDate}</p>
-      <div className="my-4">
-        <p>Funding: ${funding}</p>
+
+      <div className="inline-flex gap-2 rounded-lg  bg-slate-100 w-full p-3 mt-5">
+        <p className="font-bold text-gray-500">Start Date: {startDate} </p>
+        <p className="font-bold text-gray-500">- End Date: {endDate}</p>        
       </div>
-      {contributionStatus && <div className="text-green-500 text-lg">{contributionStatus}</div>}
-      <div>
-        <button className="btn-primary" onClick={handleContributeClick}>
-          Contribute
-        </button>
-
-        {isContributeClicked && (
-          <ProofTemplateVerification
-            setHolderCredentials={setHolderCredentials}
-            setIsProofVerified={setIsProofVerified}
-          />
-        )}
-
-        {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
+      
+      <div className="mt-5">
+      {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
         {isProofVerified && <HolderCredentialsModal holderCredentials={holderCredentials} />}
       </div>
-    </div>
+    </>
   );
 }

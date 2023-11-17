@@ -10,23 +10,25 @@ const LaboratoryCard = () => {
   const [error, setError] = useState("");
   const [credentialIssued, setCredentialIssued] = useState(false);
   const [credential, setCredentialId] = useState("");
-  const [receiverDID, setReceiverDID] = useState("");
 
   console.log(credential);
   return (
     <div className="">
       <section className='container w-full bg-green-100 p-8 my-5 m-w-90 rounded-lg shadow-lg sm:mx-auto place-items-center'>
         <h1 className='text-2xl mb-4 font-extrabold font-medium text-green-800 flex items-center place-items-center'>
-          <Image className=" swing" src={Potion} height={60} width={60} sizes="100%" alt="Potion" priority />Laboratory</h1>
+          <Image className=" swing" src={Potion} height={60} width={60} sizes="100%" alt="Potion" priority />
+          Laboratory</h1>
         {!qrURL ? (
           <div>
             <h2 className='text-md mb-3 font-extrabold text-green-500'>For Patients</h2>
             <p className='text-md mb-3'>
-                Are you interested in contributing to medical research and earning from it? Explore our available research pools, contribute your Verifiable Credentials, and earn a share from the research funds.
+              In a real-life scenario, a Verifiable Credential from a laboratory test is issued by an accredited laboratory.
+              <br />
+              For testing purposes, we simulate the role of a laboratory to issue this test Verifiable Credential (VC).
             </p>
             <p className='text-md mb-3'>
-                Your data is encrypted and secure, and you have full control over who can access it.
-                Contribute to the future of medicine while earning from it.
+              Your data is encrypted and secure, and you have full control over who can access it.
+              Contribute to the future of medicine while earning from it.
             </p>
           </div>
         ) : (
@@ -48,20 +50,20 @@ const LaboratoryCard = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   <tr>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    Lab Results Link
+                      Lab Results Link
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <Link href={credential} target="_blank" rel="noopener noreferrer" className="text-green-800 underline font-semibold">
-                      Access Lab Results
+                        Access Lab Results
                       </Link>
                     </td>
                   </tr>
                   <tr>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    Password
+                      Password
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    1234
+                      1234
                     </td>
                   </tr>
                 </tbody>
@@ -73,12 +75,10 @@ const LaboratoryCard = () => {
         )}
         <ModalComponent
           buttonText="REQUEST LAB RESULTS"
-          receiverDID={receiverDID}
           error={error}
           credentialIssued={credentialIssued}
           setCredentialId={setCredentialId}
           setCredentialIssued={setCredentialIssued}
-          setReceiverDID={setReceiverDID}
           setError={setError}
           setQrUrl={setQrUrl}
         />
