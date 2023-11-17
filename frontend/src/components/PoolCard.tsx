@@ -34,7 +34,8 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
   const onUserContribution = async () => {
 
     if (isProofVerified && holderCredentials && holderCredentials.length > 0) {
-
+      let contributionProcessed = false; // Flag to check if at least one contribution is processed
+      setContributionStatus("Processing contributions...");
       for (const credential of holderCredentials) {
         console.log(`Handling Credential with ID: ${credential.id}`);
         const contributionData: Contribution = {
@@ -53,19 +54,28 @@ export default function PoolCard({ title, startDate, endDate, funding }: PoolCar
         console.log("Contribution Data:", contributionData);
 
         try {
-          console.log("Adding Contribution to DB...");
+          setContributionStatus(`Checking if contribution has already been made for credential ID: ${credential.id}`);
           await handleContribution(contributionData);
-          console.log("Success: Contribution has been added for credential ID:", credential.id);
+          setContributionStatus(`Success: Contribution has been added for credential ID: ${credential.id}`);
+          contributionProcessed = true;
         } catch (error) {
-          console.error("An error was encountered while adding your contribution for credential ID:", credential.id, error);
-          if (error instanceof Error) {
-            console.error("Error message:", error.message);
+          if (error instanceof Error && error.message === "This contribution has already been made.") {
+            console.error("Contribution Error:", error.message);
+            setContributionStatus(error.message);
+            break;
+          } else {
+            console.error("An error was encountered:", error);
           }
         }
       }
 
-      // Update status after all contributions have been processed
-      setContributionStatus("All contributions processed.");
+      if (!contributionProcessed) {
+        setIsContributeClicked(false);
+        setIsProofVerified(null);
+        setContributionStatus("");
+      } else {
+        setContributionStatus("All contributions processed.");
+      }
     }
   };
 
