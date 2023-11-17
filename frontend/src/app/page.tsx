@@ -5,6 +5,7 @@ import Header from "../components/homepage/Header";
 import About from "../components/homepage/About";
 import Steps from "../components/homepage/Steps";
 import ResearchPools from "../components/homepage/ResearchPools";
+import Colaborate from "../components/homepage/Colaborate";
 import Link from "next/link";
 
 const LandingPage = () => {
@@ -22,10 +23,12 @@ const LandingPage = () => {
       <div className="w-1/4 mx-auto pb-10">
         <Link className="w-full" href="/dashboard">
           <button className="btn-primary text-2xl w-full font-semibold">
-                        Get Started!
+            Get Started!
           </button>
         </Link>
       </div>
+
+      <Colaborate />
 
     </div>
   );

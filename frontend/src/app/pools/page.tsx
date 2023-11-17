@@ -10,23 +10,26 @@ const researchPools = [
   {
     id: 1,
     title: "Blood Test Research",
+    content: "Investigate genetic markers present in the blood to gain insights into hereditary conditions and susceptibilities.",
     startDate: "2023-01-01",
     endDate: "2023-12-31",
-    funding: 10000
+    funding: 25
   },
   {
     id: 2,
     title: "Cholesterol Level Study",
+    content: "Discover cholesterol indicators that enable early detection of health issues, facilitating proactive and preventive healthcare measures.",
     startDate: "2023-02-01",
     endDate: "2023-11-30",
-    funding: 15000
+    funding: 20
   },
   {
     id: 3,
     title: "Diabetes Monitoring",
+    content: "Discover diabetes indicators that enable early detection of health issues, facilitating proactive and preventive healthcare measures.",
     startDate: "2023-03-01",
     endDate: "2023-09-30",
-    funding: 8000
+    funding: 15
   }
   // Add more research pools here
 ];
@@ -36,7 +39,7 @@ const Pools = () => {
     <>
 
       <div className="mx-auto relative">
-        <div className="absolute left-5 top-5 rounded-lg bg-slate-300 p-2 hover:bg-slate-2 hover:text-gray-700 font-bold text-gray-500">
+        <div className="absolute left-5 top-5 rounded-lg bg-slate-300 p-2 hover:bg-slate-2 hover:text-gray-700 font-bold text-gray-500 text-sm">
           <Link href="/dashboard"><FontAwesomeIcon icon={faArrowLeft} /> Go back</Link>
         </div>
 
@@ -57,10 +60,11 @@ const Pools = () => {
         </div>
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {researchPools.map((pool) => (
-            <div key={pool.id} className="p-4 rounded-lg border-slate-200 bg-slate-100">
+            <div key={pool.id}>
               <PoolCard
                 key={pool.id}
                 title={pool.title}
+                content={pool.content}
                 startDate={pool.startDate}
                 endDate={pool.endDate}
                 funding={pool.funding}

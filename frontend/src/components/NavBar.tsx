@@ -12,7 +12,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className='sticky top-5 w-full rounded-full flex shadow-lg items-center min-w-screen p-1 bg-purple'>
+      <nav className='navbar sticky top-5 w-full rounded-full flex shadow-lg items-center min-w-screen p-1 bg-purple'>
 
         <ul className='desktopMenu bg-white rounded-full w-full h-8 gap-4 lg items-center  justify-between sm:flex text-black'>
           <li className='flex gap-4 items-center'>
