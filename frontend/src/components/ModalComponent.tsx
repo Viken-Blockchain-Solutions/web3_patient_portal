@@ -1,4 +1,3 @@
-// frontend/src/components/ModalComponent.tsx
 "use client";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
@@ -25,18 +24,11 @@ export default function ModalComponent({
   setError,
   setQrUrl
 }: ModalComponentProps) {
-  const [open, setOpen] = useState(false);
   const userDid = userStore((state: any) => state.Did)
-  const setDid = userStore((state: any) => state.Did)
+  const setDid = userStore((state: any) => state.setDid)
+  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [receiverDID, setReceiverDID] = useState('');
   const cancelButtonRef = useRef(null);
-
-  useEffect(() => {
-    if (userDid === '') return
-    console.log('setting did to : ', userDid);
-    setReceiverDID(userDid)
-  }, [userDid])
 
   const handleSubmit = async (receiverDID: string) => {
     if (receiverDID.trim() === "") {
@@ -118,13 +110,15 @@ export default function ModalComponent({
                             type="text"
                             placeholder="Enter your DID"
                             name="did"
-                            value={receiverDID}
+                            value={userDid}
                             onChange={(e) => setDid(e.target.value)}
                             className="border border-indigo-300 rounded-lg p-2 font-normal w-full"
                           />
                         </label>
                         <p className="mt-3">
-                          Or scann it from your <span className="text-main"> Dock App </span>
+                          Or scann it from your <span className="text-main"> Dock Wallet App </span>
+                          <br />
+                          <span className="text-gray-500 ">(open Dock Wallet App in your mobile, you can find your DID's on clicking on bottom link "DID's")</span>
                         </p>
                         <QrReader />
                       </div>
@@ -135,7 +129,7 @@ export default function ModalComponent({
                       type="button"
                       className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
                       onClick={() => {
-                        handleSubmit(receiverDID);
+                        handleSubmit(userDid);
                       }}
                       disabled={isLoading || credentialIssued}
                     >
