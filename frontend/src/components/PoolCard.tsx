@@ -6,6 +6,7 @@ import HolderCredentialsModal from "./HolderCredentialsModal";
 import { ProofTemplateVerification } from "./ProofTemplateVerification";
 import { Contribution } from "../../types";
 import { handleContribution } from "../utils/db/handleContribution";
+import { incrementContributions } from "../utils/db/pools/addDataByPool";
 
 interface PoolCardProps {
   title: string;
@@ -57,9 +58,13 @@ export default function PoolCard({ title, startDate, endDate, funding, content }
 
         try {
           setContributionStatus(`Checking if contribution has already been made for credential ID: ${credential.id}`);
-          await handleContribution(contributionData);
-          setContributionStatus(`Success: Contribution has been added for credential ID: ${credential.id}`);
-          contributionProcessed = true;
+          const newContribution = await handleContribution(contributionData);
+          if (newContribution) {
+            setContributionStatus(`Success: Contribution has been added for credential ID: ${credential.id}`);
+
+            await incrementContributions(newContribution.pool_id);
+            contributionProcessed = true;
+          }
         } catch (error) {
           if (error instanceof Error && error.message === "This contribution has already been made.") {
             console.error("Contribution Error:", error.message);
@@ -72,9 +77,10 @@ export default function PoolCard({ title, startDate, endDate, funding, content }
       }
 
       if (!contributionProcessed) {
-        setIsContributeClicked(false);
-        setIsProofVerified(null);
-        setContributionStatus("");
+        // setIsContributeClicked(false);
+        // setIsProofVerified(null);
+        // setContributionStatus("");
+        console.log("an error with the a contribution was encountered.");
       } else {
         setContributionStatus("All contributions processed.");
       }
