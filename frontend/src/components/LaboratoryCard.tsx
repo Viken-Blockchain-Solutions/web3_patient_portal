@@ -72,13 +72,11 @@ const LaboratoryCard = () => {
 
         )}
         <ModalComponent
-          buttonText="REQUEST LAB RESULTS"
-          receiverDID={receiverDID}
+          buttonText="REQUEST LAB RESULTS"          
           error={error}
           credentialIssued={credentialIssued}
           setCredentialId={setCredentialId}
-          setCredentialIssued={setCredentialIssued}
-          setReceiverDID={setReceiverDID}
+          setCredentialIssued={setCredentialIssued}          
           setError={setError}
           setQrUrl={setQrUrl}
         />
