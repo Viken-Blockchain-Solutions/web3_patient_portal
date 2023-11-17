@@ -3,13 +3,22 @@ import React, { useEffect, useState } from "react";
 import { QRCodeGenerator } from "./QRCodeGenerator";
 import { useProofTemplate } from "../hooks/useProofTemplate";
 
-export const ProofTemplateVerification = ({ setHolderCredentials, setIsProofVerified }: any) => {
+interface ProofTemplateVerificationProps {
+ setHolderCredentials: (credentials: any) => void;
+ setIsProofVerified: (isVerified: boolean) => void;
+}
+
+export const ProofTemplateVerification: React.FC<ProofTemplateVerificationProps> = ({ setHolderCredentials, setIsProofVerified }) => {
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [qrCodeGenerated, setQrCodeGenerated] = useState(false);
   const [error, setError] = useState("");
+  const [proofID, setProofRequestID] = useState<string | undefined>(undefined);
+  const [proofData, setProofRequestData] = useState<string | undefined>(undefined);
 
   const {
     isLoading,
+    proofRequestID,
+    proofRequestData,
     proofRequestStatus,
     holderDID,
     holderCredentials,
@@ -17,16 +26,19 @@ export const ProofTemplateVerification = ({ setHolderCredentials, setIsProofVeri
   } = useProofTemplate(setQrCodeUrl, setError);
 
   useEffect(() => {
-    console.log("holderDID updated:", holderDID);
-    console.log("holderCredentials updated:", holderCredentials);
-    console.log("proofRequestStatus updated:", proofRequestStatus);
-    console.log("qrCodeGenerated updated:", qrCodeGenerated);
-
     if (holderDID) {
+      setProofRequestID(proofRequestID);
+      setProofRequestData(proofRequestData);
       setHolderCredentials(holderCredentials);
       setIsProofVerified(proofRequestStatus);
     }
-  }, [holderDID, holderCredentials, proofRequestStatus, setHolderCredentials, setIsProofVerified]);
+    console.log("Holder Credentials:", holderCredentials);
+    console.log("Holder DID:", holderDID);
+    console.log("Proof Request ID:", proofID);
+    console.log("Proof Request Data:", proofData);
+    console.log("Proof Request Status:", proofRequestStatus);
+    console.log("Proof Request QRCode:", qrCodeGenerated);
+  }, [holderDID, holderCredentials, proofRequestID, proofRequestData, proofRequestStatus, qrCodeGenerated]);
 
   const handleButtonClick = async () => {
     console.log("Generate QR Code button clicked");

@@ -5,8 +5,8 @@ import { apiPost, apiGet } from "../utils/apiUtils";
 import { dockUrl } from "../utils/envVariables";
 
 interface ProofRequest {
-  id: string | null;
-  status: boolean | null;
+  id: string;
+  status: boolean;
   data: any | null;
   holderDID: string;
   credentials: any[];
@@ -15,19 +15,19 @@ interface ProofRequest {
 export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: (error: string) => void) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [proofRequest, setProofRequest] = useState<ProofRequest>({
-    id: null,
-    status: null,
+    id: "",
+    status: false,
     data: null,
     holderDID: "",
     credentials: []
   });
 
-  const proofRequestBody = {
-    "nonce": "123456",
-    "domain": "dock.io"
-  };
-
   const generateProofRequestQR = useCallback(async () => {
+    const proofRequestBody = {
+      "nonce": "123456",
+      "domain": "dock.io"
+    };
+
     setIsLoading(true);
     setError("");
 
@@ -49,7 +49,7 @@ export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: 
     } finally {
       setIsLoading(false);
     }
-  }, [proofRequest, setQrCodeUrl, setError]);
+  }, [setError, setQrCodeUrl, proofRequest]);
 
   const fetchProofData = useCallback(async () => {
     if (!proofRequest.id) return;
@@ -59,9 +59,8 @@ export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: 
         url: `${dockUrl}/proof-requests/${proofRequest.id}`
       });
 
-      const holder = dataResponse.presentation?.holder;
+      const holder: string = dataResponse.presentation?.holder;
       const credentials = dataResponse.presentation?.credentials;
-
       setProofRequest({ ...proofRequest, data: dataResponse, holderDID: holder, credentials });
     } catch (err) {
       setError(`Error fetching proof data: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
@@ -84,6 +83,7 @@ export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: 
         }
       }
     } catch (err) {
+      console.log(err);
       setError(`Error checking proof request status: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
     }
   }, [proofRequest, fetchProofData, setError]);
@@ -103,6 +103,8 @@ export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: 
 
   return {
     isLoading,
+    proofRequestID: proofRequest.id,
+    proofRequestData: proofRequest.data,
     proofRequestStatus: proofRequest.status,
     holderDID: proofRequest.holderDID,
     holderCredentials: proofRequest.credentials,
