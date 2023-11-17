@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import { Html5QrcodeScanner, Html5QrcodeScanType, QrcodeErrorCallback, QrcodeSuccessCallback } from "html5-qrcode";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQrcode } from "@fortawesome/free-solid-svg-icons";
@@ -37,7 +36,6 @@ export default function QrReader() {
     }
 
     async function onScanSuccess(decodedResult: any) {
-        console.log('scanner', scanner);
         scanner.clear();
         const result = extractQRData(decodedResult);
         setDid(result)
