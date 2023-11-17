@@ -24,8 +24,8 @@ export default function ModalComponent({
   setError,
   setQrUrl
 }: ModalComponentProps) {
-  const userDid = userStore((state: any) => state.Did)
-  const setDid = userStore((state: any) => state.setDid)
+  const userDid = userStore((state: any) => state.Did);
+  const setDid = userStore((state: any) => state.setDid);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const cancelButtonRef = useRef(null);
@@ -118,7 +118,7 @@ export default function ModalComponent({
                         <p className="mt-3">
                           Or scann it from your <span className="text-main"> Dock Wallet App </span>
                           <br />
-                          <span className="text-gray-500 ">(open Dock Wallet App in your mobile, you can find your DID's on clicking on bottom link "DID's")</span>
+                          <span className="text-gray-500">(open Dock Wallet App in your mobile, you can find your DID on clicking on bottom link DIDs)</span>
                         </p>
                         <QrReader />
                       </div>
