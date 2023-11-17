@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Docs from "../public/assets/images/docs.png";
-import { ProofTemplateVerification } from "./ProofTemplateVerification";
 import HolderCredentialsModal from "./HolderCredentialsModal";
 import { ProofTemplateVerification } from "./ProofTemplateVerification";
 import { Contribution } from "../../types";
@@ -132,11 +131,11 @@ export default function PoolCard({ title, startDate, endDate, funding, content }
 
       <div className="inline-flex gap-2 rounded-lg  bg-slate-100 w-full p-3 mt-5">
         <p className="font-bold text-gray-500">Start Date: {startDate} </p>
-        <p className="font-bold text-gray-500">- End Date: {endDate}</p>        
+        <p className="font-bold text-gray-500">- End Date: {endDate}</p>
       </div>
-      
+
       <div className="mt-5">
-      {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
+        {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
         {isProofVerified && <HolderCredentialsModal holderCredentials={holderCredentials} />}
       </div>
     </>
