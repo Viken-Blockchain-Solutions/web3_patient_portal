@@ -38,6 +38,7 @@ export const ProofTemplateVerification: React.FC<ProofTemplateVerificationProps>
     console.log("Proof Request Data:", proofData);
     console.log("Proof Request Status:", proofRequestStatus);
     console.log("Proof Request QRCode:", qrCodeGenerated);
+    // eslint-disable-next-line
   }, [holderDID, holderCredentials, proofRequestID, proofRequestData, proofRequestStatus, qrCodeGenerated]);
 
   const handleButtonClick = async () => {

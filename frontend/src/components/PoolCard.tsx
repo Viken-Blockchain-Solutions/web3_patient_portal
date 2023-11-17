@@ -19,7 +19,8 @@ export default function PoolCard({ title, startDate, endDate, funding, content }
   const [isContributeClicked, setIsContributeClicked] = useState(false);
   const [holderCredentials, setHolderCredentials] = useState<any>([]);
   const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null);
-  const [contributionStatus, setContributionStatus] = useState<string>("");
+  // eslint-disable-next-line
+  const [contributionStatus, setContributionStatus] = useState<string>(""); 
 
   const handleContributeClick = () => {
     setIsContributeClicked(true);
