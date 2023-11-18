@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Modal from "./Modal"; // Ensure this path is correct
 
 interface Credential {
-  // ... other fields
   issuer: {
     id: string;
     logo: string;

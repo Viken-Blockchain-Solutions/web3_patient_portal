@@ -9,18 +9,16 @@ import { incrementContributions } from "../../utils/db/pools/addDataByPool";
 
 export default function PoolModal() {
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const cancelButtonRef = useRef(null);
   const [holderCredentials, setHolderCredentials] = useState<any>([]);
   const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null);
+  const cancelButtonRef = useRef(null);
 
 
   useEffect(() => {
     if (isProofVerified) {
-      setIsLoading(true);
       onUserContribution();
     }
-  }, [setIsLoading, isProofVerified]);
+  }, [isProofVerified]);
 
   const onUserContribution = async () => {
 
@@ -62,13 +60,12 @@ export default function PoolModal() {
       if (!contributionProcessed) {
         console.log("an error with the a contribution was encountered.");
       } else {
-        setIsLoading(false);
+        console.log("Contribution was processed successfully.");
       }
     }
   };
 
   function handleOpen() {
-    setIsLoading(true);
     setOpen(true);
   }
 
@@ -79,9 +76,8 @@ export default function PoolModal() {
         type="button"
         className="btn-primary w-full"
         onClick={() => handleOpen()}
-        disabled={isLoading}
       >
-                Contribute
+      Contribute
       </button>
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>

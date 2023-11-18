@@ -13,10 +13,10 @@ export interface Contribution {
 
 export interface Pool {
   pool_id: string;
-  created_at: string; // or Date if you are using Date objects
+  created_at: string;
   pool_heading: string;
-  start_date: string; // or Date
-  end_date: string; // or Date
+  start_date: string;
+  end_date: string;
   funding_amount: number;
   currency_unit: string;
   contributions_amount: number;
