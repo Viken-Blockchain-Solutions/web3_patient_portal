@@ -1,5 +1,3 @@
-"use client";
-import React, { useState } from "react";
 import Image from "next/image";
 import Docs from "../public/assets/images/docs.png";
 import PoolModal from "./pools/PoolModal";
