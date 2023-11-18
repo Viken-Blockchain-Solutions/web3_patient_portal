@@ -1,4 +1,4 @@
-// pages/credentials.tsx
+// admin/components/CredentialsComponent.tsx
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";

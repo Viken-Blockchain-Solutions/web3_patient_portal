@@ -11,15 +11,9 @@ export default function PoolModal() {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const cancelButtonRef = useRef(null);
-  //const [isContributeClicked, setIsContributeClicked] = useState(false);
   const [holderCredentials, setHolderCredentials] = useState<any>([]);
   const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null);
-  // eslint-disable-next-line
- // const [contributionStatus, setContributionStatus] = useState<string>(""); 
 
-  /*  const handleContributeClick = () => {
-    setIsContributeClicked(true);
-  }; */
 
   useEffect(() => {
     if (isProofVerified) {
@@ -31,8 +25,7 @@ export default function PoolModal() {
   const onUserContribution = async () => {
 
     if (isProofVerified && holderCredentials && holderCredentials.length > 0) {
-      let contributionProcessed = false; // Flag to check if at least one contribution is processed
-      //setContributionStatus("Processing contributions...");
+      let contributionProcessed = false;
       for (const credential of holderCredentials) {
         console.log(`Handling Credential with ID: ${credential.id}`);
         const contributionData: Contribution = {
@@ -51,18 +44,14 @@ export default function PoolModal() {
         console.log("Contribution Data:", contributionData);
 
         try {
-        // setContributionStatus(`Checking if contribution has already been made for credential ID: ${credential.id}`);
           const newContribution = await handleContribution(contributionData);
           if (newContribution) {
-          // setContributionStatus(`Success: Contribution has been added for credential ID: ${credential.id}`);
-
             await incrementContributions(newContribution.pool_id);
             contributionProcessed = true;
           }
         } catch (error) {
           if (error instanceof Error && error.message === "This contribution has already been made.") {
             console.error("Contribution Error:", error.message);
-            // setContributionStatus(error.message);
             break;
           } else {
             console.error("An error was encountered:", error);
@@ -71,18 +60,15 @@ export default function PoolModal() {
       }
 
       if (!contributionProcessed) {
-        // setIsContributeClicked(false);
-        // setIsProofVerified(null);
-        // setContributionStatus("");
         console.log("an error with the a contribution was encountered.");
       } else {
-      //  setContributionStatus("All contributions processed.");
+        setIsLoading(false);
       }
     }
   };
 
   function handleOpen() {
-  // handleContributeClick();
+    setIsLoading(true);
     setOpen(true);
   }
 
@@ -133,10 +119,7 @@ export default function PoolModal() {
                           setHolderCredentials={setHolderCredentials}
                           setIsProofVerified={setIsProofVerified}
                         />
-
-                        {/* Optionally, display the holder's credentials and verification status */}
                         {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
-                        {/*holderCredentials && <div>Holder´s Credentials: {JSON.stringify(holderCredentials)}</div>*/}
                         {holderCredentials && <HolderCredentialsModal holderCredentials={holderCredentials} />}
                       </div>
                       <div className="mt-5">
@@ -146,14 +129,13 @@ export default function PoolModal() {
                     </div>
                   </div>
                   <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-
                     <button
                       type="button"
                       className="btn-primary-transparent"
                       onClick={() => setOpen(false)}
                       ref={cancelButtonRef}
                     >
-                                            Cancel
+                    Cancel
                     </button>
                   </div>
                 </Dialog.Panel>
