@@ -1,12 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Docs from "../public/assets/images/docs.png";
-import HolderCredentialsModal from "./HolderCredentialsModal";
-import { ProofTemplateVerification } from "./ProofTemplateVerification";
-import { Contribution } from "../../types";
-import { handleContribution } from "../utils/db/handleContribution";
-import { incrementContributions } from "../utils/db/pools/addDataByPool";
+import PoolModal from "./pools/PoolModal";
 
 interface PoolCardProps {
   title: string;
@@ -21,7 +17,7 @@ export default function PoolCard({ title, startDate, endDate, funding, content }
   const [holderCredentials, setHolderCredentials] = useState<any>([]);
   const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null);
   // eslint-disable-next-line
-  const [contributionStatus, setContributionStatus] = useState<string>(""); 
+  const [contributionStatus, setContributionStatus] = useState<string>("");
 
   const handleContributeClick = () => {
     setIsContributeClicked(true);
@@ -58,13 +54,9 @@ export default function PoolCard({ title, startDate, endDate, funding, content }
 
         try {
           setContributionStatus(`Checking if contribution has already been made for credential ID: ${credential.id}`);
-          const newContribution = await handleContribution(contributionData);
-          if (newContribution) {
-            setContributionStatus(`Success: Contribution has been added for credential ID: ${credential.id}`);
-
-            await incrementContributions(newContribution.pool_id);
-            contributionProcessed = true;
-          }
+          await handleContribution(contributionData);
+          setContributionStatus(`Success: Contribution has been added for credential ID: ${credential.id}`);
+          contributionProcessed = true;
         } catch (error) {
           if (error instanceof Error && error.message === "This contribution has already been made.") {
             console.error("Contribution Error:", error.message);
@@ -77,10 +69,9 @@ export default function PoolCard({ title, startDate, endDate, funding, content }
       }
 
       if (!contributionProcessed) {
-        // setIsContributeClicked(false);
-        // setIsProofVerified(null);
-        // setContributionStatus("");
-        console.log("an error with the a contribution was encountered.");
+        setIsContributeClicked(false);
+        setIsProofVerified(null);
+        setContributionStatus("");
       } else {
         setContributionStatus("All contributions processed.");
       }
@@ -118,22 +109,7 @@ export default function PoolCard({ title, startDate, endDate, funding, content }
           <p className="text-main font-bold">Reward: ${funding}</p>
         </div>
 
-        <div>
-          <button className="btn-primary w-full" onClick={handleContributeClick}>
-            Contribute
-          </button>
-
-          {isContributeClicked && (
-            <ProofTemplateVerification
-              setHolderCredentials={setHolderCredentials}
-              setIsProofVerified={setIsProofVerified}
-            />
-          )}
-          {/* Optionally, display the holder's credentials and verification status */}
-          {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
-          {/*holderCredentials && <div>Holder´s Credentials: {JSON.stringify(holderCredentials)}</div>*/}
-          {holderCredentials && <HolderCredentialsModal holderCredentials={holderCredentials} />}
-        </div>
+        <PoolModal />
       </div>
 
       <div className="inline-flex gap-2 rounded-lg  bg-slate-100 w-full p-3 mt-5">
@@ -141,10 +117,7 @@ export default function PoolCard({ title, startDate, endDate, funding, content }
         <p className="font-bold text-gray-500">- End Date: {endDate}</p>
       </div>
 
-      <div className="mt-5">
-        {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
-        {isProofVerified && <HolderCredentialsModal holderCredentials={holderCredentials} />}
-      </div>
+
     </>
   );
 }
