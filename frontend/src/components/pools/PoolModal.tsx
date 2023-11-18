@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import HolderCredentialsModal from "../HolderCredentialsModal";
