@@ -101,7 +101,7 @@ export default function ModalComponent({
                           </h3>
                           <ol className="text-sm text-gray-500 py-2">
                             <li>
-                              Step 1. Enter or select your DID to receive your lab results as a Verifiable Credential.
+                              <strong>Step 1.</strong> Enter or scan your <strong>DID</strong> to receive your <strong>Lab-Results</strong> as a <strong>Verifiable Credential</strong>.
                             </li>
                           </ol>
                         </div>
@@ -115,10 +115,9 @@ export default function ModalComponent({
                             className="border border-indigo-300 rounded-lg p-2 font-normal w-full"
                           />
                         </label>
-                        <p className="mt-3">
-                          Or scann it from your <span className="text-main"> Dock Wallet App </span>
-                          <br />
-                          <span className="text-gray-500">(open Dock Wallet App in your mobile, you can find your DID on clicking on bottom link DIDs)</span>
+                        <h3 className="mt-3">Or scan it from your <span className="text-main"> Dock Wallet App </span></h3>
+                        <p className="my-3 text-xs">
+                          <span className="text-gray-500">(Open the <strong>Dock Wallet App</strong> in your mobile, there you can find your DID on clicking on the link in the bottom menu.)</span>
                         </p>
                         <QrReader />
                       </div>
