@@ -52,7 +52,7 @@
 .main {
     margin: auto;
     margin-top: 50px;
-    min-height: 90vh;
+    min-height: 86vh;
 }
 
 .footer {
@@ -60,9 +60,9 @@
     position: relative;
     display: block;
     background-color: var(--purple);
-    border:solid 5px #a8a4d6;
+    border: solid 5px #a8a4d6;
     border-bottom: none;
-    color: white;    
+    color: white;
     width: 100%;
     padding: 30px 20px;
 }

@@ -35,7 +35,7 @@ const HolderCredentialsModal: React.FC<HolderCredentialsModalProps> = ({ holderC
 
   return (
     <>
-      <button onClick={toggleModal} className="btn-modal-trigger">
+      <button onClick={toggleModal} className="btn-modal-trigger mt-5">
         View Holder´s Credentials
       </button>
 

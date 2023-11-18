@@ -13,15 +13,6 @@ interface PoolCardProps {
 }
 
 export default function PoolCard({ title, startDate, endDate, funding, content }: PoolCardProps) {
-  const [isContributeClicked, setIsContributeClicked] = useState(false);
-  const [holderCredentials, setHolderCredentials] = useState<any>([]);
-  const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null);
-  // eslint-disable-next-line
-  const [contributionStatus, setContributionStatus] = useState<string>("");
-
-  const handleContributeClick = () => {
-    setIsContributeClicked(true);
-  };
 
   useEffect(() => {
     if (isProofVerified) {

@@ -25,7 +25,6 @@ export default function PoolModal() {
       setIsLoading(true);
       onUserContribution();
     }
-
   }, [setIsLoading, isProofVerified]);
 
   const onUserContribution = async () => {
