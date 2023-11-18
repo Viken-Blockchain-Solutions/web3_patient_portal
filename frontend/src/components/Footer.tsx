@@ -8,15 +8,13 @@ export default function Footer() {
         <div className="flex">
           <div className="w-1/2 ta-l">
             <p>
-              <Link href="https://www.vikenblockchain.com/" target="_black">Viken Blockchain</Link>
+              <Link href="https://www.vikenblockchain.com/" target="_black">VBS - Viken Blockchain Solutions AS</Link>
               <br />
               <Link href="https://onchainsol.com/" target="_black">Onchain Solutions</Link>
             </p>
           </div>
           <div className="w-1/2 ta-r">
-            <p>
-                            Copyright © 2023
-            </p>
+            <p>Copyright © 2023. All rights reserved.</p>
           </div>
         </div>
       </div>

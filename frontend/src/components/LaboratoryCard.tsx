@@ -13,14 +13,14 @@ const LaboratoryCard = () => {
 
   console.log(credential);
   return (
-    <div className="">
+    <div className="md:w-12/12">
       <section className='container w-full bg-green-100 p-8 my-5 m-w-90 rounded-lg shadow-lg sm:mx-auto place-items-center'>
-        <h1 className='text-2xl mb-4 font-extrabold font-medium text-green-800 flex items-center place-items-center'>
+        <h1 className='text-2xl mb-4 font-semibold text-green-800 flex items-center place-items-center'>
           <Image className=" swing" src={Potion} height={60} width={60} sizes="100%" alt="Potion" priority />
           Laboratory</h1>
         {!qrURL ? (
           <div>
-            <h2 className='text-md mb-3 font-extrabold text-green-500'>For Patients</h2>
+            <h2 className='text-md mb-3 font-semibold text-green-500'>For Patients</h2>
             <p className='text-md mb-3'>
               In a real-life scenario, a Verifiable Credential from a laboratory test is issued by an accredited laboratory.
               <br />

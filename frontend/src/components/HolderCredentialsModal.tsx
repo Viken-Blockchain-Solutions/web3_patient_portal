@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Modal from "./Modal"; // Ensure this path is correct
 
 interface Credential {
-  // ... other fields
   issuer: {
     id: string;
     logo: string;
@@ -35,7 +34,7 @@ const HolderCredentialsModal: React.FC<HolderCredentialsModalProps> = ({ holderC
 
   return (
     <>
-      <button onClick={toggleModal} className="btn-modal-trigger">
+      <button onClick={toggleModal} className="btn-modal-trigger mt-5">
         View Holder´s Credentials
       </button>
 

@@ -11,20 +11,23 @@ export default function HomeCards() {
       <div>
         <LaboratoryCard />
       </div>
-      <section className='m-auto lg:w-1/2 w-full bg-indigo-100 p-8 my-5 m-w-90 rounded-lg shadow-lg sm:mb-5 sm:mx-auto'>
-        <h1 className='text-2xl mb-4 font-extrabold font-medium text-indigo-600 flex items-center'>
+      <section className='m-auto lg:w-9/12 w-full bg-indigo-100 p-8 my-5 m-w-90 rounded-lg shadow-lg sm:mb-5 sm:mx-auto'>
+        <h1 className='text-2xl mb-4 font-semibold text-indigo-600 flex items-center'>
           <Image src={Book} height={50} width={50} alt={"book"} priority />
-            Research Pools
+          Research Pools
         </h1>
-        <h2 className='text-md mb-3 font-extrabold font-medium text-indigo-500' >Contribute by verifiedying your digital credential</h2>
+        <h2 className='text-md mb-3 font-semibold text-indigo-500' >Contribute by Verifying Your Digital Credential</h2>
         <p className='text-md mb-3'>
         This credential represents your lab results and is a key to participating in medical research pools and earn rewards.
         </p>
         <p className='text-md mb-3'>
-                    With your credential, you can securely contribute to research initiatives and be part of groundbreaking medical discoveries. Your participation is encrypted, ensuring your privacy while allowing you to contribute to the advancement of medicine.
+        With your credential, you can securely contribute to research initiatives and be part of groundbreaking medical discoveries.
+        </p>
+        <p>
+        Your participation is encrypted, ensuring your privacy while allowing you to contribute to the advancement of medicine.
         </p>
         <Link href='/pools' className='inline-block mt-4 p-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500'>
-                    CONTRUBITE USING VC
+        CONTRUBITE USING VC
         </Link>
       </section>
 

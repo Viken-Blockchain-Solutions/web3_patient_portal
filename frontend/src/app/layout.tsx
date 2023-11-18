@@ -3,7 +3,7 @@ import "./globals.css";
 import "./animation.css";
 import { Providers } from "./providers";
 import Navbar from "../components/NavBar";
-// import Footer from "../components/Footer";
+import Footer from "../components/Footer";
 
 export default function RootLayout({
   children
@@ -18,7 +18,9 @@ export default function RootLayout({
           <div className='main'>
             {children}
           </div>
+          <Footer />
         </Providers>
+
       </body>
     </html>
   );

@@ -4,8 +4,8 @@ import { QRCodeGenerator } from "./QRCodeGenerator";
 import { useProofTemplate } from "../hooks/useProofTemplate";
 
 interface ProofTemplateVerificationProps {
- setHolderCredentials: (credentials: any) => void;
- setIsProofVerified: (isVerified: boolean) => void;
+  setHolderCredentials: (credentials: any) => void;
+  setIsProofVerified: (isVerified: boolean) => void;
 }
 
 export const ProofTemplateVerification: React.FC<ProofTemplateVerificationProps> = ({ setHolderCredentials, setIsProofVerified }) => {
@@ -49,11 +49,11 @@ export const ProofTemplateVerification: React.FC<ProofTemplateVerificationProps>
   return (
     <div className="flex flex-col items-center">
       <button
-        className="border-2 rounded-md px-4 py-2 bg-blue-600 text-white my-5 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out"
+        className="btn-primary my-3"
         onClick={handleButtonClick}
         disabled={isLoading}
       >
-        {isLoading ? "Generating QR Code..." : "Step 1: Generate QR Code"}
+        {isLoading ? "Generating QR Code..." : "Generate QR Code"}
       </button>
 
       {qrCodeUrl && <QRCodeGenerator url={qrCodeUrl} setQrCodeGenerated={setQrCodeGenerated} />}

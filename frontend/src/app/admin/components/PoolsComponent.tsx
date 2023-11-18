@@ -1,4 +1,4 @@
-// pages/credentials.tsx
+// admin/components/PoolsComponent.tsx
 "use client";
 import React, { useEffect, useState } from "react";
 import { supabase } from "../../../utils/db/supabaseClient";
