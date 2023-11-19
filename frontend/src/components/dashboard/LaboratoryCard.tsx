@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import Potion from "../public/assets/images/potion.png";
-import ModalComponent from "../components/ModalComponent";
+import Potion from "../../public/assets/images/potion.png";
+import ModalComponent from "../ModalComponent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHandPointRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 const LaboratoryCard = () => {
@@ -11,7 +13,6 @@ const LaboratoryCard = () => {
   const [credentialIssued, setCredentialIssued] = useState(false);
   const [credential, setCredentialId] = useState("");
 
-  console.log(credential);
   return (
     <div className="md:w-12/12">
       <section className='container w-full bg-green-100 p-8 my-5 m-w-90 rounded-lg shadow-lg sm:mx-auto place-items-center'>
@@ -42,7 +43,8 @@ const LaboratoryCard = () => {
                         Follow the link below to view your lab results.
                       </p>
                       <p className="text-md leading-6 pb-1">
-                        Scan the QR code on the page to import the <span className="text-green-800 underline font-semibold">Verifiable Credential</span> into your <span className="text-green-800 underline font-semibold">DOCK WALLET</span>.
+                        Scan the QR code on the page to import the <span className="text-green-800 underline font-semibold">Verifiable Credential</span>
+                        into your <span className="text-green-800 underline font-semibold">DOCK WALLET</span>.
                       </p>
                     </th>
                   </tr>
@@ -50,17 +52,17 @@ const LaboratoryCard = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   <tr>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      Lab Results Link
+                      Lab Results PDF Link
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <Link href={credential} target="_blank" rel="noopener noreferrer" className="text-green-800 underline font-semibold">
-                        Access Lab Results
+                        <FontAwesomeIcon icon={faHandPointRight} /> Access Lab Results
                       </Link>
                     </td>
                   </tr>
                   <tr>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      Password
+                      PDF Password
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       1234
