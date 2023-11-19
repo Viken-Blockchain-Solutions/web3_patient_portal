@@ -1,8 +1,7 @@
 // frontend/src/utils/laboratoryUtils.ts
 import { dockIssuerDid, dockUrl } from "./envVariables";
 import { apiPost } from "./apiUtils";
-import { v4 as uuidv4 } from "uuid";
-import { getRandomNumber } from "../utils/tools";
+import { createCholesterolCredential } from "./credentials/cholesterolCredential";
 
 export const issueTestResult = async (
   receiverDID: string,
@@ -26,7 +25,8 @@ export const issueTestResult = async (
       name,
       proof,
       type
-    } = await signedLabCredential(dockIssuerDid, receiverDID);
+    } = await signedLabCredential(receiverDID);
+
     console.log("Received lab credential:", {
       id,
       credentialSubject,
@@ -49,6 +49,7 @@ export const issueTestResult = async (
         credentials: credentialSubject
       }
     };
+
     // console.log("Encrypting payload:", encryptionPayload);
     const didcommMessage = await apiPost({
       url: `${dockUrl}/messaging/encrypt`,
@@ -98,44 +99,15 @@ export const issueTestResult = async (
 };
 
 
-const signedLabCredential = async (issuerDid: string, receiverDid: string) => {
-  const labCredential = await apiPost({
-    url: `${dockUrl}/credentials`,
-    body: {
-      persist: true,
-      password: "1234",
-      credential: {
-        id: `https://creds-testnet.dock.io/${uuidv4()}`,
-        name: "Lab Test Verification",
-        description: "A verifiable credential for a lab test result.",
-        type: [
-          "VerifiableCredential",
-          "LabTestVerification"
-        ],
-        issuer: {
-          id: issuerDid,
-          name: "VBS - Labs"
-        },
-        subject: {
-          id: `${receiverDid}`,
-          testName: "Lipid Panel",
-          results: {
-            totalCholesterol: {
-              value: `${getRandomNumber()}`,
-              unit: "mg/dL",
-              referenceRange: "50-250 mg/dL"
-            }
-          }
-        }
-      }
-    }
-  });
+const signedLabCredential = async (receiverDid: string) => {
+  const cholesterolCredential = createCholesterolCredential(receiverDid);
+
+  const signedCredential = await apiPost(cholesterolCredential);
+
   console.log("Get Issued Credential from here:", {
     "Password": "1234",
-    "Credential Link": labCredential.id
+    "Credential Link": signedCredential.id
   });
 
-  // console.log("Received signed lab credential ID:", labCredential.id);
-  // console.log("Received signed lab credential:", labCredential);
-  return labCredential;
+  return signedCredential;
 };
