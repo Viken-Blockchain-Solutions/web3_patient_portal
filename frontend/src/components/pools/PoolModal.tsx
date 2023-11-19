@@ -71,13 +71,13 @@ export default function PoolModal() {
 
 
   return (
-    <div className="mt-10 mx-auto container">
+    <div className="mx-auto container">
       <button
         type="button"
         className="btn-primary w-full"
         onClick={() => handleOpen()}
       >
-      Contribute
+        Contribute
       </button>
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
@@ -106,21 +106,19 @@ export default function PoolModal() {
               >
                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                   <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                    <div className="sm:flex sm:items-start">
-                      <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <div className="sm:items-start">
+                      <div className="mt-3 text-center sm:ml-4 sm:mt-0">
                         <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                                                    Scan Qr code with Dock Wallet App and contribute with your VC
+                          Scan Qr code with Dock Wallet App and contribute with your VC
                         </Dialog.Title>
                         <ProofTemplateVerification
                           setHolderCredentials={setHolderCredentials}
                           setIsProofVerified={setIsProofVerified}
                         />
                         {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
-                        {holderCredentials && <HolderCredentialsModal holderCredentials={holderCredentials} />}
                       </div>
-                      <div className="mt-5">
-                        {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
-                        {isProofVerified && <HolderCredentialsModal holderCredentials={holderCredentials} />}
+                      <div className="ta-c">
+                        {(isProofVerified || holderCredentials) && <HolderCredentialsModal holderCredentials={holderCredentials} />}
                       </div>
                     </div>
                   </div>
@@ -131,7 +129,7 @@ export default function PoolModal() {
                       onClick={() => setOpen(false)}
                       ref={cancelButtonRef}
                     >
-                    Cancel
+                      Cancel
                     </button>
                   </div>
                 </Dialog.Panel>
