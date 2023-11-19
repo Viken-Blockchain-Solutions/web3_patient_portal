@@ -50,7 +50,6 @@ export const issueTestResult = async (
       }
     };
 
-    // console.log("Encrypting payload:", encryptionPayload);
     const didcommMessage = await apiPost({
       url: `${dockUrl}/messaging/encrypt`,
       body: encryptionPayload
@@ -102,7 +101,10 @@ export const issueTestResult = async (
 const signedLabCredential = async (receiverDid: string) => {
   const cholesterolCredential = createCholesterolCredential(receiverDid);
 
-  const signedCredential = await apiPost(cholesterolCredential);
+  const signedCredential = await apiPost({
+    "url": cholesterolCredential.url,
+    "body": cholesterolCredential.body
+  });
 
   console.log("Get Issued Credential from here:", {
     "Password": "1234",

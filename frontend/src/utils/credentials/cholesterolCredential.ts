@@ -6,13 +6,14 @@ export function createCholesterolCredential(receiverDid: string) {
   return {
     url: `${dockUrl}/credentials`,
     body: {
-      distribute: true,
-      persist: true,
-      password: "1234",
+      "anchor": true,
+      "persist": true,
+      "password": "1234",
+      "distribute": true,
       credential: {
         id: `https://creds-testnet.dock.io/${uuidv4()}`,
         name: "Lab Test Verification",
-        description: "A verifiable credential for a lab test result.",
+        description: "A verifiable credential for a cholesterol lab test result.",
         type: [
           "VerifiableCredential",
           "LabTestVerification"
