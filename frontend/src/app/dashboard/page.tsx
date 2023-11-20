@@ -1,4 +1,4 @@
-import HomeCards from "../../components/homepage/HomeCards";
+import HomeCards from "../../components/dashboard/HomeCards";
 
 const Dashboard: React.FC = () => {
   return (

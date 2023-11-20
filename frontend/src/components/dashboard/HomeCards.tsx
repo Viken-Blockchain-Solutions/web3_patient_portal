@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Book from "../../public/assets/images/book.png";
-import LaboratoryCard from "../LaboratoryCard";
+import LaboratoryCard from "./LaboratoryCard";
 
 
 export default function HomeCards() {
@@ -18,20 +18,18 @@ export default function HomeCards() {
         </h1>
         <h2 className='text-md mb-3 font-semibold text-indigo-500' >Contribute by Verifying Your Digital Credential</h2>
         <p className='text-md mb-3'>
-        This credential represents your lab results and is a key to participating in medical research pools and earn rewards.
+          This credential represents your lab results and is a key to participating in medical research pools and earn rewards.
         </p>
         <p className='text-md mb-3'>
-        With your credential, you can securely contribute to research initiatives and be part of groundbreaking medical discoveries.
+          With your credential, you can securely contribute to research initiatives and be part of groundbreaking medical discoveries.
         </p>
         <p>
-        Your participation is encrypted, ensuring your privacy while allowing you to contribute to the advancement of medicine.
+          Your participation is encrypted, ensuring your privacy while allowing you to contribute to the advancement of medicine.
         </p>
         <Link href='/pools' className='inline-block mt-4 p-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500'>
-        CONTRUBITE USING VC
+          CONTRUBITE USING VC
         </Link>
       </section>
-
-
     </div>
   );
 }

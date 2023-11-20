@@ -141,6 +141,17 @@ nav ul {
     color: white;
 }
 
+.btn-secondary {
+    background-color: grey;
+    border-radius: 50px;
+    padding: 6px 25px;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: rgb(150, 150, 150);
+}
+
 .btn-primary-transparent {
     background-color: white;
     border: solid 3px var(--purple);
@@ -239,6 +250,11 @@ nav ul {
 .swing {
     transform-origin: top center;
     animation: swing 2s infinite;
+}
+
+.balancing {
+    transform-origin: top center;
+    animation: balancing 1s infinite;
 }
 
 .vh-40 {

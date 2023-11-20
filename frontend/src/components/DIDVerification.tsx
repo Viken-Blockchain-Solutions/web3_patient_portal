@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { QRCodeGenerator } from "./QRCodeGenerator";
+import { QRCodeGenerator } from "./pools/QRCodeGenerator";
 import { useDIDVerification } from "../hooks/useDIDVerification";
 
 export const DIDVerification = ({ setHolderDID, setIsHolderDIDVerified }: any) => {
