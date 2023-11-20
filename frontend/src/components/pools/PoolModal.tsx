@@ -46,7 +46,6 @@ export default function PoolModal() {
         try {
           const newContribution = await handleContribution(contributionData);
           if (newContribution) {
-            await incrementContributions(newContribution.pool_id);
             processed = true;
             setContributionProcessed(processed);
           }

@@ -47,7 +47,7 @@ const LaboratoryCard = () => {
                         Follow the link below to view your lab results.
                       </p>
                       <p className="text-md leading-6 pb-1">
-                        Scan the QR code on the page to import the <span className="text-green-800 underline font-semibold">Verifiable Credential</span>
+                        Scan the QR code on the page to import the <span className="text-green-800 underline font-semibold mr-2">Verifiable Credential</span>
                         into your <span className="text-green-800 underline font-semibold">DOCK WALLET</span>.
                       </p>
                     </th>

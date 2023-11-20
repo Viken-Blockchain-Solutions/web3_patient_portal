@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Modal from "./Modal"; // Ensure this path is correct
+import { truncateString } from "../utils/tools";
 
 interface Credential {
   issuer: {
@@ -48,14 +49,14 @@ const HolderCredentialsModal: React.FC<HolderCredentialsModalProps> = ({ holderC
               <h4 className="text-lg text-main">Issuer:</h4>
               <p className="mb-2 p-2 bg-slate-100 rounded-lg">
                 <span className="font-bold">Did:</span>
-                <span className="text-xs"> {credential.issuer.id}</span>
+                <span className="text-xs"> {truncateString(credential.issuer.id)}</span>
                 <br />
                 <span className="font-bold">Name:</span> {credential.issuer.name}
               </p>
               <h4 className="text-lg text-main mb-2">Credential Subject:</h4>
               <p className="mb-2 p-2 bg-slate-100 rounded-lg">
                 <span className="font-bold">Did:</span>
-                <span className="text-xs"> {credential.credentialSubject.id}</span>
+                <span className="text-xs"> {truncateString(credential.credentialSubject.id)}</span>
                 <br />
                 <span className="font-bold ">Test Name : </span>{credential.credentialSubject.testName}
               </p>
