@@ -1,3 +1,4 @@
+import { create } from 'zustand';
 export interface Contribution {
   credential_id: string;
   contributor_id: string;
@@ -20,6 +21,19 @@ export interface Pool {
   funding_amount: number;
   currency_unit: string;
   contributions_amount: number;
+  proof_template: string;
+}
+
+export interface NewPool {
+  pool_id: string;
+  created_at?: string | null;
+  pool_heading: string;
+  pool_description: string;
+  start_date: string;
+  end_date: string;
+  funding_amount: number;
+  currency_unit: string;
+  contributions_amount?: number | null;
   proof_template: string;
 }
 
