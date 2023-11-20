@@ -4,7 +4,7 @@ import Image from "next/image";
 import Potion from "../../public/assets/images/potion.png";
 import ModalComponent from "../ModalComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHandPointRight, faWarning, faWheatAwnCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faHandPointRight, faWarning } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 const LaboratoryCard = () => {

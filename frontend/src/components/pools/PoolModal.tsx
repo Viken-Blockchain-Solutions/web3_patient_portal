@@ -21,6 +21,7 @@ export default function PoolModal() {
     if (isProofVerified) {
       onUserContribution();
     }
+    // eslint-disable-next-line
   }, [isProofVerified]);
 
   const onUserContribution = async () => {
@@ -46,13 +47,13 @@ export default function PoolModal() {
           const newContribution = await handleContribution(contributionData);
           if (newContribution) {
             await incrementContributions(newContribution.pool_id);
-            processed = true
-            setContributionProcessed(processed)
+            processed = true;
+            setContributionProcessed(processed);
           }
         } catch (error) {
           if (error instanceof Error && error.message === "This contribution has already been made.") {
             console.error("Contribution Error:", error.message);
-            setAlreadyContributed(true)
+            setAlreadyContributed(true);
             break;
           } else {
             console.error("An error was encountered:", error);

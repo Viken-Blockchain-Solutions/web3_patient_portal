@@ -5,12 +5,12 @@ import HomeImg from "../../public/assets/images/world.png";
 export default function Header() {
 
   const handleClick = () => {
-    const targetElement = document.getElementById('steps');
+    const targetElement = document.getElementById("steps");
 
     if (targetElement) {
       window.scrollTo({
         top: targetElement.offsetTop,
-        behavior: 'smooth',
+        behavior: "smooth"
       });
     }
   };
