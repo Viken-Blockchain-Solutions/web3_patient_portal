@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../../../utils/db/supabaseClient";
 import { Pool } from "../../../../types";
-import { uuid as v4 } from "uuidv4";
+import { v4 as uuidv4 } from "uuid";
 import PoolForm from "./PoolForm";
 import PoolTable from "./PoolTable";
 
@@ -12,7 +12,7 @@ const PoolComponent: React.FC = () => {
   const [pools, setPools] = useState<Pool[]>([]);
   const [isLoading, setLoading] = useState(true);
   const [newPool, setNewPool] = useState({
-    pool_id: `${v4()}`,
+    pool_id: `${uuidv4()}`,
     pool_heading: "",
     pool_description: "",
     start_date: "",
