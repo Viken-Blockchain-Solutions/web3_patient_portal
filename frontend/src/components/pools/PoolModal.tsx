@@ -1,18 +1,21 @@
 "use client";
 import { useState, useEffect, Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import HolderCredentialsModal from "../HolderCredentialsModal";
-import { ProofTemplateVerification } from "../ProofTemplateVerification";
+import { ProofTemplateVerification } from "./ProofTemplateVerification";
 import { Contribution } from "../../../types";
 import { handleContribution } from "../../utils/db/handleContribution";
 import { incrementContributions } from "../../utils/db/pools/addDataByPool";
+import Image from "next/image";
+import HolderCredentialsModal from "../HolderCredentialsModal";
+import Reward from "../../public/assets/images/reward.png";
 
 export default function PoolModal() {
   const [open, setOpen] = useState(false);
+  const [contributionProcessed, setContributionProcessed] = useState(false);
+  const [alreadyContributed, setAlreadyContributed] = useState(false);
   const [holderCredentials, setHolderCredentials] = useState<any>([]);
   const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null);
   const cancelButtonRef = useRef(null);
-
 
   useEffect(() => {
     if (isProofVerified) {
@@ -23,9 +26,9 @@ export default function PoolModal() {
   const onUserContribution = async () => {
 
     if (isProofVerified && holderCredentials && holderCredentials.length > 0) {
-      let contributionProcessed = false;
+      let processed = false;
       for (const credential of holderCredentials) {
-        console.log(`Handling Credential with ID: ${credential.id}`);
+
         const contributionData: Contribution = {
           credential_id: credential.id as string,
           contributor_id: credential.credentialSubject.id as string,
@@ -39,25 +42,24 @@ export default function PoolModal() {
           pool_id: "e93cc9c8-22c6-412b-bba8-6e4f57de72f8"
         };
 
-        console.log("Contribution Data:", contributionData);
-
         try {
           const newContribution = await handleContribution(contributionData);
           if (newContribution) {
             await incrementContributions(newContribution.pool_id);
-            contributionProcessed = true;
+            processed = true
+            setContributionProcessed(processed)
           }
         } catch (error) {
           if (error instanceof Error && error.message === "This contribution has already been made.") {
             console.error("Contribution Error:", error.message);
+            setAlreadyContributed(true)
             break;
           } else {
             console.error("An error was encountered:", error);
           }
         }
       }
-
-      if (!contributionProcessed) {
+      if (!processed) {
         console.log("an error with the a contribution was encountered.");
       } else {
         console.log("Contribution was processed successfully.");
@@ -105,23 +107,43 @@ export default function PoolModal() {
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                  <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                    <div className="sm:items-start">
-                      <div className="mt-3 text-center sm:ml-4 sm:mt-0">
-                        <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                          Scan Qr code with Dock Wallet App and contribute with your VC
-                        </Dialog.Title>
-                        <ProofTemplateVerification
-                          setHolderCredentials={setHolderCredentials}
-                          setIsProofVerified={setIsProofVerified}
-                        />
-                        {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
+
+                  {
+                    !contributionProcessed ?
+                      !alreadyContributed ?
+                        <div className="bg-white p-4">
+                          <Dialog.Title as="h3" className="text-main text-xl under font-semibold text-gray-900 ">
+                            Scan Qr
+                          </Dialog.Title>
+                          <p className="bg-slate-100 rounded-lg p-2 mt-2">
+                            Use the QR code scanner with mobile Dock Wallet App and contribute with your VC
+                          </p>
+                          <div className="ta-c">
+                            <ProofTemplateVerification
+                              setHolderCredentials={setHolderCredentials}
+                              setIsProofVerified={setIsProofVerified}
+                            />
+                            {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
+                            {(holderCredentials && holderCredentials.length > 0) && <HolderCredentialsModal holderCredentials={holderCredentials} />}
+                          </div>
+                        </div>
+                        :
+                        <div className="bg-white px-4 pb-4 pt-5 ta-c bg-green-100">
+                          <Image className="mt-4 balancing sha" src={Reward} height={200} width={200} sizes="100%" alt={"Reward"} />
+                          <p className="text-main text-xl">
+                            You already contribute to this pool!
+                          </p>
+                        </div>
+                      :
+                      <div className="bg-white px-4 pb-4 pt-5 ta-c bg-green-100">
+                        <Image className="mt-4 balancing sha" src={Reward} height={200} width={200} sizes="100%" alt={"Reward"} />
+                        <p className="text-main text-xl">
+                          Thanks for your contributions!
+                          <br />
+                          We have credit your account with $25
+                        </p>
                       </div>
-                      <div className="ta-c">
-                        {(isProofVerified || holderCredentials) && <HolderCredentialsModal holderCredentials={holderCredentials} />}
-                      </div>
-                    </div>
-                  </div>
+                  }
                   <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                     <button
                       type="button"

@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { QRCodeGenerator } from "./QRCodeGenerator";
-import { useProofTemplate } from "../hooks/useProofTemplate";
+import { useProofTemplate } from "../../hooks/useProofTemplate";
+import Credential from "../../public/assets/images/credential.png";
+import Image from "next/image";
 
 interface ProofTemplateVerificationProps {
   setHolderCredentials: (credentials: any) => void;
@@ -48,6 +50,11 @@ export const ProofTemplateVerification: React.FC<ProofTemplateVerificationProps>
 
   return (
     <div className="flex flex-col items-center">
+
+      {qrCodeUrl ? <QRCodeGenerator url={qrCodeUrl} setQrCodeGenerated={setQrCodeGenerated} />
+        :
+        <Image className="mt-8 mb-5" src={Credential} height={120} width={120} sizes="100%" alt={"Reward"} />
+      }
       <button
         className="btn-primary my-3"
         onClick={handleButtonClick}
@@ -56,7 +63,6 @@ export const ProofTemplateVerification: React.FC<ProofTemplateVerificationProps>
         {isLoading ? "Generating QR Code..." : "Generate QR Code"}
       </button>
 
-      {qrCodeUrl && <QRCodeGenerator url={qrCodeUrl} setQrCodeGenerated={setQrCodeGenerated} />}
 
       {proofRequestStatus !== null && (
         <p className="mt-4 text-lg text-gray-700">

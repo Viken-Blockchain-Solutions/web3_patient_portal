@@ -149,7 +149,7 @@ nav ul {
 }
 
 .btn-secondary:hover {
-    background-color: rgb(150, 150, 150);    
+    background-color: rgb(150, 150, 150);
 }
 
 .btn-primary-transparent {
@@ -250,6 +250,11 @@ nav ul {
 .swing {
     transform-origin: top center;
     animation: swing 2s infinite;
+}
+
+.balancing {
+    transform-origin: top center;
+    animation: balancing 1s infinite;
 }
 
 .vh-40 {

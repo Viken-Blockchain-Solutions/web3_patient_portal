@@ -4,7 +4,7 @@ import Image from "next/image";
 import Potion from "../../public/assets/images/potion.png";
 import ModalComponent from "../ModalComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHandPointRight } from "@fortawesome/free-solid-svg-icons";
+import { faHandPointRight, faWarning, faWheatAwnCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 const LaboratoryCard = () => {
@@ -30,6 +30,10 @@ const LaboratoryCard = () => {
             <p className='text-md mb-3'>
               Your data is encrypted and secure, and you have full control over who can access it.
               Contribute to the future of medicine while earning from it.
+            </p>
+            <p className="bg-green-300 rounded-lg p-3">
+              <FontAwesomeIcon icon={faWarning} className="mr-2" />
+              If you already have this credential into your dock wallet app, you can go to research pools to contribute.
             </p>
           </div>
         ) : (
