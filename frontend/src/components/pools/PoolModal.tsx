@@ -4,7 +4,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ProofTemplateVerification } from "./ProofTemplateVerification";
 import { Contribution } from "../../../types";
 import { handleContribution } from "../../utils/db/handleContribution";
-import { incrementContributions } from "../../utils/db/pools/addDataByPool";
 import Image from "next/image";
 import HolderCredentialsModal from "../HolderCredentialsModal";
 import Reward from "../../public/assets/images/reward.png";
