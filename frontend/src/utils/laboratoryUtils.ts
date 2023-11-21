@@ -2,6 +2,8 @@
 import { dockIssuerDid, dockUrl } from "./envVariables";
 import { apiPost } from "./apiUtils";
 import { createCholesterolCredential } from "./credentials/cholesterolCredential";
+import { createBloodTestCredential } from "./credentials/bloodCredential";
+import { createDiabetesCredential } from "./credentials/diabetesMonitoring";
 import { toast } from "react-toastify";
 
 export const issueTestResult = async (
@@ -9,10 +11,11 @@ export const issueTestResult = async (
   setIsLoading: any,
   setQrUrl: any
 ) => {
-
   try {
     setIsLoading(true);
-    const { id, credentialSubject } = await signedLabCredential(receiverDID);
+    const issuedCredentials = await signedLabCredential(receiverDID);
+
+    const credentialsSubject = issuedCredentials.map(cred => cred.credentialSubject);
 
     const encryptionPayload = {
       senderDid: dockIssuerDid,
@@ -20,7 +23,7 @@ export const issueTestResult = async (
       type: "issue",
       payload: {
         domain: "api.dock.io",
-        credentials: credentialSubject
+        credentials: credentialsSubject
       }
     };
 
@@ -39,13 +42,12 @@ export const issueTestResult = async (
       body: sendMessagePayload
     });
 
-
     setQrUrl(qrUrlResponse);
 
     return {
-      success: true,
-      credentialId: id,
-      qrUrl: qrUrlResponse
+      sent: true,
+      qrUrl: qrUrlResponse,
+      issuedCredentials: issuedCredentials
     };
 
   } catch (error) {
@@ -64,11 +66,22 @@ export const issueTestResult = async (
 
 const signedLabCredential = async (receiverDid: string) => {
   const cholesterolCredential = createCholesterolCredential(receiverDid);
+  const bloodTestCredential = createBloodTestCredential(receiverDid);
+  const diabetesMonitoringCredential = createDiabetesCredential(receiverDid);
 
-  const labCredential = await apiPost({
-    "url": cholesterolCredential.url,
-    "body": cholesterolCredential.body
-  });
+  const credentials = [
+    cholesterolCredential,
+    bloodTestCredential,
+    diabetesMonitoringCredential
+  ];
 
-  return labCredential;
+  const issuedCredentials = await Promise.all(credentials.map(async credential => {
+    return apiPost({
+      url: credential.url,
+      body: credential.body
+    });
+  }));
+  console.log("issuedCredentials:", issuedCredentials);
+  return issuedCredentials;
 };
+

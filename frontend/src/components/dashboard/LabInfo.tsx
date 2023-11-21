@@ -7,17 +7,19 @@ export default function LabInfo() {
     <div>
       <h2 className='text-md mb-3 font-semibold text-green-500'>For Patients</h2>
       <p className='text-md mb-3'>
-                In a real-life scenario, a Verifiable Credential from a laboratory test is issued by an accredited laboratory.
-        <br />
-                For testing purposes, we simulate the role of a laboratory to issue this test Verifiable Credential (VC).
+        Typically, a Verifiable Credential (VC) for a laboratory test is issued by an accredited laboratory. This process guarantees the authenticity and reliability of your medical test results.
       </p>
       <p className='text-md mb-3'>
-          This credential represents your lab results and is a key to participating in medical research pools and earn rewards.
+        In this demonstration, we´ll simulate a laboratory´s role to issue three distinct VCs, each representing a specific laboratory test result. This step is crucial for ensuring the integrity of the data used in our testing environment.
+      </p>
+      <p className='text-md mb-3'>
+        These VCs symbolize your personal lab results, serving as a digital passport that unlocks opportunities to participate in medical research studies. By contributing, you not only aid scientific progress but also stand to earn rewards for your participation.
       </p>
       <p className="bg-green-300 rounded-lg p-3">
         <FontAwesomeIcon icon={faWarning} className="mr-2" />
-                If you already own this credential into your dock wallet app, you can go to research pools to contribute.
+        Should you already possess these credentials in your DOCK Wallet app, feel free to explore and contribute to various research pools available, furthering medical advancements and potentially earning rewards.
       </p>
     </div>
+
   );
 }

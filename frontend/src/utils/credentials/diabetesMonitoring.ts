@@ -2,7 +2,7 @@ import { dockUrl, dockIssuerDid } from "../envVariables";
 import { v4 as uuidv4 } from "uuid";
 import { getRandomNumber } from "../tools";
 
-export function createDiabetesMonitoringCredential(receiverDid: string) {
+export function createDiabetesCredential(receiverDid: string) {
   return {
     url: `${dockUrl}/credentials`,
     body: {
