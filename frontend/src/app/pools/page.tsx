@@ -1,31 +1,14 @@
-// app/pools/page.tsx
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PoolCard from "../../components/PoolCard";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { supabase } from "../../utils/db/supabaseClient";
-import { Pool } from "../../../types";
+import { useFetchPools } from "../../hooks/useFetchPools";
 
 const PoolsPage = () => {
-  const [researchPools, setResearchPools] = useState<Pool[]>([]);
-  const [isLoading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchPools = async () => {
-      setLoading(true);
-      const { data, error } = await supabase.from("pool_view").select("*");
-      if (error) {
-        console.error("Error fetching pools:", error);
-      } else {
-        setResearchPools(data || []);
-      }
-      setLoading(false);
-    };
-
-    fetchPools();
-  }, []);
+  const { isLoading, researchPools } = useFetchPools();
 
   if (isLoading) return <p>Loading pools...</p>;
   if (researchPools.length === 0) return <p>No research pools available.</p>;
@@ -44,7 +27,7 @@ const PoolsPage = () => {
             <hr className="divider" />
             <div className="mt-5">
               <h3 className="mb-3">Here you can find various Research Pools that you can contribute to.</h3>
-              <p  className="mb-1">Browse through the available pools, check their details, and click <span className="font-bold">´Contribute´</span> to participate.</p>
+              <p className="mb-1">Browse through the available pools, check their details, and click <span className="font-bold">´Contribute´</span> to participate.</p>
               <p>By contributing your Verifiable Credentials, you can earn from the research funds allocated to each pool.</p>
             </div>
           </div>

@@ -52,11 +52,11 @@ export default function QrReader() {
   return (
     <div className="card lg:card-side">
       <div>
-        <div id="reader" className="w-auto"></div>
+        <div id="reader" className="w-auto my-4 rounded-lg"></div>
         {(!Did || Did === "") && (
           <>
             <button
-              className="btn-primary mt-3"
+              className="btn-primary"
               onClick={startCamera}>
               <FontAwesomeIcon icon={faQrcode} />   Scan Qr code
             </button>
@@ -66,7 +66,7 @@ export default function QrReader() {
       {(Did && Did !== "") &&
                 <>
                   <button
-                    className="btn-primary mt-3"
+                    className="btn-primary"
                     onClick={startCamera}>
                     <FontAwesomeIcon icon={faQrcode} /> Scan Again
                   </button>

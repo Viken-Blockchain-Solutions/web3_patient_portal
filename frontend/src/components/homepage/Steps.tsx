@@ -14,12 +14,13 @@ export default function Steps() {
 
   return (
     <>
-      <div className="mt-10 ta-c text-main">
-        <h1 className="text-2xl" id="steps">
+      <div className="mt-10 ta-c mb-20 text-main">
+        <h1 className="text-3xl" id="steps">
           3 simple steps</h1>
       </div>
 
-      <div className={"mt-10 pt-10 pb-10  lg:flex sm:block place-items-center justify-center	ta-c"}>
+
+      <div className={"mt-10 mb-20 pt-10 pb-10  lg:flex sm:block place-items-center justify-center	ta-c"}>
         <section className='lg:w-1/2 w-full items-center'>
           <h3 className="text-3xl font-bold">
             1° Download & Register
@@ -60,7 +61,7 @@ export default function Steps() {
         </section>
       </div>
 
-      <div className={"mt-10 pt-10 pb-10 lg:flex sm:block place-items-center justify-center	ta-c"}>
+      <div className={"mt-10 pt-10 mb-20 pb-10 lg:flex sm:block place-items-center justify-center	ta-c"}>
         <section className='lg:w-1/2 w-full items-center'>
           <h3 className="text-3xl font-bold">
             2° Request a Lab Result VC

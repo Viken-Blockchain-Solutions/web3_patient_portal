@@ -1,15 +1,19 @@
-import { Contribution } from "../../../types";
-import { addContribution, getContributionByCredentialID } from "./contributions";
-import { incrementContributions } from "./pools/addDataByPool";
+// //TODO - DELETE THIS FILE
+// import { Contribution } from "../../../types";
+// import { addContribution, getContributionByCredentialID } from "./contributions";
+// import { toast } from "react-toastify"
+// // import { incrementContributions } from "./pools/addDataByPool";
 
-export const handleContribution = async (contribution: Contribution) => {
-  const existingContributions: any = await getContributionByCredentialID(contribution.contributor_id, contribution.credential_id,);
-  if (existingContributions.length > 0) {
-    console.log("This contribution has already been made.");
-    throw new Error("This contribution has already been made.");
-  }
-  const addedContribution: any = await addContribution(contribution);
-  console.log("from handleContribution:", addedContribution);
-  await incrementContributions(addedContribution.pool_id);
-  return addedContribution;
-};
+// export const handleContribution = async (contribution: Contribution, setAlreadyContributed: (bool: boolean) => void) => {
+//   const existingContributions: any = await getContributionByCredentialID(contribution.contributor_id, contribution.credential_id,);
+//   if (existingContributions.length > 0) {
+//     setAlreadyContributed(true)
+//     toast.info('You already contributed to this pool.')
+//     return
+//   }
+//   const addedContribution: any = await addContribution(contribution);
+//   console.log('addedContribution', addedContribution);
+//   // await incrementContributions(addedContribution.pool_id);
+//   return addedContribution;
+// };
+

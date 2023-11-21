@@ -5,7 +5,6 @@ import { useDIDVerification } from "../hooks/useDIDVerification";
 
 export const DIDVerification = ({ setHolderDID, setIsHolderDIDVerified }: any) => {
   const [qrCodeUrl, setQrCodeUrl] = useState("");
-  const [error, setError] = useState("");
 
   // Use the custom hook here
   const {
@@ -13,7 +12,7 @@ export const DIDVerification = ({ setHolderDID, setIsHolderDIDVerified }: any) =
     proofRequestStatus,
     holderDID,
     generateDIDVerificationQR
-  } = useDIDVerification(setQrCodeUrl, setError);
+  } = useDIDVerification(setQrCodeUrl);
 
   useEffect(() => {
     if (holderDID) {
@@ -40,8 +39,6 @@ export const DIDVerification = ({ setHolderDID, setIsHolderDIDVerified }: any) =
         </p>
       )}
       {holderDID && (setIsHolderDIDVerified(true))}
-
-      {error && <p className="mt-4 text-lg text-red-500">{error}</p>}
     </div>
   );
 };

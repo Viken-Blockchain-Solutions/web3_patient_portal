@@ -60,7 +60,7 @@
     position: relative;
     display: block;
     background-color: var(--purple);
-    border: solid 5px #a8a4d6;
+    border: solid 3px #a8a4d6;
     border-bottom: none;
     color: white;
     width: 100%;
@@ -234,6 +234,7 @@ nav ul {
 
 .pool-card {
     transition: 0.5s;
+    border: solid 1px rgb(163, 163, 163);
     cursor: pointer;
     place-items: center;
     margin: 10px;
@@ -243,7 +244,6 @@ nav ul {
 }
 
 .pool-card:hover {
-    border: solid 1px rgb(163, 163, 163);
     transform: scale(1.1);
 }
 
@@ -291,6 +291,19 @@ nav ul {
     -webkit-animation: spin 2s linear infinite;
     /* Safari */
     animation: spin 2s linear infinite;
+}
+
+.valign-middle {
+    display: table !important;
+}
+
+.valign-middle div:first-child {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#reader__scan_region {
+    text-align: -webkit-center !important;
 }
 
 /* Safari */
