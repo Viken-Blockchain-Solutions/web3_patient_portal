@@ -12,7 +12,7 @@ export const issueTestResult = async (
 
   try {
     setIsLoading(true);
-    const { id, credentialSubject } = await createCholesterolCredential(dockIssuerDid, receiverDID);
+    const { id, credentialSubject } = await signedLabCredential(receiverDID);
 
     const encryptionPayload = {
       senderDid: dockIssuerDid,
@@ -65,7 +65,7 @@ export const issueTestResult = async (
 const signedLabCredential = async (receiverDid: string) => {
   const cholesterolCredential = createCholesterolCredential(receiverDid);
 
-  const signedCredential = await apiPost({
+  const labCredential = await apiPost({
     "url": cholesterolCredential.url,
     "body": cholesterolCredential.body
   });
