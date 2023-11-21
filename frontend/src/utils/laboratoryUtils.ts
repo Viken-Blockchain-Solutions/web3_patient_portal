@@ -56,7 +56,7 @@ export const issueTestResult = async (
       errorMessage = error.message;
     }
 
-    toast.error(`Error: ${errorMessage}`)
+    toast.error(`Error: ${errorMessage}`);
     return { success: false, error: errorMessage };
   } finally {
     setIsLoading(false);

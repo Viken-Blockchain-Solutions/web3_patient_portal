@@ -7,8 +7,8 @@ export const addContribution = async (contribution: Contribution, setAlreadyCont
   const existingContributions: any = await getContributionByCredentialID(contribution.contributor_id, contribution.credential_id);
 
   if (existingContributions.length > 0) {
-    setAlreadyContributed(true)
-    toast.info('You already contributed to this pool.')
+    setAlreadyContributed(true);
+    toast.info("You already contributed to this pool.");
     return false;
   }
 
@@ -18,15 +18,15 @@ export const addContribution = async (contribution: Contribution, setAlreadyCont
       .insert([contribution]);
     if (error) throw new Error(error.message);
 
-    console.log('addContribution data', data);
+    console.log("addContribution data", data);
     if (data && data.pool_id) {
       return data;
     } else {
       return false;
     }
   } catch (error) {
-    toast.info('Contribution error, try again or contact support')
-    return null
+    toast.info("Contribution error, try again or contact support");
+    return null;
   }
 
 };

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { apiPost, apiGet } from "../utils/apiUtils";
 import { dockUrl } from "../utils/envVariables";
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 
 interface ProofRequest {
   id: string;

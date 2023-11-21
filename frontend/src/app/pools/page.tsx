@@ -4,11 +4,11 @@ import PoolCard from "../../components/PoolCard";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useFetchPools } from "@/src/hooks/useFetchPools";
+import { useFetchPools } from "../../hooks/useFetchPools";
 
 const PoolsPage = () => {
 
-  const { isLoading, researchPools } = useFetchPools()
+  const { isLoading, researchPools } = useFetchPools();
 
   if (isLoading) return <p>Loading pools...</p>;
   if (researchPools.length === 0) return <p>No research pools available.</p>;

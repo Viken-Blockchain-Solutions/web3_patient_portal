@@ -32,7 +32,7 @@ const Modal = ({ isOpen, closeModal, children }: any) => {
             >
               <Dialog.Panel className="relative w-full max-w-md transform rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
 
-                <div style={{ width: '25px', height: '25px' }}
+                <div style={{ width: "25px", height: "25px" }}
                   onClick={closeModal}
                   className="valign-middle cursor-pointer bg-slate-300 hover:bg-slate-200 absolute rounded-full right-5 top-5 ta-c">
                   <div>

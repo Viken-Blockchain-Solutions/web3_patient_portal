@@ -7,7 +7,7 @@ import LabResults from "./LabResults";
 import LabInfo from "./LabInfo";
 
 const LaboratoryCard = () => {
-  const [qrURL, setQrUrl] = useState("");  
+  const [qrURL, setQrUrl] = useState("");
   const [credentialIssued, setCredentialIssued] = useState(false);
   const [credential, setCredentialId] = useState("");
 
@@ -25,10 +25,10 @@ const LaboratoryCard = () => {
           <LabResults credential={credential} />
         )}
         <ModalComponent
-          buttonText="REQUEST LAB RESULTS"          
+          buttonText="REQUEST LAB RESULTS"
           credentialIssued={credentialIssued}
           setCredentialId={setCredentialId}
-          setCredentialIssued={setCredentialIssued}          
+          setCredentialIssued={setCredentialIssued}
           setQrUrl={setQrUrl}
         />
 

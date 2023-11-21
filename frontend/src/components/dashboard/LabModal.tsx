@@ -1,10 +1,9 @@
 "use client";
-import { Fragment, useRef, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { useState } from "react";
 import { IdentificationIcon } from "@heroicons/react/24/outline";
 import { issueTestResult } from "../../utils/laboratoryUtils";
 import { userStore } from "../../../stores/appStore";
-import { ModalComponentProps } from "@/types/credentials";
+import { ModalComponentProps } from "../../../types/credentials";
 import Modal from "../Modal";
 import QrReader from "./QrReader";
 import { toast } from "react-toastify";
@@ -19,16 +18,13 @@ export default function ModalComponent({
 }: ModalComponentProps) {
   const userDid = userStore((state: any) => state.Did);
   const setDid = userStore((state: any) => state.setDid);
-
-  const cancelButtonRef = useRef(null);
-
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
 
   const handleSubmit = async (receiverDID: string) => {
     if (receiverDID.trim() === "") {
-      toast.error("DID cannot be empty")
+      toast.error("DID cannot be empty");
       return;
     }
 
@@ -42,7 +38,7 @@ export default function ModalComponent({
       setCredentialIssued(true);
       setOpen(false);
     } else {
-      toast.error("Failed to issue credential")
+      toast.error("Failed to issue credential");
     }
   };
 
@@ -61,9 +57,9 @@ export default function ModalComponent({
         <IdentificationIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
 
         <div className="mt-3">
-          <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+          <h3 className="text-base font-semibold leading-6 text-gray-900">
             Receive Laboratory Results
-          </Dialog.Title>
+          </h3>
           <div className="mt-2">
             <p className="text-sm text-gray-500 py-2">
               Enter or scan your <strong>DID</strong> to receive your <strong>Lab-Results</strong> as a <strong>Verifiable Credential</strong>.
@@ -87,7 +83,7 @@ export default function ModalComponent({
             <span className="text-gray-500">(Open the <strong>Dock Wallet App</strong> in your mobile, there you can find your DID on clicking on the link in the bottom menu.)</span>
           </p>
           <div className="mb-4">
-          <QrReader />
+            <QrReader />
           </div>
         </div>
 
@@ -97,7 +93,6 @@ export default function ModalComponent({
           credentialIssued={credentialIssued}
         />
       </Modal>
-
 
 
     </div>

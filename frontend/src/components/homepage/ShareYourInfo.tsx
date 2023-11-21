@@ -11,7 +11,7 @@ export default function ShareYourInfo() {
         <h1 className="text-4xl mb-4">Share your information safely</h1>
         <p className="text-main font-bold ">
           Verification with Zero-Knowledge Proofs
-        </p>        
+        </p>
       </div>
       <hr className="divider" />
       <div className={"lg:flex sm:block place-items-center justify-center mt-5"}>

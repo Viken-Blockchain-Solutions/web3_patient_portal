@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { apiPost, apiGet } from "../utils/apiUtils";
 import { dockUrl } from "../utils/envVariables";
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 
 export const useDIDVerification = (setQrCodeUrl: any) => {
   const [isLoading, setIsLoading] = useState(false);

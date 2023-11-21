@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ProofTemplateVerification } from "./ProofTemplateVerification";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQrcode } from "@fortawesome/free-solid-svg-icons";
-import { useContribute } from "@/src/hooks/useContribute";
+import { useContribute } from "../../hooks/useContribute";
 import Image from "next/image";
 import HolderCredentialsModal from "../HolderCredentialsModal";
 import Reward from "../../public/assets/images/reward.png";
@@ -20,7 +20,7 @@ export default function PoolModal() {
     isProofVerified,
     setHolderCredentials,
     setIsProofVerified
-  } = useContribute()
+  } = useContribute();
 
   return (
     <div className="mx-auto container">
