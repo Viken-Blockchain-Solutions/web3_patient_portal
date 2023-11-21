@@ -74,13 +74,17 @@ const PoolComponent: React.FC = () => {
           <p>New pool added successfully!</p>
         </div>
       )}
-      <div className="grid grid-cols-2 gap-4">
-        <PoolForm
-          newPool={newPool}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-        />
-        <PoolTable pools={pools} />
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
+        <div className="h-auto rounded-lg p-4">
+          <PoolForm
+            newPool={newPool}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+          />
+        </div>
+        <div className="h-auto rounded-lg lg:col-span-2 p-4">
+          <PoolTable pools={pools} />
+        </div>
       </div>
     </div>
   );

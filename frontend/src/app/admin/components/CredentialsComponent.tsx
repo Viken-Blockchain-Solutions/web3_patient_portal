@@ -8,6 +8,8 @@ import { truncateString } from "../../../utils/tools";
 
 const CredentialsComponent: React.FC = () => {
   const [contributions, setContributions] = useState<Contribution[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     const fetchContributions = async () => {
@@ -23,24 +25,30 @@ const CredentialsComponent: React.FC = () => {
     fetchContributions();
   }, []);
 
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = contributions.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(contributions.length / itemsPerPage);
+  const changePage = (pageNumber: any) => setCurrentPage(pageNumber);
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-lg font-bold text-center mb-4">Credentials</h1>
       <div className="overflow-x-auto">
-        <table className="min-w-fit leading-normal">
-          <thead>
-            <tr className="bg-gray-100">
-              {["Credential ID", "Contributor ID", "Test Name", "Issuer ID", "Issuer Name", "Issuer Logo", "Cholesterol Value", "Cholesterol Unit", "Cholesterol Reference Range", "Pool ID"].map((header) => (
-                <th key={header} className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600">
-                  {header}
-                </th>
-              ))}
-            </tr>
+        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+          <thead className="bg-gray-100">
+            {["Credential ID", "Contributor ID", "Test Name", "Issuer ID", "Issuer Name", "Issuer Logo", "Cholesterol Value", "Cholesterol Unit", "Cholesterol Reference Range", "Pool ID"].map((header) => (
+              <th key={header} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                {header}
+              </th>
+            ))}
           </thead>
-          <tbody>
-            {contributions.map((contribution) => (
+          <tbody className="divide-y divide-gray-200">
+            {currentItems.map((contribution) => (
               <tr key={contribution.credential_id} className="hover:bg-gray-50">
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-xs">
+                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                   {contribution.credential_id}
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-xs">
@@ -74,6 +82,19 @@ const CredentialsComponent: React.FC = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-end mt-4">
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => changePage(index + 1)}
+            className={`h-8 w-8 mx-1 rounded border border-gray-200 ${index + 1 === currentPage ? "bg-blue-600 text-white" : "bg-white text-gray-900"}`}
+          >
+            {index + 1}
+          </button>
+        ))}
       </div>
     </div>
   );
