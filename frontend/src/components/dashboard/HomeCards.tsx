@@ -18,9 +18,6 @@ export default function HomeCards() {
         </h1>
         <h2 className='text-md mb-3 font-semibold text-indigo-500' >Contribute by Verifying Your Digital Credential</h2>
         <p className='text-md mb-3'>
-          This credential represents your lab results and is a key to participating in medical research pools and earn rewards.
-        </p>
-        <p className='text-md mb-3'>
           With your credential, you can securely contribute to research initiatives and be part of groundbreaking medical discoveries.
         </p>
         <p>

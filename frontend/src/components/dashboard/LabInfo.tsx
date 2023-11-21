@@ -12,8 +12,7 @@ export default function LabInfo() {
                 For testing purposes, we simulate the role of a laboratory to issue this test Verifiable Credential (VC).
       </p>
       <p className='text-md mb-3'>
-                Your data is encrypted and secure, and you have full control over who can access it.
-                Contribute to the future of medicine while earning from it.
+          This credential represents your lab results and is a key to participating in medical research pools and earn rewards.
       </p>
       <p className="bg-green-300 rounded-lg p-3">
         <FontAwesomeIcon icon={faWarning} className="mr-2" />
