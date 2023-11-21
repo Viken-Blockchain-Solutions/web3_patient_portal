@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Contribution } from "../../types";
-import { handleContribution } from "../utils/db/handleContribution";
+import { addContribution } from "../utils/db/contributions";
 import { toast } from "react-toastify";
 
 export const useContribute = () => {
@@ -37,22 +37,15 @@ export const useContribute = () => {
                 };
 
                 try {
-                    const newContribution = await handleContribution(contributionData);
+                    const newContribution = await addContribution(contributionData, setAlreadyContributed);
                     if (newContribution) {
                         processed = true;
                         setContributionProcessed(processed);
                         toast.success("Contribution successfull!")
                     }
                 } catch (error) {
-                    if (error instanceof Error && error.message === "This contribution has already been made.") {
-                        console.error("Contribution Error:", error.message);
-                        toast.info('You already contributed to this pool.')
-                        setAlreadyContributed(true);
-                        break;
-                    } else {
-                        console.error("An error was encountered:", error);
-                        toast.error("An error was encountered, try agina or contact support")
-                    }
+                    console.error("An error was encountered:", error);
+                    toast.error("An error was encountered, try agina or contact support")
                 }
             }
         }

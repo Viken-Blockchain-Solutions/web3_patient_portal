@@ -1,4 +1,3 @@
-// In /hooks/useDIDVerification.js
 import { useState, useEffect } from "react";
 import { apiPost, apiGet } from "../utils/apiUtils";
 import { dockUrl } from "../utils/envVariables";
@@ -95,14 +94,6 @@ export const useDIDVerification = (setQrCodeUrl: any) => {
     }, 5000); // Polling every 5 seconds
 
     return () => clearInterval(intervalId);
-  });
-
-  console.log("useDIDVerification", {
-    proofRequestId,
-    proofRequestStatus,
-    proofData,
-    holderDID,
-    holderCredentials
   });
 
   return {
