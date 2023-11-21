@@ -41,6 +41,7 @@ export const useContribute = () => {
                     if (newContribution) {
                         processed = true;
                         setContributionProcessed(processed);
+                        toast.success("Contribution successfull!")
                     }
                 } catch (error) {
                     if (error instanceof Error && error.message === "This contribution has already been made.") {
@@ -50,13 +51,9 @@ export const useContribute = () => {
                         break;
                     } else {
                         console.error("An error was encountered:", error);
+                        toast.error("An error was encountered, try agina or contact support")
                     }
                 }
-            }
-            if (!processed) {
-                toast.error("An error with the a contribution was encountered.")
-            } else {
-                toast.success("Contribution successfull!")
             }
         }
     };
