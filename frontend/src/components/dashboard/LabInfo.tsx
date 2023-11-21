@@ -17,7 +17,7 @@ export default function LabInfo() {
             </p>
             <p className="bg-green-300 rounded-lg p-3">
                 <FontAwesomeIcon icon={faWarning} className="mr-2" />
-                If you already have this credential into your dock wallet app, you can go to research pools to contribute.
+                If you already own this credential into your dock wallet app, you can go to research pools to contribute.
             </p>
         </div>
     );
