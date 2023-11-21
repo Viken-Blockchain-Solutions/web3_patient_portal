@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Modal from "./Modal"; // Ensure this path is correct
+import Modal from "./Modal"; 
 import { truncateString } from "../utils/tools";
 
 interface Credential {

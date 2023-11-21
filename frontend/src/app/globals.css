@@ -293,6 +293,19 @@ nav ul {
     animation: spin 2s linear infinite;
 }
 
+.valign-middle {
+    display: table !important;
+}
+
+.valign-middle div:first-child {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#reader__scan_region {
+    text-align: -webkit-center !important;
+}
+
 /* Safari */
 @-webkit-keyframes spin {
     0% {
