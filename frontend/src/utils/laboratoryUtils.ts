@@ -3,42 +3,18 @@ import { dockIssuerDid, dockUrl } from "./envVariables";
 import { apiPost } from "./apiUtils";
 import { v4 as uuidv4 } from "uuid";
 import { getRandomNumber } from "../utils/tools";
+import { toast } from "react-toastify";
 
 export const issueTestResult = async (
   receiverDID: string,
   setIsLoading: any,
-  setError: any,
   setQrUrl: any
 ) => {
 
   try {
     setIsLoading(true);
-    setError("");
 
-    const {
-      id,
-      credentialSubject,
-      credentialSchema,
-      cryptoVersion,
-      description,
-      issuanceDate,
-      issuer,
-      name,
-      proof,
-      type
-    } = await signedLabCredential(dockIssuerDid, receiverDID);
-    console.log("Received lab credential:", {
-      id,
-      credentialSubject,
-      credentialSchema,
-      cryptoVersion,
-      description,
-      issuanceDate,
-      issuer,
-      name,
-      proof,
-      type
-    });
+    const { id, credentialSubject } = await signedLabCredential(dockIssuerDid, receiverDID);
 
     const encryptionPayload = {
       senderDid: dockIssuerDid,
@@ -49,32 +25,24 @@ export const issueTestResult = async (
         credentials: credentialSubject
       }
     };
-    // console.log("Encrypting payload:", encryptionPayload);
+
     const didcommMessage = await apiPost({
       url: `${dockUrl}/messaging/encrypt`,
       body: encryptionPayload
     });
-    console.log("Received encrypted message:", didcommMessage);
 
     const sendMessagePayload = {
       to: receiverDID,
       message: didcommMessage.jwe
     };
 
-    //console.log("Sending message:", sendMessagePayload);
     const { qrUrl: qrUrlResponse } = await apiPost({
       url: `${dockUrl}/messaging/send`,
       body: sendMessagePayload
     });
-    console.log("Received QR URL response:", qrUrlResponse);
+
 
     setQrUrl(qrUrlResponse);
-
-    console.log("Successfully issued test result", {
-      success: true,
-      credentialId: id,
-      qrUrl: qrUrlResponse
-    });
 
     return {
       success: true,
@@ -88,12 +56,10 @@ export const issueTestResult = async (
       errorMessage = error.message;
     }
 
-    console.error("Error in issueTestResult:", errorMessage);
-    setError(`Error: ${errorMessage}`);
+    toast.error(`Error: ${errorMessage}`);
     return { success: false, error: errorMessage };
   } finally {
     setIsLoading(false);
-    // console.log("issueTestResult completed");
   }
 };
 
@@ -130,12 +96,6 @@ const signedLabCredential = async (issuerDid: string, receiverDid: string) => {
       }
     }
   });
-  console.log("Get Issued Credential from here:", {
-    "Password": "1234",
-    "Credential Link": labCredential.id
-  });
 
-  // console.log("Received signed lab credential ID:", labCredential.id);
-  // console.log("Received signed lab credential:", labCredential);
   return labCredential;
 };

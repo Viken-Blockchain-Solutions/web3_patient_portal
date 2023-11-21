@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { apiPost, apiGet } from "../utils/apiUtils";
 import { dockUrl } from "../utils/envVariables";
+import { toast } from "react-toastify";
 
 interface ProofRequest {
   id: string;
@@ -12,7 +13,7 @@ interface ProofRequest {
   credentials: any[];
 }
 
-export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: (error: string) => void) => {
+export const useProofTemplate = (setQrCodeUrl: (url: string) => void) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [proofRequest, setProofRequest] = useState<ProofRequest>({
     id: "",
@@ -29,7 +30,7 @@ export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: 
     };
 
     setIsLoading(true);
-    setError("");
+
 
     try {
       const response = await apiPost({
@@ -45,11 +46,11 @@ export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: 
         throw new Error("QR Code URL not found in response");
       }
     } catch (err) {
-      setError(`Error: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
+      toast.error(`Error: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
     } finally {
       setIsLoading(false);
     }
-  }, [setError, setQrCodeUrl, proofRequest]);
+  }, [setQrCodeUrl, proofRequest]);
 
   const fetchProofData = useCallback(async () => {
     if (!proofRequest.id) return;
@@ -63,9 +64,9 @@ export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: 
       const credentials = dataResponse.presentation?.credentials;
       setProofRequest({ ...proofRequest, data: dataResponse, holderDID: holder, credentials });
     } catch (err) {
-      setError(`Error fetching proof data: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
+      toast.error(`Error fetching proof data: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
     }
-  }, [proofRequest, setError]);
+  }, [proofRequest]);
 
   const checkProofRequestStatus = useCallback(async () => {
     if (!proofRequest.id) return;
@@ -84,9 +85,9 @@ export const useProofTemplate = (setQrCodeUrl: (url: string) => void, setError: 
       }
     } catch (err) {
       console.log(err);
-      setError(`Error checking proof request status: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
+      toast.error(`Error checking proof request status: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
     }
-  }, [proofRequest, fetchProofData, setError]);
+  }, [proofRequest, fetchProofData]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {

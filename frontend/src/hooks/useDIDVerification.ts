@@ -1,9 +1,9 @@
-// In /hooks/useDIDVerification.js
 import { useState, useEffect } from "react";
 import { apiPost, apiGet } from "../utils/apiUtils";
 import { dockUrl } from "../utils/envVariables";
+import { toast } from "react-toastify";
 
-export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
+export const useDIDVerification = (setQrCodeUrl: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [proofRequestId, setProofRequestId] = useState(null);
   const [proofRequestStatus, setProofRequestStatus] = useState(null);
@@ -13,7 +13,6 @@ export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
 
   const generateDIDVerificationQR = async () => {
     setIsLoading(true);
-    setError("");
 
     const proofRequestBody = {
       name: "Proof Request",
@@ -45,7 +44,7 @@ export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
         throw new Error("QR Code URL not found in response");
       }
     } catch (err) {
-      setError(`Error: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
+      toast.error(`Error: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
     } finally {
       setIsLoading(false);
     }
@@ -66,7 +65,7 @@ export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
         await fetchProofData();
       }
     } catch (err) {
-      setError(`Error checking proof request status: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
+      toast.error(`Error checking proof request status: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
     }
   };
 
@@ -85,7 +84,7 @@ export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
       setHolderDID(holder);
       setHolderCredentials(credentials);
     } catch (err) {
-      setError(`Error fetching proof data: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
+      toast.error(`Error fetching proof data: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
     }
   };
 
@@ -95,14 +94,6 @@ export const useDIDVerification = (setQrCodeUrl: any, setError: any) => {
     }, 5000); // Polling every 5 seconds
 
     return () => clearInterval(intervalId);
-  });
-
-  console.log("useDIDVerification", {
-    proofRequestId,
-    proofRequestStatus,
-    proofData,
-    holderDID,
-    holderCredentials
   });
 
   return {
