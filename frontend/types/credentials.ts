@@ -1,7 +1,7 @@
 export type ModalComponentProps = {
     buttonText: string;
     credentialIssued: boolean;
-    setCredentialId: (id: string) => void;
+    setCredentials: (id: []) => void;
     setCredentialIssued: (issued: boolean) => void;
     setQrUrl: (url: string) => void;
 };

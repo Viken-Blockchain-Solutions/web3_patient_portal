@@ -1,8 +1,9 @@
 // frontend/src/utils/laboratoryUtils.ts
 import { dockIssuerDid, dockUrl } from "./envVariables";
 import { apiPost } from "./apiUtils";
-import { v4 as uuidv4 } from "uuid";
-import { getRandomNumber } from "../utils/tools";
+import { createCholesterolCredential } from "./credentials/cholesterolCredential";
+import { createBloodTestCredential } from "./credentials/bloodCredential";
+import { createDiabetesCredential } from "./credentials/diabetesMonitoring";
 import { toast } from "react-toastify";
 
 export const issueTestResult = async (
@@ -10,11 +11,11 @@ export const issueTestResult = async (
   setIsLoading: any,
   setQrUrl: any
 ) => {
-
   try {
     setIsLoading(true);
+    const issuedCredentials = await signedLabCredential(receiverDID);
 
-    const { id, credentialSubject } = await signedLabCredential(dockIssuerDid, receiverDID);
+    const credentialsSubject = issuedCredentials.map(cred => cred.credentialSubject);
 
     const encryptionPayload = {
       senderDid: dockIssuerDid,
@@ -22,7 +23,7 @@ export const issueTestResult = async (
       type: "issue",
       payload: {
         domain: "api.dock.io",
-        credentials: credentialSubject
+        credentials: credentialsSubject
       }
     };
 
@@ -41,13 +42,12 @@ export const issueTestResult = async (
       body: sendMessagePayload
     });
 
-
     setQrUrl(qrUrlResponse);
 
     return {
-      success: true,
-      credentialId: id,
-      qrUrl: qrUrlResponse
+      sent: true,
+      qrUrl: qrUrlResponse,
+      issuedCredentials: issuedCredentials
     };
 
   } catch (error) {
@@ -64,38 +64,24 @@ export const issueTestResult = async (
 };
 
 
-const signedLabCredential = async (issuerDid: string, receiverDid: string) => {
-  const labCredential = await apiPost({
-    url: `${dockUrl}/credentials`,
-    body: {
-      persist: true,
-      password: "1234",
-      credential: {
-        id: `https://creds-testnet.dock.io/${uuidv4()}`,
-        name: "Lab Test Verification",
-        description: "A verifiable credential for a lab test result.",
-        type: [
-          "VerifiableCredential",
-          "LabTestVerification"
-        ],
-        issuer: {
-          id: issuerDid,
-          name: "VBS - Labs"
-        },
-        subject: {
-          id: `${receiverDid}`,
-          testName: "Lipid Panel",
-          results: {
-            totalCholesterol: {
-              value: `${getRandomNumber()}`,
-              unit: "mg/dL",
-              referenceRange: "50-250 mg/dL"
-            }
-          }
-        }
-      }
-    }
-  });
+const signedLabCredential = async (receiverDid: string) => {
+  const cholesterolCredential = createCholesterolCredential(receiverDid);
+  const bloodTestCredential = createBloodTestCredential(receiverDid);
+  const diabetesMonitoringCredential = createDiabetesCredential(receiverDid);
 
-  return labCredential;
+  const credentials = [
+    cholesterolCredential,
+    bloodTestCredential,
+    diabetesMonitoringCredential
+  ];
+
+  const issuedCredentials = await Promise.all(credentials.map(async credential => {
+    return apiPost({
+      url: credential.url,
+      body: credential.body
+    });
+  }));
+  console.log("issuedCredentials:", issuedCredentials);
+  return issuedCredentials;
 };
+

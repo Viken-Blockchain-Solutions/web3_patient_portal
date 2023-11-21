@@ -12,7 +12,7 @@ import ModalSubmit from "./ModalSubmit";
 export default function ModalComponent({
   buttonText,
   credentialIssued,
-  setCredentialId,
+  setCredentials,
   setCredentialIssued,
   setQrUrl
 }: ModalComponentProps) {
@@ -29,12 +29,12 @@ export default function ModalComponent({
     }
 
     setIsLoading(true);
-    const response = await issueTestResult(receiverDID, setIsLoading, setQrUrl);
-
+    const response: any = await issueTestResult(receiverDID, setIsLoading, setQrUrl);
+    console.log("issueTestResult response: ", response);
     setIsLoading(false);
 
-    if (response.credentialId) {
-      setCredentialId(response.credentialId);
+    if (response.issuedCredentials) {
+      setCredentials(response.issuedCredentials);
       setCredentialIssued(true);
       setOpen(false);
     } else {
