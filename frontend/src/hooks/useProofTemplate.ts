@@ -76,13 +76,12 @@ export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: st
       .eq("credential_id", credentialId);
 
     if (selectError) {
-      console.error("Error checking Supabase for existing credential:", selectError);
-      return;
+      return false;
     }
 
     if (existingData && existingData.length > 0) {
       console.log("Credential already exists in the database.");
-      return;
+      return false;
     }
 
     for (const credential of credentials) {
@@ -105,6 +104,7 @@ export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: st
       if (error) {
         console.error("Error adding to Supabase:", error);
       }
+
     }
   }, [proofResponse, proofTemplateID]);
 
