@@ -1,15 +1,16 @@
-import { create } from 'zustand';
+import { create } from "zustand";
+
 export interface Contribution {
   credential_id: string;
-  contributor_id: string;
+  contributor_did: string;
   test_name: string;
   issuer_id: string;
   issuer_name: string;
   issuer_logo: string;
-  cholesterol_value: number;
-  cholesterol_unit: string;
-  cholesterol_reference_range: string;
+  test_result: object;
   pool_id: string;
+  submitted_at?: string | null;
+  verified_status: boolean;
 }
 
 export interface Pool {

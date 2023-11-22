@@ -2,45 +2,64 @@
 import React, { useEffect, useState } from "react";
 import { QRCodeGenerator } from "./QRCodeGenerator";
 import { useProofTemplate } from "../../hooks/useProofTemplate";
+import { useAddContributionToDB } from "../../hooks/useAddContributionToDB";
 import Credential from "../../public/assets/images/credential.png";
 import Image from "next/image";
 
 interface ProofTemplateVerificationProps {
+  poolId: string,
+  proofTemplate: string,
   setHolderCredentials: (credentials: any) => void;
   setIsProofVerified: (isVerified: boolean) => void;
+  setAlreadyContributed: (isAlreadyContributed: boolean) => void;
 }
 
-export const ProofTemplateVerification: React.FC<ProofTemplateVerificationProps> = ({ setHolderCredentials, setIsProofVerified }) => {
+/**
+ * Renders a component for verifying a proof template.
+ *
+ * @param {ProofTemplateVerificationProps} props - The props for the component.
+ * @param {ProofTemplate} props.proofTemplate - The proof template to be verified.
+ * @param {function} props.setHolderCredentials - The function to set the holder credentials.
+ * @param {function} props.setIsProofVerified - The function to set the proof verification status.
+ * @return {JSX.Element} - The JSX element for the component.
+ */
+export const ProofTemplateVerification: React.FC<ProofTemplateVerificationProps> = ({
+  poolId,
+  proofTemplate,
+  setHolderCredentials,
+  setIsProofVerified,
+  setAlreadyContributed
+}) => {
   const [qrCodeUrl, setQrCodeUrl] = useState("");
-  const [qrCodeGenerated, setQrCodeGenerated] = useState(false);
 
   const {
     isLoading,
-    proofRequestID,
-    proofRequestData,
-    proofRequestStatus,
-    holderDID,
+    proofResponseStatus,
     holderCredentials,
     generateProofRequestQR
-  } = useProofTemplate(setQrCodeUrl);
+  } = useProofTemplate(proofTemplate, setQrCodeUrl);
+
+  const {  } = useAddContributionToDB({ poolId, holderCredentials, setAlreadyContributed });
 
   useEffect(() => {
-    if (holderDID) {
+    if (proofResponseStatus && holderCredentials) {
+      setIsProofVerified(proofResponseStatus);
       setHolderCredentials(holderCredentials);
-      setIsProofVerified(proofRequestStatus);
     }
-
     // eslint-disable-next-line
-  }, [holderDID, holderCredentials, proofRequestID, proofRequestData, proofRequestStatus, qrCodeGenerated]);
+  }, [holderCredentials, proofResponseStatus]);
+
 
   const handleButtonClick = async () => {
-    await generateProofRequestQR();
+    if (!isLoading) {
+      await generateProofRequestQR();
+    }
   };
 
   return (
     <div className="flex flex-col items-center">
 
-      {qrCodeUrl ? <QRCodeGenerator url={qrCodeUrl} setQrCodeGenerated={setQrCodeGenerated} />
+      {qrCodeUrl ? <QRCodeGenerator url={qrCodeUrl} />
         :
         <Image className="mt-8 mb-5" src={Credential} height={120} width={120} sizes="100%" alt={"Reward"} />
       }
@@ -53,10 +72,10 @@ export const ProofTemplateVerification: React.FC<ProofTemplateVerificationProps>
       </button>
 
 
-      {proofRequestStatus !== null && (
+      {proofResponseStatus !== null && (
         <p className="mt-4 text-lg text-gray-700">
           Proof Request Verified:
-          {proofRequestStatus ? <span className="text-green-500">Yes</span> : <span className="text-red-500">No</span>}
+          {proofResponseStatus ? <span className="text-green-500">Yes</span> : <span className="text-red-500">No</span>}
         </p>
       )}
     </div>

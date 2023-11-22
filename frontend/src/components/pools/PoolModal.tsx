@@ -3,24 +3,18 @@ import { useState } from "react";
 import { ProofTemplateVerification } from "./ProofTemplateVerification";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQrcode } from "@fortawesome/free-solid-svg-icons";
-import { useContribute } from "../../hooks/useContribute";
 import Image from "next/image";
 import HolderCredentialsModal from "../HolderCredentialsModal";
 import Reward from "../../public/assets/images/reward.png";
 import Modal from "../Modal";
 
-export default function PoolModal() {
-
+export default function PoolModal({ poolId, proofTemplate }: any) {
+  const [contributionProcessed, setContributionProcessed] = useState(false);
+  const [alreadyContributed, setAlreadyContributed] = useState(false);
+  const [holderCredentials, setHolderCredentials] = useState<any>([]);
+  const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null);
   const [open, setOpen] = useState(false);
 
-  const {
-    contributionProcessed,
-    alreadyContributed,
-    holderCredentials,
-    isProofVerified,
-    setHolderCredentials,
-    setIsProofVerified
-  } = useContribute();
 
   return (
     <div className="mx-auto container">
@@ -44,8 +38,12 @@ export default function PoolModal() {
                 </p>
                 <div className="ta-c">
                   <ProofTemplateVerification
+                    poolId={poolId}
+                    proofTemplate={proofTemplate}
                     setHolderCredentials={setHolderCredentials}
                     setIsProofVerified={setIsProofVerified}
+                    setContributionProcessed={setContributionProcessed}
+                    setAlreadyContributed={setAlreadyContributed}
                   />
                   {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
                   {(holderCredentials && holderCredentials.length > 0) && <HolderCredentialsModal holderCredentials={holderCredentials} />}

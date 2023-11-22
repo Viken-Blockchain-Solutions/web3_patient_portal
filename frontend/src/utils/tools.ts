@@ -21,3 +21,7 @@ export function truncateString(str: string): string {
   return `${start}…….${end}`;
 }
 
+export const generateNonce = (): string => {
+  const nonce = Math.floor(100000 + Math.random() * 900000);
+  return nonce.toString();
+};

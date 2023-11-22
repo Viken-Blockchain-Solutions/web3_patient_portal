@@ -29,7 +29,7 @@ const PoolComponent: React.FC = () => {
       console.log("Fetching pools from the database...");
 
       const { data, error } = await supabase.from("research_pools").select("*");
-
+      console.log(data);
       if (error) {
         console.error("Error fetching data:", error);
       } else {
@@ -51,6 +51,7 @@ const PoolComponent: React.FC = () => {
     e.preventDefault();
     setIsSuccess(false);
     const { data, error } = await supabase.from("research_pools").insert([newPool]);
+    console.log(data);
     if (error) {
       console.error("Error inserting new pool:", error);
     } else {

@@ -14,7 +14,7 @@ const CredentialsComponent: React.FC = () => {
   useEffect(() => {
     const fetchContributions = async () => {
       const { data, error } = await supabase.from("new_contributions").select("*");
-
+      console.log(data);
       if (error) {
         console.error("Error fetching data:", error);
         return;
@@ -37,7 +37,7 @@ const CredentialsComponent: React.FC = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-lg font-bold text-center mb-4">Credentials</h1>
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+        {/* <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead className="bg-gray-100">
             {["Credential ID", "Contributor ID", "Test Name", "Issuer ID", "Issuer Name", "Issuer Logo", "Cholesterol Value", "Cholesterol Unit", "Cholesterol Reference Range", "Pool ID"].map((header) => (
               <th key={header} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
@@ -81,7 +81,7 @@ const CredentialsComponent: React.FC = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table> */}
       </div>
 
       {/* Pagination Controls */}

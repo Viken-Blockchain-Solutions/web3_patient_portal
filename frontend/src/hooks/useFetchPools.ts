@@ -10,7 +10,7 @@ export const useFetchPools = () => {
   useEffect(() => {
     const fetchPools = async () => {
       setLoading(true);
-      const { data, error } = await supabase.from("pool_view").select("*");
+      const { data, error } = await supabase.from("research_pools").select("*");
       if (error) {
         console.error("Error fetching pools:", error);
       } else {
