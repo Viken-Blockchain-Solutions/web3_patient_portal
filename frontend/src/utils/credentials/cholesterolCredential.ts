@@ -13,11 +13,11 @@ export function createCholesterolCredential(receiverDid: string) {
       schema: "https://schema.dock.io/LabTestVerification-V1.0-1700013941542.json",
       credential: {
         id: `https://creds-testnet.dock.io/${uuidv4()}`,
-        name: "Lab Test Verification",
+        name: "Cholesterol Study Lab Test",
         description: "A verifiable credential for a cholesterol lab test result.",
         type: [
           "VerifiableCredential",
-          "LabTestVerification"
+          "CholesterolStudyLabTest"
         ],
         issuer: {
           id: dockIssuerDid,

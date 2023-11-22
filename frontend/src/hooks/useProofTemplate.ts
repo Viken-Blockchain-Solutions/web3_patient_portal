@@ -5,7 +5,8 @@ import { apiPost, apiGet } from "../utils/apiUtils";
 import { dockUrl } from "../utils/envVariables";
 import { toast } from "react-toastify";
 import { generateNonce } from "./../utils/tools";
-import { ProofResponse } from "../../types";
+import { Contribution, ProofResponse } from "../../types";
+import { supabase } from "../db/supabaseClient";
 
 
 /**
@@ -55,43 +56,74 @@ export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: st
   }, [proofTemplateID, setQrCodeUrl, proofResponse]);
 
 
-  // Fetch proof data is used to fetch the data of the user response.
   const fetchProofData = useCallback(async () => {
     if (!proofResponse.id) return;
 
-    try {
-      const dataResponse = await apiGet({
-        url: `${dockUrl}/proof-requests/${proofResponse.id}`
-      });
+    const dataResponse = await apiGet({
+      url: `${dockUrl}/proof-requests/${proofResponse.id}`
+    });
 
-      const holder: string = dataResponse.presentation?.holder;
-      const credentials = dataResponse.presentation?.credentials;
-      setProofResponse({ ...proofResponse, data: dataResponse, holderDID: holder, credentials });
-    } catch (err) {
-      toast.error(`Error fetching proof data: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
+    const holder: string = dataResponse.presentation?.holder;
+    const credentials = dataResponse.presentation?.credentials;
+
+    setProofResponse({ ...proofResponse, data: dataResponse, holderDID: holder, credentials: credentials });
+    console.log("Data Response:", dataResponse);
+    const credentialId = credentials.id as string;
+
+    const { data: existingData, error: selectError } = await supabase
+      .from("new_contributions")
+      .select("credential_id")
+      .eq("credential_id", credentialId);
+
+    if (selectError) {
+      console.error("Error checking Supabase for existing credential:", selectError);
+      return;
     }
-  }, [proofResponse]);
+
+    if (existingData && existingData.length > 0) {
+      console.log("Credential already exists in the database.");
+      return;
+    }
+
+    for (const credential of credentials) {
+      const contributionData: Contribution = {
+        credential_id: credential.id as string,
+        contributor_did: credential.credentialSubject.id.split("did:key:")[1],
+        test_name: credential.credentialSubject.testName,
+        issuer_id: credential.issuer.id,
+        issuer_name: credential.issuer.name,
+        issuer_logo: credential.issuer.logo,
+        test_result: credential.credentialSubject.results,
+        proof_template: proofTemplateID,
+        verified_status: proofResponse.status
+      };
+
+      const { error } = await supabase
+        .from("new_contributions")
+        .insert([contributionData]);
+
+      if (error) {
+        console.error("Error adding to Supabase:", error);
+      }
+    }
+  }, [proofResponse, proofTemplateID]);
 
   // Check proof response status is used to check if the proofResponse has been verified.
   const checkProofResponseStatus = useCallback(async () => {
     if (!proofResponse.id) return;
 
-    try {
-      const statusResponse = await apiGet({
-        url: `${dockUrl}/proof-requests/${proofResponse.id}`
-      });
+    const statusResponse = await apiGet({
+      url: `${dockUrl}/proof-requests/${proofResponse.id}`
+    });
 
-      const isVerified = statusResponse.verified;
-      if (isVerified !== proofResponse.status) {
-        setProofResponse({ ...proofResponse, status: isVerified });
-        if (isVerified && !proofResponse.data) {
-          await fetchProofData();
-        }
+    const isVerified = statusResponse.verified;
+    if (isVerified !== proofResponse.status) {
+      setProofResponse({ ...proofResponse, status: isVerified });
+      if (isVerified && !proofResponse.data) {
+        await fetchProofData();
       }
-    } catch (err) {
-      console.log(err);
-      toast.error(`Error checking proof request status: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
     }
+
   }, [proofResponse, fetchProofData]);
 
   // Will call the checkProofResponseStatus function every 5 seconds

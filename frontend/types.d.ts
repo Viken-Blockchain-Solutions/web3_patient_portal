@@ -1,3 +1,4 @@
+
 export interface Contribution {
   credential_id: string;
   contributor_did: string;
@@ -6,7 +7,7 @@ export interface Contribution {
   issuer_name: string;
   issuer_logo: string;
   test_result: object;
-  pool_id: string;
+  proof_template: string;
   submitted_at?: string | null;
   verified_status: boolean;
 }
@@ -102,4 +103,96 @@ export interface Contributor {
   gender?: string;
   medical_conditions?: string;
   consent_given?: boolean;
+}
+
+
+// Credentials
+
+export interface BloodTestCredential {
+  kind: "BloodTestCredential";
+  id: string;
+  name: string;
+  description: string;
+  type: string[];
+  issuer: {
+    id: string;
+    name: string;
+  };
+  credentialSubject: {
+    id: string;
+    testName: string;
+    results: {
+      hemoglobin: {
+        value: string;
+        unit: string;
+        referenceRange: string;
+      };
+      whiteBloodCellCount: {
+        value: string;
+        unit: string;
+        referenceRange: string;
+      };
+      plateletCount: {
+        value: string;
+        unit: string;
+        referenceRange: string;
+      };
+    };
+  };
+}
+
+export interface CholesterolCredential {
+  kind: "CholesterolCredential";
+  id: string;
+  name: string;
+  description: string;
+  type: string[];
+  issuer: {
+    id: string;
+    name: string;
+  };
+  credentialSubject: {
+    id: string;
+    testName: string;
+    results: {
+      totalCholesterol: {
+        value: string;
+        unit: string;
+        referenceRange: string;
+      };
+    };
+  };
+}
+
+export interface DiabetesMonitoringCredential {
+  kind: "DiabetesMonitoringCredential";
+  id: string;
+  name: string;
+  description: string;
+  type: string[];
+  issuer: {
+    id: string;
+    name: string;
+  };
+  credentialSubject: {
+    id: string;
+    testName: string;
+    results: {
+      glucoseLevel: {
+        value: string;
+        unit: string;
+        referenceRange: string;
+      };
+      hba1c: {
+        value: string;
+        unit: string;
+        referenceRange: string;
+      };
+      insulinLevel: {
+        value: string;
+        unit: string;
+        referenceRange: string;
+      };
+    };
+  };
 }

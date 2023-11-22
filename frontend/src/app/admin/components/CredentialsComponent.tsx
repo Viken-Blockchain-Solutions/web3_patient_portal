@@ -17,6 +17,7 @@ const CredentialsComponent: React.FC = () => {
         console.error("Error fetching data:", error);
         return;
       }
+      console.log(data);
       setContributions(data || []);
     };
 
@@ -48,7 +49,7 @@ const CredentialsComponent: React.FC = () => {
               <tr key={index} className="hover:bg-gray-50">
                 <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{truncateString(contribution.credential_id)}</td>
                 <td className="px-4 py-2">{truncateString(contribution.contributor_did)}</td>
-                <td className="px-4 py-2">{truncateString(contribution.pool_id)}</td>
+                <td className="px-4 py-2">{truncateString(contribution.proof_template)}</td>
                 <td className="px-4 py-2">{truncateString(contribution.issuer_id)}</td>
                 <td className="px-4 py-2">{contribution.issuer_name}</td>
                 <td className="px-4 py-2"> {/* Image component if needed */}</td>

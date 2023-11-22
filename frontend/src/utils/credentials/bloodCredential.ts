@@ -13,11 +13,11 @@ export function createBloodTestCredential(receiverDid: string) {
       schema: "https://schema.dock.io/BloodTestVerification-V1-1700404310643.json",
       credential: {
         id: `https://creds-testnet.dock.io/${uuidv4()}`,
-        name: "Blood Test Verification",
+        name: "Blood Test Credential",
         description: "A verifiable credential for a general blood test result.",
         type: [
           "VerifiableCredential",
-          "BloodTestVerification"
+          "BloodTestCredential"
         ],
         issuer: {
           id: dockIssuerDid,
