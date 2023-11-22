@@ -39,8 +39,6 @@ export const ProofTemplateVerification: React.FC<ProofTemplateVerificationProps>
     generateProofRequestQR
   } = useProofTemplate(proofTemplate, setQrCodeUrl);
 
-  const {  } = useAddContributionToDB({ poolId, holderCredentials, setAlreadyContributed });
-
   useEffect(() => {
     if (proofResponseStatus && holderCredentials) {
       setIsProofVerified(proofResponseStatus);
