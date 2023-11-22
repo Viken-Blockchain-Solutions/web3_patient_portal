@@ -89,3 +89,17 @@ export interface PoolCardProps {
 export interface PoolModalProps {
   proofTemplateID: string; // Add this interface
 }
+
+
+// Contributors
+
+export interface Contributor {
+  contributor_did: string;
+  name?: string;
+  phone_number?: string;
+  country?: string;
+  age?: number;
+  gender?: string;
+  medical_conditions?: string;
+  consent_given?: boolean;
+}

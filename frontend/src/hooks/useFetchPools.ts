@@ -1,7 +1,7 @@
 // frontend/src/hooks/useFetchPools.ts
 "use client";
 import { useState, useEffect } from "react";
-import { supabase } from "../../db/supabaseClient";
+import { supabase } from "../db/supabaseClient";
 import { Pool } from "../../types";
 
 /**

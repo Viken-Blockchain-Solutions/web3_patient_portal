@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+/* import { useState, useEffect } from "react";
 import { Contribution } from "../../types";
 import { addContribution } from "../../db/contributions";
 import { toast } from "react-toastify";
@@ -45,7 +45,5 @@ export const useAddContributionToDB = ({poolId, holderCredentials, setAlreadyCon
 
 
 return {
-  contributionSuccess: 
-
-
-};
+  contributionSuccess: onUserContribution
+}; */

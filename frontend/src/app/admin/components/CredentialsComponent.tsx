@@ -1,8 +1,7 @@
 // admin/components/CredentialsComponent.tsx
 "use client";
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import { supabase } from "../../../../db/supabaseClient";
+import { supabase } from "../../../db/supabaseClient";
 import { Contribution } from "../../../../types";
 import { truncateString } from "../../../utils/tools";
 
@@ -14,7 +13,6 @@ const CredentialsComponent: React.FC = () => {
   useEffect(() => {
     const fetchContributions = async () => {
       const { data, error } = await supabase.from("new_contributions").select("*");
-      console.log(data);
       if (error) {
         console.error("Error fetching data:", error);
         return;
@@ -31,57 +29,37 @@ const CredentialsComponent: React.FC = () => {
   const currentItems = contributions.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(contributions.length / itemsPerPage);
-  const changePage = (pageNumber: any) => setCurrentPage(pageNumber);
+  const changePage = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-lg font-bold text-center mb-4">Credentials</h1>
       <div className="overflow-x-auto">
-        {/* <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead className="bg-gray-100">
-            {["Credential ID", "Contributor ID", "Test Name", "Issuer ID", "Issuer Name", "Issuer Logo", "Cholesterol Value", "Cholesterol Unit", "Cholesterol Reference Range", "Pool ID"].map((header) => (
+            {["Credential ID", "Contributor DID", "Pool ID", "Issuer ID", "Issuer Name", "Issuer Logo", "Test Name", "Test Result", "Submitted At", "Verified Status"].map((header) => (
               <th key={header} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 {header}
               </th>
             ))}
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {currentItems.map((contribution) => (
-              <tr key={contribution.credential_id} className="hover:bg-gray-50">
-                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                  {contribution.credential_id}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-xs">
-                  {truncateString(contribution.contributor_id)}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-xs">
-                  {contribution.test_name}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-xs">
-                  {truncateString(contribution.issuer_id)}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-xs">
-                  {contribution.issuer_name}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-xs">
-                  <Image src={contribution.issuer_logo} width={50} height={50} alt="Issuer Logo" priority className="rounded-full" />
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-xs">
-                  {contribution.cholesterol_value}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-xs">
-                  {contribution.cholesterol_unit}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-xs">
-                  {contribution.cholesterol_reference_range}
-                </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-xs">
-                  {contribution.pool_id}
-                </td>
+            {currentItems.map((contribution, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{truncateString(contribution.credential_id)}</td>
+                <td className="px-4 py-2">{truncateString(contribution.contributor_did)}</td>
+                <td className="px-4 py-2">{truncateString(contribution.pool_id)}</td>
+                <td className="px-4 py-2">{truncateString(contribution.issuer_id)}</td>
+                <td className="px-4 py-2">{contribution.issuer_name}</td>
+                <td className="px-4 py-2"> {/* Image component if needed */}</td>
+                <td className="px-4 py-2">{contribution.test_name}</td>
+                <td className="px-4 py-2">{JSON.stringify(contribution.test_result)}</td>
+                <td className="px-4 py-2">{contribution.submitted_at}</td>
+                <td className="px-4 py-2">{contribution.verified_status ? "Yes" : "No"}</td>
               </tr>
             ))}
           </tbody>
-        </table> */}
+        </table>
       </div>
 
       {/* Pagination Controls */}
