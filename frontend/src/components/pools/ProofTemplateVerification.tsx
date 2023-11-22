@@ -2,16 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { QRCodeGenerator } from "./QRCodeGenerator";
 import { useProofTemplate } from "../../hooks/useProofTemplate";
-import { useAddContributionToDB } from "../../hooks/useAddContributionToDB";
 import Credential from "../../public/assets/images/credential.png";
 import Image from "next/image";
 
 interface ProofTemplateVerificationProps {
-  poolId: string,
   proofTemplate: string,
   setHolderCredentials: (credentials: any) => void;
   setIsProofVerified: (isVerified: boolean) => void;
-  setAlreadyContributed: (isAlreadyContributed: boolean) => void;
 }
 
 /**
@@ -24,11 +21,9 @@ interface ProofTemplateVerificationProps {
  * @return {JSX.Element} - The JSX element for the component.
  */
 export const ProofTemplateVerification: React.FC<ProofTemplateVerificationProps> = ({
-  poolId,
   proofTemplate,
   setHolderCredentials,
-  setIsProofVerified,
-  setAlreadyContributed
+  setIsProofVerified
 }) => {
   const [qrCodeUrl, setQrCodeUrl] = useState("");
 
