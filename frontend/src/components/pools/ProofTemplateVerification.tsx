@@ -1,27 +1,21 @@
+// frontend/src/components/pools/ProofTemplateVerification.tsx
 "use client";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { QRCodeGenerator } from "./QRCodeGenerator";
 import { useProofTemplate } from "../../hooks/useProofTemplate";
 import Credential from "../../public/assets/images/credential.png";
-import Image from "next/image";
+import { ProofTemplateVerificationProps } from "../../../types";
 
-interface ProofTemplateVerificationProps {
-  proofTemplate: string,
-  setHolderCredentials: (credentials: any) => void;
-  setIsProofVerified: (isVerified: boolean) => void;
-}
 
 /**
- * Renders a component for verifying a proof template.
+ * Renders a component for proof template verification.
  *
- * @param {ProofTemplateVerificationProps} props - The props for the component.
- * @param {ProofTemplate} props.proofTemplate - The proof template to be verified.
- * @param {function} props.setHolderCredentials - The function to set the holder credentials.
- * @param {function} props.setIsProofVerified - The function to set the proof verification status.
- * @return {JSX.Element} - The JSX element for the component.
+ * @param {ProofTemplateVerificationProps} props - The props object that contains the proof template ID, functions to set holder credentials and set proof verification status.
+ * @return {ReactNode} The rendered component for proof template verification.
  */
 export const ProofTemplateVerification: React.FC<ProofTemplateVerificationProps> = ({
-  proofTemplate,
+  proofTemplateID,
   setHolderCredentials,
   setIsProofVerified
 }) => {
@@ -32,14 +26,13 @@ export const ProofTemplateVerification: React.FC<ProofTemplateVerificationProps>
     proofResponseStatus,
     holderCredentials,
     generateProofRequestQR
-  } = useProofTemplate(proofTemplate, setQrCodeUrl);
+  } = useProofTemplate(proofTemplateID, setQrCodeUrl);
 
   useEffect(() => {
     if (proofResponseStatus && holderCredentials) {
       setIsProofVerified(proofResponseStatus);
       setHolderCredentials(holderCredentials);
     }
-    // eslint-disable-next-line
   }, [holderCredentials, proofResponseStatus]);
 
 

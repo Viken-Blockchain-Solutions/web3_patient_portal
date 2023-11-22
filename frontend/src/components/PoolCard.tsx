@@ -1,16 +1,16 @@
+// frontend/src/components/PoolCard.tsx
 import Image from "next/image";
 import Docs from "../public/assets/images/docs.png";
 import PoolModal from "./pools/PoolModal";
+import { PoolCardProps } from "../../types";
 
-interface PoolCardProps {
-  title: string;
-  startDate: string;
-  endDate: string;
-  funding: number;
-  currency_unit: string;
-}
-
-export default function PoolCard({ title, startDate, endDate, funding, currency_unit }: PoolCardProps) {
+/**
+ * Renders the PoolCard component.
+ *
+ * @param {PoolCardProps} props - The props object containing the title, start date, end date, funding, currency unit, and proof template ID.
+ * @return {JSX.Element} The rendered PoolCard component.
+ */
+export default function PoolCard({ title, startDate, endDate, funding, currency_unit, proofTemplateID }: PoolCardProps) {
 
   return (
     <div>
@@ -48,7 +48,7 @@ export default function PoolCard({ title, startDate, endDate, funding, currency_
         <div className="mt-2 mb-5 mx-2">
           <p className="text-main font-semibold">Reward: {funding.toLocaleString() + " " + currency_unit}</p>
         </div>
-        <PoolModal />
+        <PoolModal proofTemplateID={proofTemplateID} />
       </div>
       <div className="inline-flex gap-2 rounded-lg w-full mt-3 justify-center">
         <p className="font-semibold text-gray-500">Start Date: {startDate} </p>

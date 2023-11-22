@@ -5,16 +5,17 @@ import { apiPost, apiGet } from "../utils/apiUtils";
 import { dockUrl } from "../utils/envVariables";
 import { toast } from "react-toastify";
 import { generateNonce } from "./../utils/tools";
+import { ProofResponse } from "../../types";
 
-interface ProofResponse {
-  id: string;
-  status: boolean;
-  data: any | null;
-  holderDID: string;
-  credentials: any[];
-}
 
-export const useProofTemplate = (proofTemplate : string, setQrCodeUrl: (url: string) => void) => {
+/**
+ * Generates a proof request QR code and updates the QR code URL.
+ *
+ * @param {string} proofTemplateID - The ID of the proof template.
+ * @param {(url: string) => void} setQrCodeUrl - A function to set the QR code URL.
+ * @return {void}
+ */
+export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: string) => void) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [proofResponse, setProofResponse] = useState<ProofResponse>({
     id: "",
@@ -32,10 +33,9 @@ export const useProofTemplate = (proofTemplate : string, setQrCodeUrl: (url: str
 
     setIsLoading(true);
 
-
     try {
       const response = await apiPost({
-        url: `${dockUrl}/proof-templates/${proofTemplate}/request`,
+        url: `${dockUrl}/proof-templates/${proofTemplateID}/request`,
         body: proofResponseBody
       });
 
@@ -46,13 +46,16 @@ export const useProofTemplate = (proofTemplate : string, setQrCodeUrl: (url: str
       } else {
         throw new Error("QR Code URL not found in response");
       }
+
     } catch (err) {
       toast.error(`Error: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
     } finally {
       setIsLoading(false);
     }
-  }, [setQrCodeUrl, proofResponse]);
+  }, [proofTemplateID, setQrCodeUrl, proofResponse]);
 
+
+  // Fetch proof data is used to fetch the data of the user response.
   const fetchProofData = useCallback(async () => {
     if (!proofResponse.id) return;
 
@@ -69,6 +72,7 @@ export const useProofTemplate = (proofTemplate : string, setQrCodeUrl: (url: str
     }
   }, [proofResponse]);
 
+  // Check proof response status is used to check if the proofResponse has been verified.
   const checkProofResponseStatus = useCallback(async () => {
     if (!proofResponse.id) return;
 
@@ -90,6 +94,7 @@ export const useProofTemplate = (proofTemplate : string, setQrCodeUrl: (url: str
     }
   }, [proofResponse, fetchProofData]);
 
+  // Will call the checkProofResponseStatus function every 5 seconds
   useEffect(() => {
     const intervalId = setInterval(() => {
       checkProofResponseStatus();
