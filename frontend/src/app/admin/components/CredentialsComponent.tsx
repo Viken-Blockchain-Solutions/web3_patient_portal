@@ -2,7 +2,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { supabase } from "../../../utils/db/supabaseClient";
+import { supabase } from "../../../../db/supabaseClient";
 import { Contribution } from "../../../../types";
 import { truncateString } from "../../../utils/tools";
 
@@ -13,7 +13,7 @@ const CredentialsComponent: React.FC = () => {
 
   useEffect(() => {
     const fetchContributions = async () => {
-      const { data, error } = await supabase.from("contributions").select("*");
+      const { data, error } = await supabase.from("new_contributions").select("*");
 
       if (error) {
         console.error("Error fetching data:", error);

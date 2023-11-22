@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Contribution } from "../../types";
-import { addContribution } from "../utils/db/contributions";
+import { addContribution } from "../../db/contributions";
 import { toast } from "react-toastify";
 
 export const useContribute = () => {

@@ -1,5 +1,5 @@
 import { supabase } from "./supabaseClient";
-import { Contribution } from "../../../types";
+import { Contribution } from "../types";
 import { toast } from "react-toastify";
 
 export const addContribution = async (contribution: Contribution, setAlreadyContributed: (bool: boolean) => void) => {
@@ -14,16 +14,12 @@ export const addContribution = async (contribution: Contribution, setAlreadyCont
 
   try {
     const { data, error }: any = await supabase
-      .from("contributions")
+      .from("new_contributions")
       .insert([contribution]);
     if (error) throw new Error(error.message);
 
     console.log("addContribution data", data);
-    if (data && data.pool_id) {
-      return data;
-    } else {
-      return false;
-    }
+    return data;
   } catch (error) {
     toast.info("Contribution error, try again or contact support");
     return null;
@@ -33,7 +29,7 @@ export const addContribution = async (contribution: Contribution, setAlreadyCont
 
 export const updateContribution = async (credential_id: string, updates: Partial<Contribution>) => {
   const { data, error } = await supabase
-    .from("contributions")
+    .from("new_contributions")
     .update(updates)
     .match({ credential_id });
   if (error) throw new Error(error.message);
@@ -42,7 +38,7 @@ export const updateContribution = async (credential_id: string, updates: Partial
 
 export const getContributionByCredentialID = async (contributor_id: string, credential_id: string) => {
   const { data, error } = await supabase
-    .from("contributions")
+    .from("new_contributions")
     .select("*")
     .eq("contributor_id", contributor_id)
     .eq("credential_id", credential_id);

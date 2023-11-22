@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../utils/db/supabaseClient";
+import { supabase } from "../../db/supabaseClient";
 import { Pool } from "../../types";
 
 export const useFetchPools = () => {
