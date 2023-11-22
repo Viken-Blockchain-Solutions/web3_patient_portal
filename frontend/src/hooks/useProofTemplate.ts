@@ -6,7 +6,7 @@ import { dockUrl } from "../utils/envVariables";
 import { toast } from "react-toastify";
 import { generateNonce } from "./../utils/tools";
 import { Contribution, ProofResponse } from "../../types";
-import { supabase } from "../db/supabaseClient";
+import { supabase } from "../../db/supabaseClient";
 
 
 /**

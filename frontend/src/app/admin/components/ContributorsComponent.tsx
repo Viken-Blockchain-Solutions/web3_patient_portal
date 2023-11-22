@@ -1,7 +1,7 @@
 // admin/components/ContributorsComponent.tsx
 "use client";
 import React, { useState, useEffect } from "react";
-import { supabase } from "../../../db/supabaseClient";
+import { supabase } from "../../../../db/supabaseClient";
 import { Contributor } from "../../../../types";
 import ContributorForm from "./ContributorForm";
 import ContributorTable from "./ContributorTable";

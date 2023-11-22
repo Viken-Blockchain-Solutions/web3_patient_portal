@@ -9,7 +9,7 @@ import Modal from "../Modal";
 import QrReader from "./QrReader";
 import { toast } from "react-toastify";
 import ModalSubmit from "./ModalSubmit";
-import { supabase } from "../../db/supabaseClient";
+import { supabase } from "../../../db/supabaseClient";
 
 /**
  * Renders a modal component for receiving laboratory results.

@@ -1,6 +1,6 @@
 // frontend/db/contributions.ts
 import { supabase } from "./supabaseClient";
-import { Contribution } from "../../types";
+import { Contribution } from "../types";
 import { toast } from "react-toastify";
 
 export const addContribution = async (contribution: Contribution, setAlreadyContributed: (bool: boolean) => void) => {

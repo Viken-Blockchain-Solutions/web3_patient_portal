@@ -1,7 +1,7 @@
 // admin/components/ContributorTable.tsx
 import React from "react";
 import { Contributor } from "../../../../types";
-import { supabase } from "../../../db/supabaseClient";
+import { supabase } from "../../../../db/supabaseClient";
 
 type ContributorTableProps = {
   contributors: Contributor[];

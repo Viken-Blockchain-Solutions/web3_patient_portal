@@ -1,7 +1,7 @@
 // admin/components/CredentialsComponent.tsx
 "use client";
 import { useEffect, useState } from "react";
-import { supabase } from "../../../db/supabaseClient";
+import { supabase } from "../../../../db/supabaseClient";
 import { Contribution } from "../../../../types";
 import { truncateString } from "../../../utils/tools";
 

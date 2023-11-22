@@ -1,7 +1,7 @@
 // admin/components/PoolsComponent.tsx
 "use client";
 import React, { useState, useEffect } from "react";
-import { supabase } from "../../../db/supabaseClient";
+import { supabase } from "../../../../db/supabaseClient";
 import { Pool } from "../../../../types";
 import { v4 as uuidv4 } from "uuid";
 import PoolForm from "./PoolForm";
