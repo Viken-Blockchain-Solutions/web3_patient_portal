@@ -1,4 +1,4 @@
-import HomeCards from "../../components/homepage/HomeCards";
+import HomeCards from "../../components/dashboard/HomeCards";
 
 const Dashboard: React.FC = () => {
   return (
@@ -9,6 +9,7 @@ const Dashboard: React.FC = () => {
           <h1 className="text-3xl mb-3">
             Welcome back!
           </h1>
+
           <hr className="divider" />
 
           <p>

@@ -1,65 +1,60 @@
-"use client";
-import React, { useState } from "react";
+// frontend/src/components/PoolCard.tsx
 import Image from "next/image";
-import avatarLogo from "../public/assets/images/verifyed.png";
-import { ProofTemplateVerification } from "./ProofTemplateVerification";
-import HolderCredentialsModal from "./HolderCredentialsModal";
+import Docs from "../public/assets/images/docs.png";
+import PoolModal from "./pools/PoolModal";
+import { PoolCardProps } from "../../types";
 
-interface PoolCardProps {
-  title: string;
-  startDate: string;
-  endDate: string;
-  funding: number;
-}
-
-export default function PoolCard({ title, startDate, endDate, funding }: PoolCardProps) {
-  const [isContributeClicked, setIsContributeClicked] = useState(false);
-  const [holderCredentials, setHolderCredentials] = useState<any>(null); // State to store holder's credentials
-  const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null); // State to store proof verification status
-
-  const handleContributeClick = () => {
-    setIsContributeClicked(true);
-  };
+/**
+ * Renders the PoolCard component.
+ *
+ * @param {PoolCardProps} props - The props object containing the title, start date, end date, funding, currency unit, and proof template ID.
+ * @return {JSX.Element} The rendered PoolCard component.
+ */
+export default function PoolCard({ title, startDate, endDate, funding, currency_unit, proofTemplateID }: PoolCardProps) {
 
   return (
-    <div className="max-w-[400px]">
-      <div className="flex gap-3 place-items-center">
-        <Image
-          alt="avatar"
-          width={50}
-          height={50}
-          className="verifyLogo"
-          src={avatarLogo}
-          priority
-        />
-        <div className="flex flex-col">
-          <p className="text-lg">{title}</p>
+    <div>
+      <div className="p-4 rounded-lg bg-slate-100 w-full relative pt-2">
+        <div className="flex pt-2">
+          <div className="flex flex-col">
+            <p className="text-lg inline-flex place-items-center">
+              <Image
+                alt="avatar"
+                width={40}
+                height={40}
+                sizes="100%"
+                className="verifyLogo"
+                src={Docs}
+                priority
+              />
+              {title}</p>
+          </div>
         </div>
+        <hr className="divider" />
+        <div className="text-md p-2">
+          <h5 className="text-sm text-slate-800 font-semibold">About:</h5>
+          <ol className="text-xs font-medium ml-2 text-gray-600">
+            <li>Name: <span className="text-main">Lipid Panel</span></li>
+            <li>Issuer: <span className="text-main">VBS-Labs</span></li>
+            <div>
+              <h6 className="font-semibold text-slate-800">Required:</h6>
+              <p className="font-medium text-xs text-gray-600">Cholesterol:</p>
+              <div className="text-main text-xs">
+                <li>Value, Unit, Reference Range</li>
+              </div>
+            </div>
+          </ol>
+        </div>
+        <div className="mt-2 mb-5 mx-2">
+          <p className="text-main font-semibold">Reward: {funding.toLocaleString() + " " + currency_unit}</p>
+        </div>
+        <PoolModal proofTemplateID={proofTemplateID} />
       </div>
-      <hr className="divider" />
-      <p className="text-small text-default-500">Start Date: {startDate}</p>
-      <p className="text-small text-default-500">End Date: {endDate}</p>
-      <div className="my-4">
-        <p>Funding: ${funding}</p>
+      <div className="inline-flex gap-2 rounded-lg w-full mt-3 justify-center">
+        <p className="font-semibold text-gray-500">Start Date: {startDate} </p>
+        <p className="font-semibold text-gray-500">- End Date: {endDate}</p>
       </div>
 
-      <div>
-        <button className="btn-primary" onClick={handleContributeClick}>
-          Contribute
-        </button>
-
-        {isContributeClicked && (
-          <ProofTemplateVerification
-            setHolderCredentials={setHolderCredentials}
-            setIsProofVerified={setIsProofVerified}
-          />
-        )}
-
-        {/* Optionally, display the holder's credentials and verification status */}
-        {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
-        {/*holderCredentials && <div>Holder´s Credentials: {JSON.stringify(holderCredentials)}</div>*/}
-        {holderCredentials && <HolderCredentialsModal holderCredentials={holderCredentials} />}
-      </div>
     </div>
   );
 }
