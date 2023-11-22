@@ -1,3 +1,4 @@
+// frontend/src/app/pools/page.tsx
 "use client";
 import React from "react";
 import PoolCard from "../../components/PoolCard";
@@ -6,13 +7,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useFetchPools } from "../../hooks/useFetchPools";
 
+/**
+ * Renders the PoolsPage component.
+ *
+ * @return {JSX.Element} The rendered PoolsPage component.
+ */
 const PoolsPage = () => {
 
   const { isLoading, researchPools } = useFetchPools();
-
   if (isLoading) return <p>Loading pools...</p>;
   if (researchPools.length === 0) return <p>No research pools available.</p>;
 
+  console.log(researchPools);
   return (
     <>
       <div className="mx-auto relative">
@@ -41,6 +47,7 @@ const PoolsPage = () => {
               endDate={pool.end_date}
               funding={pool.funding_amount}
               currency_unit={pool.currency_unit}
+              proofTemplateID={pool.proof_template}
             />
           ))}
         </div>

@@ -4,18 +4,21 @@ import { useState, useEffect, useCallback } from "react";
 import { apiPost, apiGet } from "../utils/apiUtils";
 import { dockUrl } from "../utils/envVariables";
 import { toast } from "react-toastify";
+import { generateNonce } from "./../utils/tools";
+import { Contribution, ProofResponse } from "../../types";
+import { supabase } from "../../db/supabaseClient";
 
-interface ProofRequest {
-  id: string;
-  status: boolean;
-  data: any | null;
-  holderDID: string;
-  credentials: any[];
-}
 
-export const useProofTemplate = (setQrCodeUrl: (url: string) => void) => {
+/**
+ * Generates a proof request QR code and updates the QR code URL.
+ *
+ * @param {string} proofTemplateID - The ID of the proof template.
+ * @param {(url: string) => void} setQrCodeUrl - A function to set the QR code URL.
+ * @return {void}
+ */
+export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: string) => void) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [proofRequest, setProofRequest] = useState<ProofRequest>({
+  const [proofResponse, setProofResponse] = useState<ProofResponse>({
     id: "",
     status: false,
     data: null,
@@ -24,91 +27,126 @@ export const useProofTemplate = (setQrCodeUrl: (url: string) => void) => {
   });
 
   const generateProofRequestQR = useCallback(async () => {
-    const proofRequestBody = {
-      "nonce": "123456",
+    const proofResponseBody = {
+      "nonce": `${generateNonce()}`,
       "domain": "dock.io"
     };
 
     setIsLoading(true);
 
-
     try {
       const response = await apiPost({
-        url: `${dockUrl}/proof-templates/9e752f3c-1e6d-41e7-bd7d-0a3290ef0ebe/request`,
-        body: proofRequestBody
+        url: `${dockUrl}/proof-templates/${proofTemplateID}/request`,
+        body: proofResponseBody
       });
 
       const qrCodeUrl = response.qr;
       if (qrCodeUrl) {
         setQrCodeUrl(qrCodeUrl);
-        setProofRequest({ ...proofRequest, id: response.id });
+        setProofResponse({ ...proofResponse, id: response.id });
       } else {
         throw new Error("QR Code URL not found in response");
       }
+
     } catch (err) {
       toast.error(`Error: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
     } finally {
       setIsLoading(false);
     }
-  }, [setQrCodeUrl, proofRequest]);
+  }, [proofTemplateID, setQrCodeUrl, proofResponse]);
+
 
   const fetchProofData = useCallback(async () => {
-    if (!proofRequest.id) return;
+    if (!proofResponse.id) return;
 
-    try {
-      const dataResponse = await apiGet({
-        url: `${dockUrl}/proof-requests/${proofRequest.id}`
-      });
+    const dataResponse = await apiGet({
+      url: `${dockUrl}/proof-requests/${proofResponse.id}`
+    });
 
-      const holder: string = dataResponse.presentation?.holder;
-      const credentials = dataResponse.presentation?.credentials;
-      setProofRequest({ ...proofRequest, data: dataResponse, holderDID: holder, credentials });
-    } catch (err) {
-      toast.error(`Error fetching proof data: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
+    const holder: string = dataResponse.presentation?.holder;
+    const credentials = dataResponse.presentation?.credentials;
+
+    setProofResponse({ ...proofResponse, data: dataResponse, holderDID: holder, credentials: credentials });
+    console.log("Data Response:", dataResponse);
+    const credentialId = credentials.id as string;
+
+    const { data: existingData, error: selectError } = await supabase
+      .from("new_contributions")
+      .select("credential_id")
+      .eq("credential_id", credentialId);
+
+    if (selectError) {
+      return false;
     }
-  }, [proofRequest]);
 
-  const checkProofRequestStatus = useCallback(async () => {
-    if (!proofRequest.id) return;
+    if (existingData && existingData.length > 0) {
+      console.log("Credential already exists in the database.");
+      return false;
+    }
 
-    try {
-      const statusResponse = await apiGet({
-        url: `${dockUrl}/proof-requests/${proofRequest.id}`
-      });
+    for (const credential of credentials) {
+      const contributionData: Contribution = {
+        credential_id: credential.id as string,
+        contributor_did: credential.credentialSubject.id.split("did:key:")[1],
+        test_name: credential.credentialSubject.testName,
+        issuer_id: credential.issuer.id,
+        issuer_name: credential.issuer.name,
+        issuer_logo: credential.issuer.logo,
+        test_result: credential.credentialSubject.results,
+        proof_template: proofTemplateID,
+        verified_status: proofResponse.status
+      };
 
-      const isVerified = statusResponse.verified;
-      if (isVerified !== proofRequest.status) {
-        setProofRequest({ ...proofRequest, status: isVerified });
-        if (isVerified && !proofRequest.data) {
-          await fetchProofData();
-        }
+      const { error } = await supabase
+        .from("new_contributions")
+        .insert([contributionData]);
+
+      if (error) {
+        console.error("Error adding to Supabase:", error);
       }
-    } catch (err) {
-      console.log(err);
-      toast.error(`Error checking proof request status: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
-    }
-  }, [proofRequest, fetchProofData]);
 
+    }
+  }, [proofResponse, proofTemplateID]);
+
+  // Check proof response status is used to check if the proofResponse has been verified.
+  const checkProofResponseStatus = useCallback(async () => {
+    if (!proofResponse.id) return;
+
+    const statusResponse = await apiGet({
+      url: `${dockUrl}/proof-requests/${proofResponse.id}`
+    });
+
+    const isVerified = statusResponse.verified;
+    if (isVerified !== proofResponse.status) {
+      setProofResponse({ ...proofResponse, status: isVerified });
+      if (isVerified && !proofResponse.data) {
+        await fetchProofData();
+      }
+    }
+
+  }, [proofResponse, fetchProofData]);
+
+  // Will call the checkProofResponseStatus function every 5 seconds
   useEffect(() => {
     const intervalId = setInterval(() => {
-      checkProofRequestStatus();
+      checkProofResponseStatus();
     }, 5000); // Polling every 5 seconds
 
-    if (proofRequest.status === true) {
+    if (proofResponse.status === true) {
       clearInterval(intervalId);
     }
 
     return () => clearInterval(intervalId);
-  }, [checkProofRequestStatus, proofRequest.status]);
+  }, [checkProofResponseStatus, proofResponse.status]);
 
 
   return {
     isLoading,
-    proofRequestID: proofRequest.id,
-    proofRequestData: proofRequest.data,
-    proofRequestStatus: proofRequest.status,
-    holderDID: proofRequest.holderDID,
-    holderCredentials: proofRequest.credentials,
+    proofResponseID: proofResponse.id,
+    proofResponseData: proofResponse.data,
+    proofResponseStatus: proofResponse.status,
+    holderDID: proofResponse.holderDID,
+    holderCredentials: proofResponse.credentials,
     generateProofRequestQR
   };
 };

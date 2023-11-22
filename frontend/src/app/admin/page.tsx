@@ -1,3 +1,4 @@
+import ContributorsComponent from "./components/ContributorsComponent";
 import CredentialsComponent from "./components/CredentialsComponent";
 import PoolsComponent from "./components/PoolsComponent";
 
@@ -7,6 +8,7 @@ const AdminPage = () => {
       <h1 className="text-3xl font-semibold text-gray-700 mb-8">Admin Page</h1>
       <div className="bg-white shadow rounded-lg p-6">
         <PoolsComponent />
+        <ContributorsComponent />
       </div>
       <div className="bg-white shadow rounded-lg p-6 mb-6">
         <CredentialsComponent />

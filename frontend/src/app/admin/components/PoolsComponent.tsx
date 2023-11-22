@@ -1,7 +1,7 @@
 // admin/components/PoolsComponent.tsx
 "use client";
 import React, { useState, useEffect } from "react";
-import { supabase } from "../../../utils/db/supabaseClient";
+import { supabase } from "../../../../db/supabaseClient";
 import { Pool } from "../../../../types";
 import { v4 as uuidv4 } from "uuid";
 import PoolForm from "./PoolForm";
@@ -29,7 +29,7 @@ const PoolComponent: React.FC = () => {
       console.log("Fetching pools from the database...");
 
       const { data, error } = await supabase.from("research_pools").select("*");
-
+      console.log(data);
       if (error) {
         console.error("Error fetching data:", error);
       } else {
@@ -51,6 +51,7 @@ const PoolComponent: React.FC = () => {
     e.preventDefault();
     setIsSuccess(false);
     const { data, error } = await supabase.from("research_pools").insert([newPool]);
+    console.log(data);
     if (error) {
       console.error("Error inserting new pool:", error);
     } else {
