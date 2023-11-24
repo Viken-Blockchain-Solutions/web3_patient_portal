@@ -39,7 +39,7 @@ const ModalComponent = ({
     const { data, error } = await supabase
       .from("contributors")
       .select("*")
-      .eq("contributor_did", contributorDid);
+      .eq("contributor_did", contributorDid.split("did:key:")[1]);
 
     if (error) {
       toast.error("Error checking contributor existence");
