@@ -50,14 +50,12 @@ export default function PoolModal({ proofTemplateID }: PoolModalProps) {
             {(holderCredentials && holderCredentials.length > 0) && <HolderCredentialsModal holderCredentials={holderCredentials} />}
           </div>
         </div>
-              :
         <div className="bg-white px-4 pb-4 pt-5 ta-c bg-green-100">
           <Image className="mt-4 balancing sha" src={Reward} height={200} width={200} sizes="100%" alt={"Reward"} />
           <p className="text-main text-xl">
                   You already contribute to this pool!
           </p>
         </div>
-            :
         <div className="bg-white px-4 pb-4 pt-5 ta-c bg-green-100">
           <Image className="mt-4 balancing sha" src={Reward} height={200} width={200} sizes="100%" alt={"Reward"} />
           <p className="text-main text-xl">
