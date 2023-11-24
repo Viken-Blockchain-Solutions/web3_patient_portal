@@ -29,6 +29,7 @@ export const handleAddContributor = async (_userDid: string) => {
         error: error.message
       };
     }
+
     console.log(`New contributor added: ${newContributor}`,);
 
     return {

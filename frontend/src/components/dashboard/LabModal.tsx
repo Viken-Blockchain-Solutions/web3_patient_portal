@@ -34,7 +34,6 @@ const ModalComponent = ({
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-
   const handleSubmit = async (receiverDID: string) => {
     if (receiverDID.trim() === "") {
       toast.error("DID cannot be empty");
