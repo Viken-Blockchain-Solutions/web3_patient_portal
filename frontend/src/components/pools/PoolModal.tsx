@@ -55,7 +55,7 @@ export default function PoolModal({ proofTemplateID }: PoolModalProps) {
         {isProofVerified !== null && (
           <div>
             {isProofVerified ? (
-              <div className={`mt-16 px-4 pb-4 pt-5 text-center ${isProofVerified ? 'bg-green-100' : 'bg-white'}`}>
+              <div className={`mt-16 px-4 pb-4 pt-5 text-center ${isProofVerified ? "bg-green-100" : "bg-white"}`}>
                 <Image className="mt-4 balancing sha" src={Reward} height={200} width={200} sizes="100%" alt="Reward" />
                 <p className="text-main text-xl">
                   Thanks for your contribution!
@@ -64,7 +64,7 @@ export default function PoolModal({ proofTemplateID }: PoolModalProps) {
                 </p>
               </div>
             ) : (
-              <div className={`px-4 pb-4 pt-5 text-center ${isProofVerified ? 'bg-green-100' : 'bg-white'}`}>
+              <div className={`px-4 pb-4 pt-5 text-center ${isProofVerified ? "bg-green-100" : "bg-white"}`}>
                 <Image className="mt-4 balancing sha" src={Reward} height={200} width={200} sizes="100%" alt="Reward" />
                 <p className="text-main text-xl">
                   You already contributed to this pool!
