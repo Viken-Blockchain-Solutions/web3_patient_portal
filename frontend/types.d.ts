@@ -22,6 +22,8 @@ export interface Pool {
   currency_unit: string;
   contributions_amount: number;
   proof_template: string;
+  test_name: string;
+  issuer_name: string;
 }
 
 export interface NewPool {
@@ -71,8 +73,9 @@ export interface ProofTemplateVerificationProps {
 
 export interface ProofResponse {
   id: string;
-  status: boolean;
+  verified: boolean;
   data: any | null;
+  qr: string;
   holderDID: string;
   credentials: any[];
 }
@@ -84,11 +87,13 @@ export interface PoolCardProps {
   endDate: string;
   funding: number;
   currency_unit: string;
-  proofTemplateID: string; // Add this line
+  proofTemplateID: string;
+  testName: string;
+  issuerName: string;
 }
 
 export interface PoolModalProps {
-  proofTemplateID: string; // Add this interface
+  proofTemplateID: string;
 }
 
 

@@ -20,7 +20,7 @@ import Modal from "../Modal";
 export default function PoolModal({ proofTemplateID }: PoolModalProps) {
   const [holderCredentials, setHolderCredentials] = useState<any>([]);
   const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
 
   return (
@@ -32,6 +32,7 @@ export default function PoolModal({ proofTemplateID }: PoolModalProps) {
       >
         Contribute
       </button>
+
       <Modal isOpen={open} closeModal={() => setOpen(false)} >
         <div className="bg-white">
           <h3 className="text-main text-xl under font-semibold text-gray-900 ">
@@ -50,22 +51,28 @@ export default function PoolModal({ proofTemplateID }: PoolModalProps) {
             {(holderCredentials && holderCredentials.length > 0) && <HolderCredentialsModal holderCredentials={holderCredentials} />}
           </div>
         </div>
-              :
-        <div className="bg-white px-4 pb-4 pt-5 ta-c bg-green-100">
-          <Image className="mt-4 balancing sha" src={Reward} height={200} width={200} sizes="100%" alt={"Reward"} />
-          <p className="text-main text-xl">
-                  You already contribute to this pool!
-          </p>
-        </div>
-            :
-        <div className="bg-white px-4 pb-4 pt-5 ta-c bg-green-100">
-          <Image className="mt-4 balancing sha" src={Reward} height={200} width={200} sizes="100%" alt={"Reward"} />
-          <p className="text-main text-xl">
-                Thanks for your contributions!
-            <br />
-                We have credit your account with $25
-          </p>
-        </div>
+
+        {isProofVerified !== null && (
+          <div>
+            {isProofVerified ? (
+              <div className={`mt-16 px-4 pb-4 pt-5 text-center ${isProofVerified ? "bg-green-100" : "bg-white"}`}>
+                <Image className="mt-4 balancing sha" src={Reward} height={200} width={200} sizes="100%" alt="Reward" />
+                <p className="text-main text-xl">
+                  Thanks for your contribution!
+                  <br />
+                  We have credited $25 to your account.
+                </p>
+              </div>
+            ) : (
+              <div className={`px-4 pb-4 pt-5 text-center ${isProofVerified ? "bg-green-100" : "bg-white"}`}>
+                <Image className="mt-4 balancing sha" src={Reward} height={200} width={200} sizes="100%" alt="Reward" />
+                <p className="text-main text-xl">
+                  You already contributed to this pool!
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </Modal>
     </div>
   );
