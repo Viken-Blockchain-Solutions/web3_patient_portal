@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 export const addContribution = async (contribution: Contribution, setAlreadyContributed: (bool: boolean) => void) => {
 
-  const existingContributions: any = await getContributionByCredentialID(contribution.contributor_id, contribution.credential_id);
+  const existingContributions: any = await getContributionByCredentialID(contribution.contributor_did, contribution.credential_id);
 
   if (existingContributions.length > 0) {
     setAlreadyContributed(true);
@@ -40,11 +40,11 @@ export const updateContribution = async (credential_id: string, updates: Partial
   return data;
 };
 
-export const getContributionByCredentialID = async (contributor_id: string, credential_id: string) => {
+export const getContributionByCredentialID = async (contributor_did: string, credential_id: string) => {
   const { data, error } = await supabase
     .from("contributions")
     .select("*")
-    .eq("contributor_id", contributor_id)
+    .eq("contributor_id", contributor_did)
     .eq("credential_id", credential_id);
   if (error) throw new Error(error.message);
   return data;
