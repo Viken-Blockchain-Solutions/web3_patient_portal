@@ -9,7 +9,6 @@ import { Pool } from "../../types";
  *
  * @return {{ researchPools: Pool[], isLoading: boolean }} An object containing the fetched research pools and a flag indicating if the data is still loading.
  */
-
 export const useFetchPools = () => {
 
   const [researchPools, setResearchPools] = useState<Pool[]>([]);

@@ -48,6 +48,8 @@ const PoolsPage = () => {
               funding={pool.funding_amount}
               currency_unit={pool.currency_unit}
               proofTemplateID={pool.proof_template}
+              testName={pool.test_name}
+              issuerName={pool.issuer_name}
             />
           ))}
         </div>

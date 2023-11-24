@@ -24,21 +24,15 @@ export const handleAddContributor = async (_userDid: string) => {
       .insert([{ contributor_did: keyPart }]);
 
     if (error) {
-      console.error("Error in adding contributor:", error);
-      return { success: false, error: error.message };
+      return {
+        success: false,
+        error: error.message
+      };
     }
-
     console.log(`New contributor added: ${newContributor}`,);
 
     return {
       success: true
-    };
-
-  } else {
-    console.log("Contributor already exists");
-    return {
-      success: false,
-      error: "Contributor already exists"
     };
   }
 };
