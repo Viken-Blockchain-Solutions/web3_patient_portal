@@ -2,7 +2,7 @@
 
 ## Overview
 
-This Next.js application serves as a comprehensive solution for secure identity and lab test result verification in healthcare settings. Utilizing Polygon ID for decentralized identity management, the application will eventually also offer optional NFC and Bluetooth features for an additional layer of security. A unique feature is the integration of a lab test result issuance system, allowing healthcare providers to securely and directly send verified test results to patients.
+This Next.js application serves as a comprehensive solution for secure credentials and lab test result verification in healthcare settings. A unique feature is the integration of a lab test result issuance system, allowing healthcare providers to securely and directly send verified test results to patients.
 
 ## Table of Contents
 
