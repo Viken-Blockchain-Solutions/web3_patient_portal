@@ -22,7 +22,7 @@ This Next.js application serves as a comprehensive solution for secure identity 
 
 ## Key Features
 
-- Decentralized identity verification via Polygon ID
+- Decentralized credentials verification via Dock Certs.
 - Next.js frontend, leveraging the "app-router" approach for enhanced scalability
 - Optional integration of NFC and Bluetooth technologies for heightened security
 - Direct issuance of Verifiable Credentials (VC) for lab test results to patients' wallets
@@ -30,9 +30,9 @@ This Next.js application serves as a comprehensive solution for secure identity 
 ## Technology Stack
 
 - **Frontend**: Next.js
-- **Identity Management**: Polygon ID
+- **Identity Management**: Dock Wallet
 - **Blockchain Interactions**: Web3
-- **Optional Technologies**: NFC, Bluetooth
+- **Optional Technologies**: 
 
 ## Getting Started
 
@@ -62,18 +62,14 @@ yarn dev
 2. **Lab Tests**: Based on the consultation, lab tests such as blood clot tests are prescribed.
 3. **Lab Processing**: Tests are conducted and results are processed in the lab.
 4. **Verifiable Credentials**: The lab generates a Verifiable Credential (VC) for the test result.
-5. **Identity Verification**: The patient's identity is verified using Polygon ID.
-6. **Issuance**: The VC is issued directly to the patient's digital wallet. This can be done whether the patient is on-site or off-site.
+5. **Issuance**: The VC is issued directly to the patient's digital wallet. This can be done whether the patient is on-site or off-site.
 
 ## Performance Metrics
 
-- Count of successful identity verifications
-- Count of successfully issued lab test VCs
-- User satisfaction metrics
+- Count of successful credentials verifications
 
 ## Potential Risks
 
-- Security concerns surrounding NFC/Bluetooth integration
 - Interoperability with pre-existing healthcare systems
 
 ## How to Contribute
