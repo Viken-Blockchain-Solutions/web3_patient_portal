@@ -15,7 +15,7 @@ export function createDiabetesCredential(receiverDid: string) {
       credential: {
         id: `https://creds-testnet.dock.io/${uuidv4()}`,
         name: "Diabetes Monitoring",
-        description: "A verifiable credential for Diabetes Monitoring lab test results.",
+        description: "A verifiable credential for Diabetes Monitoring lab test results. This credential support BBS+ algorithm. Which allows for selective disclosure of certain data.",
         type: [
           "VerifiableCredential",
           "DiabetesMonitoring"
