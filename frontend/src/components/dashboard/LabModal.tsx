@@ -9,7 +9,6 @@ import Modal from "../Modal";
 import QrReader from "./QrReader";
 import { toast } from "react-toastify";
 import ModalSubmit from "./ModalSubmit";
-import { supabase } from "../../../db/supabaseClient";
 
 /**
  * Renders a modal component for receiving laboratory results.
@@ -34,43 +33,6 @@ const ModalComponent = ({
   const setDid = userStore((state: any) => state.setDid);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const checkContributorExists = async (contributorDid: string): Promise<boolean> => {
-    const { data, error } = await supabase
-      .from("contributors")
-      .select("*")
-      .eq("contributor_did", contributorDid);
-
-    if (error) {
-      toast.error("Error checking contributor existence");
-      console.error("Error:", error);
-      return false;
-    }
-    return data.length > 0;
-  };
-
-  const handleAddContributor = async (_userDid: string) => {
-    const keyPart = _userDid.split("did:key:")[1];
-    const exists = await checkContributorExists(keyPart);
-    if (!exists) {
-      const { error } = await supabase
-        .from("contributors")
-        .insert([{ contributor_did: keyPart }]);
-
-      if (error) {
-        console.error("Error in adding contributor:", error);
-        toast.error("Error adding contributor");
-        return false;
-      }
-
-      console.log("New contributor added:",);
-      toast.success("Contributor added successfully");
-      return true;
-    } else {
-      toast.info("Contributor already exists");
-      return false;
-    }
-  };
 
   const handleSubmit = async (receiverDID: string) => {
     if (receiverDID.trim() === "") {
@@ -126,7 +88,6 @@ const ModalComponent = ({
               value={userDid}
               onChange={async (e) => {
                 setDid(e.target.value);
-                await handleAddContributor(e.target.value);
               }}
               className="border border-indigo-300 rounded-lg p-2 font-normal w-full"
             />

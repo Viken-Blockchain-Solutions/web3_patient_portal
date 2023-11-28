@@ -37,7 +37,6 @@ const HolderCredentialsModal: React.FC<HolderCredentialsModalProps> = ({ holderC
               <td className="p-2 font-bold">Hemoglobin Reference Range</td>
               <td>{hemoglobin.referenceRange}</td>
             </tr>
-            {/* Add more Blood Test specific rows if needed */}
           </table>
         </div>
       );
@@ -47,7 +46,6 @@ const HolderCredentialsModal: React.FC<HolderCredentialsModalProps> = ({ holderC
         <div>
           <h4 className="text-lg text-main mb-2">{testName} Results:</h4>
           <table className="my-table w-full bg-slate-200 rounded-lg">
-            {/* Render Cholesterol Test specific table rows */}
             <tr>
               <td className="p-2 font-bold">Cholesterol Unit</td>
               <td>{totalCholesterol.unit}</td>

@@ -21,7 +21,7 @@ const PoolsPage = () => {
   console.log(researchPools);
   return (
     <>
-      <div className="mx-auto relative">
+      <div className="mx-auto relative mb-10">
         <div className="absolute left-5 top-5 rounded-lg bg-slate-300 p-2 hover:bg-slate-2 hover:text-gray-700 font-bold text-gray-500 text-sm">
           <Link href="/dashboard"><FontAwesomeIcon icon={faArrowLeft} /> Go back</Link>
         </div>
@@ -48,6 +48,8 @@ const PoolsPage = () => {
               funding={pool.funding_amount}
               currency_unit={pool.currency_unit}
               proofTemplateID={pool.proof_template}
+              testName={pool.test_name}
+              issuerName={pool.issuer_name}
             />
           ))}
         </div>

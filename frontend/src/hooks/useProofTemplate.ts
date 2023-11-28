@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { apiPost, apiGet } from "../utils/apiUtils";
 import { dockUrl } from "../utils/envVariables";
-import { toast } from "react-toastify";
 import { generateNonce } from "./../utils/tools";
 import { Contribution, ProofResponse } from "../../types";
 import { supabase } from "../../db/supabaseClient";
@@ -20,8 +19,9 @@ export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: st
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [proofResponse, setProofResponse] = useState<ProofResponse>({
     id: "",
-    status: false,
+    verified: false,
     data: null,
+    qr: "",
     holderDID: "",
     credentials: []
   });
@@ -40,7 +40,9 @@ export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: st
         body: proofResponseBody
       });
 
+      console.log("response:", response);
       const qrCodeUrl = response.qr;
+
       if (qrCodeUrl) {
         setQrCodeUrl(qrCodeUrl);
         setProofResponse({ ...proofResponse, id: response.id });
@@ -49,7 +51,7 @@ export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: st
       }
 
     } catch (err) {
-      toast.error(`Error: ${err instanceof Error ? err.message : "Unknown error occurred"}`);
+      console.error("Error generating proof request QR code:", err);
     } finally {
       setIsLoading(false);
     }
@@ -84,25 +86,27 @@ export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: st
       return false;
     }
 
-    for (const credential of credentials) {
-      const contributionData: Contribution = {
-        credential_id: credential.id as string,
-        contributor_did: credential.credentialSubject.id.split("did:key:")[1],
-        test_name: credential.credentialSubject.testName,
-        issuer_id: credential.issuer.id,
-        issuer_name: credential.issuer.name,
-        issuer_logo: credential.issuer.logo,
-        test_result: credential.credentialSubject.results,
-        proof_template: proofTemplateID,
-        verified_status: proofResponse.status
-      };
+    if (proofResponse) {
+      for (const credential of credentials) {
+        const contributionData: Contribution = {
+          credential_id: credential.id as string,
+          contributor_did: credential.credentialSubject.id.split("did:key:")[1],
+          test_name: credential.credentialSubject.testName,
+          issuer_id: credential.issuer.id,
+          issuer_name: credential.issuer.name,
+          issuer_logo: credential.issuer.logo,
+          test_result: credential.credentialSubject.results,
+          proof_template: proofTemplateID,
+          verified_status: proofResponse.verified
+        };
 
-      const { error } = await supabase
-        .from("new_contributions")
-        .insert([contributionData]);
+        const { error } = await supabase
+          .from("new_contributions")
+          .insert([contributionData]);
 
-      if (error) {
-        console.error("Error adding to Supabase:", error);
+        if (error) {
+          console.error("Error adding to Supabase:", error);
+        }
       }
 
     }
@@ -117,8 +121,8 @@ export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: st
     });
 
     const isVerified = statusResponse.verified;
-    if (isVerified !== proofResponse.status) {
-      setProofResponse({ ...proofResponse, status: isVerified });
+    if (isVerified !== proofResponse.verified) {
+      setProofResponse({ ...proofResponse, verified: isVerified });
       if (isVerified && !proofResponse.data) {
         await fetchProofData();
       }
@@ -130,21 +134,21 @@ export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: st
   useEffect(() => {
     const intervalId = setInterval(() => {
       checkProofResponseStatus();
-    }, 5000); // Polling every 5 seconds
+    }, 7000); // Polling every 10 seconds
 
-    if (proofResponse.status === true) {
+    if (proofResponse.verified === true) {
       clearInterval(intervalId);
     }
 
     return () => clearInterval(intervalId);
-  }, [checkProofResponseStatus, proofResponse.status]);
+  }, [checkProofResponseStatus, proofResponse.verified]);
 
 
   return {
     isLoading,
     proofResponseID: proofResponse.id,
     proofResponseData: proofResponse.data,
-    proofResponseStatus: proofResponse.status,
+    proofResponseStatus: proofResponse.verified,
     holderDID: proofResponse.holderDID,
     holderCredentials: proofResponse.credentials,
     generateProofRequestQR
