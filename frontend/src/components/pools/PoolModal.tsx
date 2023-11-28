@@ -34,28 +34,12 @@ export default function PoolModal({ proofTemplateID }: PoolModalProps) {
       </button>
 
       <Modal isOpen={open} closeModal={() => setOpen(false)} >
-        <div className="bg-white">
-          <h3 className="text-main text-xl under font-semibold text-gray-900 ">
-            <FontAwesomeIcon icon={faQrcode} /> Scan Qr
-          </h3>
-          <p className="bg-slate-100 rounded-lg p-2 mt-2">
-                  Use the QR code scanner with mobile Dock Wallet App and contribute with your VC
-          </p>
-          <div className="ta-c">
-            <ProofTemplateVerification
-              proofTemplateID={proofTemplateID}
-              setHolderCredentials={setHolderCredentials}
-              setIsProofVerified={setIsProofVerified}
-            />
-            {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
-            {(holderCredentials && holderCredentials.length > 0) && <HolderCredentialsModal holderCredentials={holderCredentials} />}
-          </div>
-        </div>
 
-        {isProofVerified !== null && (
+
+        {isProofVerified !== null ? (
           <div>
             {isProofVerified ? (
-              <div className={`mt-16 px-4 pb-4 pt-5 text-center ${isProofVerified ? "bg-green-100" : "bg-white"}`}>
+              <div className={"px-4 pb-4 pt-5 ta-c"}>
                 <Image className="mt-4 balancing sha" src={Reward} height={200} width={200} sizes="100%" alt="Reward" />
                 <p className="text-main text-xl">
                   Thanks for your contribution!
@@ -64,7 +48,7 @@ export default function PoolModal({ proofTemplateID }: PoolModalProps) {
                 </p>
               </div>
             ) : (
-              <div className={`px-4 pb-4 pt-5 text-center ${isProofVerified ? "bg-green-100" : "bg-white"}`}>
+              <div className={"px-4 pb-4 pt-5 ta-c"}>
                 <Image className="mt-4 balancing sha" src={Reward} height={200} width={200} sizes="100%" alt="Reward" />
                 <p className="text-main text-xl">
                   You already contributed to this pool!
@@ -72,7 +56,25 @@ export default function PoolModal({ proofTemplateID }: PoolModalProps) {
               </div>
             )}
           </div>
-        )}
+        ) :
+          <div className="bg-white">
+            <h3 className="text-main text-xl under font-semibold text-gray-900 ">
+              <FontAwesomeIcon icon={faQrcode} /> Scan Qr
+            </h3>
+            <p className="bg-slate-100 rounded-lg p-2 mt-2">
+              Use the QR code scanner with mobile Dock Wallet App and contribute with your VC
+            </p>
+            <div className="ta-c">
+              <ProofTemplateVerification
+                proofTemplateID={proofTemplateID}
+                setHolderCredentials={setHolderCredentials}
+                setIsProofVerified={setIsProofVerified}
+              />
+              {isProofVerified !== null && <div>Proof Verification Status: {isProofVerified ? "Verified" : "Not Verified"}</div>}
+              {(holderCredentials && holderCredentials.length > 0) && <HolderCredentialsModal holderCredentials={holderCredentials} />}
+            </div>
+          </div>
+        }
       </Modal>
     </div>
   );

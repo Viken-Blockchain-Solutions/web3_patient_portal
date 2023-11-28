@@ -11,8 +11,8 @@ export default function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <>
-      <nav className='navbar sticky top-5 w-full rounded-full flex shadow-lg items-center min-w-screen p-1 bg-purple'>
+    <div className="sticky top-5 z-10">
+      <nav className='navbar w-full rounded-full flex shadow-lg items-center min-w-screen p-1 bg-purple'>
 
         <ul className='desktopMenu bg-white rounded-full w-full h-8 gap-4 lg items-center  justify-between sm:flex text-black'>
           <li className='flex gap-4 items-center'>
@@ -32,7 +32,7 @@ export default function Navbar() {
           </li>
         </ul>
 
-        <ul className='mobileMenu flex w-full items-center justify-between'>
+        <ul className='mobileMenu bg-white rounded-full flex w-full items-center justify-between'>
           <li onClick={() => setShowMenu(prev => !prev)} className='w-1/4 pt-1 ml-3 cursor-pointer'>
             <span className="menu text-grey">
               <FontAwesomeIcon icon={(showMenu) ? faClose : faBars} />
@@ -49,13 +49,13 @@ export default function Navbar() {
       </nav>
 
       {/* Conditionally render dropdown based on showMenu state */}
-      <ul className={`${showMenu ? "" : "hideMenu"} mobileMenu sticky p-1 top-20 rounded-md bg-purple w-full z-10 flex-col p-3`}>
+      <ul className={`${showMenu ? "" : "hideMenu"} mobileMenu dropdown bg-white shadow-lg p-3 sticky w-full z-10 flex-col`}>
 
         <li>
-          <Link onClick={() => setShowMenu(false)} href="/dashboard" className="px-2">Access</Link>
+          <Link onClick={() => setShowMenu(false)} href="/dashboard" className="px-2 text-black font-medium">Access</Link>
         </li>
 
       </ul>
-    </>
+    </div>
   );
 }

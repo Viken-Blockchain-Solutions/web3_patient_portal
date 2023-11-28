@@ -53,6 +53,7 @@
     margin: auto;
     margin-top: 50px;
     min-height: 86vh;
+    padding: 0px 20px;
 }
 
 .footer {
@@ -134,11 +135,20 @@ nav ul {
     max-height: 50px;
 }
 
+.dropdown {
+    border: solid 3px #a8a4d6 !important;
+    border-radius: 30px;
+    max-width: 98%;
+    margin: auto;
+    margin-top: 10px;
+}
+
 .btn-primary {
     background-color: var(--purple);
     border-radius: 50px;
     padding: 6px 25px;
     color: white;
+    white-space: nowrap;
 }
 
 .btn-secondary {
