@@ -80,12 +80,10 @@ const HolderCredentialsModal: React.FC<HolderCredentialsModalProps> = ({ holderC
               <td className="p-2 font-bold">Glucose Level Reference Range</td>
               <td>{glucoseLevel.referenceRange}</td>
             </tr>
-            {/* Add more Diabetes Monitoring Test specific rows if needed */}
           </table>
         </div>
       );
     } else {
-      // Handle other credential types here if necessary
       return null;
     }
   };
@@ -102,13 +100,16 @@ const HolderCredentialsModal: React.FC<HolderCredentialsModalProps> = ({ holderC
           {holderCredentials.map((credential, index) => (
             <div key={index} className="mb-4">
               <h3 className="text-lg font-semibold">Credential - {index + 1}</h3>
-              <h4 className="text-lg text-main">Issuer:</h4>
-              <p className="mb-2 p-2 bg-slate-100 rounded-lg">
-                <span className="font-bold">Did:</span>
-                <span className="text-xs"> {truncateString(credential.issuer.id)}</span>
-                <br />
-                <span className="font-bold">Name:</span> {credential.issuer.name}
-              </p>
+              {credential.issuer &&
+                <>
+                  <h4 className="text-lg text-main">Issuer:</h4><p className="mb-2 p-2 bg-slate-100 rounded-lg">
+                    <span className="font-bold">Did:</span>
+                    <span className="text-xs"> {truncateString(credential?.issuer?.id)}</span>
+                    <br />
+                    <span className="font-bold">Name:</span> {credential?.issuer?.name}
+                  </p>
+                </>
+              }
               <h4 className="text-lg text-main mb-2">Credential Subject:</h4>
               <p className="mb-2 p-2 bg-slate-100 rounded-lg">
                 <span className="font-bold">Did:</span>
