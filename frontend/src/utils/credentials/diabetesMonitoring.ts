@@ -10,18 +10,17 @@ export function createDiabetesCredential(receiverDid: string) {
       distribute: true,
       persist: true,
       password: "1234",
-      schema: "https://schema.dock.io/DiabetesMonitoring-V2-1700439747437.json",
+      algorithm: "dockbbs+",
       credential: {
         id: `https://creds-testnet.dock.io/${uuidv4()}`,
-        name: "Diabetes Monitoring Lab Test Results",
+        name: "Diabetes Monitoring Credential",
         description: "A verifiable credential for Diabetes Monitoring lab test results.",
         type: [
           "VerifiableCredential",
-          "DiabetesMonitoringLabTestResults"
+          "DiabetesMonitoringCredential"
         ],
         issuer: {
-          id: dockIssuerDid,
-          name: "VBS - Labs"
+          id: dockIssuerDid
         },
         subject: {
           id: receiverDid,

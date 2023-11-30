@@ -10,18 +10,16 @@ export function createCholesterolCredential(receiverDid: string) {
       persist: true,
       password: "1234",
       distribute: true,
-      schema: "https://schema.dock.io/LabTestVerification-V1.0-1700013941542.json",
       credential: {
         id: `https://creds-testnet.dock.io/${uuidv4()}`,
-        name: "Cholesterol Study Lab Test",
+        name: "Cholesterol Study Credential",
         description: "A verifiable credential for a cholesterol lab test result.",
         type: [
           "VerifiableCredential",
-          "CholesterolStudyLabTest"
+          "CholesterolStudyCredential"
         ],
         issuer: {
-          id: dockIssuerDid,
-          name: "VBS - Labs"
+          id: dockIssuerDid
         },
         subject: {
           id: receiverDid,
