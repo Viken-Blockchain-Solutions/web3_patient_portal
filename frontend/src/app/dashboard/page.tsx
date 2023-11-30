@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import React from 'react';
-import HomeCards from '../../components/dashboard/HomeCards';
+import React from "react";
+import HomeCards from "../../components/dashboard/HomeCards";
 
 const Dashboard: React.FC = () => {
 

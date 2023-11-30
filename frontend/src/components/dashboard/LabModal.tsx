@@ -66,7 +66,7 @@ const ModalComponent = ({
     toast.info(<Info />, {
       closeOnClick: true,
       autoClose: false,
-      position: 'bottom-center',
+      position: "bottom-center"
     });
   }
 
