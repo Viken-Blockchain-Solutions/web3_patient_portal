@@ -41,7 +41,7 @@ export default function PoolCard({ title, startDate, endDate, funding, currency_
         <div className="mt-2 mb-5 mx-2">
           <p className="text-main font-semibold">Reward: {funding.toLocaleString() + " " + currency_unit}</p>
         </div>
-        <PoolModal proofTemplateID={proofTemplateID} />
+        <PoolModal poolName={title} proofTemplateID={proofTemplateID} />
       </div>
       <div className="inline-flex gap-2 rounded-lg w-full mt-3 justify-center">
         <p className="font-semibold text-gray-500">Start Date: {startDate} </p>

@@ -10,14 +10,7 @@ import HolderCredentialsModal from "../HolderCredentialsModal";
 import Reward from "../../public/assets/images/reward.png";
 import Modal from "../Modal";
 
-
-/**
- * Renders the PoolModal component.
- *
- * @param {PoolModalProps} props - The props object containing the proofTemplateID.
- * @return {JSX.Element} The rendered PoolModal component.
- */
-export default function PoolModal({ proofTemplateID }: PoolModalProps) {
+export default function PoolModal({ proofTemplateID, poolName }: PoolModalProps) {
   const [holderCredentials, setHolderCredentials] = useState<any>([]);
   const [isProofVerified, setIsProofVerified] = useState<boolean | null>(null);
   const [open, setOpen] = useState<boolean>(false);
@@ -46,6 +39,7 @@ export default function PoolModal({ proofTemplateID }: PoolModalProps) {
                   <br />
                   We have credited $25 to your account.
                 </p>
+                {(holderCredentials && holderCredentials.length > 0) && <HolderCredentialsModal holderCredentials={holderCredentials} />}
               </div>
             ) : (
               <div className={"px-4 pb-4 pt-5 ta-c"}>
@@ -60,6 +54,8 @@ export default function PoolModal({ proofTemplateID }: PoolModalProps) {
           <div className="bg-white">
             <h3 className="text-main text-xl under font-semibold text-gray-900 ">
               <FontAwesomeIcon icon={faQrcode} /> Scan Qr
+              <br />
+              <span className="text-gray-700 text-lg">{poolName} VC</span>
             </h3>
             <p className="bg-slate-100 rounded-lg p-2 mt-2">
               Use the QR code scanner with mobile Dock Wallet App and contribute with your VC

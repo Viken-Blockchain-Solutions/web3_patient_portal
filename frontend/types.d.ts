@@ -94,6 +94,7 @@ export interface PoolCardProps {
 
 export interface PoolModalProps {
   proofTemplateID: string;
+  poolName: string;
 }
 
 
