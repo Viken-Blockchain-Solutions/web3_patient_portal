@@ -14,3 +14,11 @@ export const userStore = create((set) => ({
     }
   }
 }));
+
+export const toastStore = create((set) => ({
+  isLoaded: false,
+  setIsLoaded: async () => {
+    set(() => ({ isLoaded: true }));
+    localStorage.setItem('toastLoaded', "true")
+  }
+}));
