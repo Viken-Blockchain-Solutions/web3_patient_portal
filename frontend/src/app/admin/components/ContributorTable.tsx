@@ -15,7 +15,6 @@ const ContributorTable: React.FC<ContributorTableProps> = ({ contributors, setCo
     if (error) {
       console.error("Error deleting contributor:", error);
     } else {
-      // Update the state to remove the deleted contributor
       setContributors(prevContributors => prevContributors.filter(contributor => contributor.contributor_did !== contributorDid));
     }
   };
@@ -54,7 +53,6 @@ const ContributorTable: React.FC<ContributorTableProps> = ({ contributors, setCo
           </tbody>
         </table>
       </div>
-      {/* Pagination or other controls can be added here */}
     </div>
   );
 };

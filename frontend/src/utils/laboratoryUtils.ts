@@ -7,7 +7,6 @@ import { createDiabetesCredential } from "./credentials/diabetesMonitoring";
 import { toast } from "react-toastify";
 import { IssueTestResultResponse, EncryptionPayload   } from "../../types";
 
-
 /**
  * Encrypts and prepares a message for a receiver.
  *
@@ -26,11 +25,13 @@ async function encryptAndPrepareMessage(receiverDID: string, credentialsSubject:
     }
   };
 
+  console.log("encryptionPayload:", encryptionPayload);
+
   const didcommMessage = await apiPost({
     url: `${dockUrl}/messaging/encrypt`,
     body: encryptionPayload
   });
-
+  console.log("didComm Message:", didcommMessage);
   return didcommMessage.jwe;
 }
 
@@ -46,39 +47,48 @@ export const issueTestResult = async (
   receiverDID: string,
   setIsLoading: (loading: boolean) => void,
   setQrUrl: (url: string) => void
-): Promise<IssueTestResultResponse> => {
+): Promise<IssueTestResultResponse[]> => {
+  const responses: IssueTestResultResponse[] = [];
+
   try {
     setIsLoading(true);
     const issuedCredentials = await signedLabCredential(receiverDID);
-    const credentialsSubject = issuedCredentials.map(cred => cred.credentialSubject);
 
-    const encryptedMessage = await encryptAndPrepareMessage(receiverDID, credentialsSubject);
+    for (const issuedCredential of issuedCredentials) {
+      console.log("Processing credential:", issuedCredential);
+      const encryptedMessage = await encryptAndPrepareMessage(receiverDID, [issuedCredential.credentialSubject]);
+      console.log("encryptedMessage:", encryptedMessage);
+      const sendMessagePayload = {
+        to: receiverDID,
+        message: encryptedMessage
+      };
 
-    const sendMessagePayload = {
-      to: receiverDID,
-      message: encryptedMessage
-    };
+      const data = await apiPost({
+        url: `${dockUrl}/messaging/send`,
+        body: sendMessagePayload
+      });
 
-    const { qrUrl: qrUrlResponse } = await apiPost({
-      url: `${dockUrl}/messaging/send`,
-      body: sendMessagePayload
-    });
+      const qrUrlResponse = data.qrUrl;
 
-    setQrUrl(qrUrlResponse);
+      console.log("apiPost data:", data);
+      setQrUrl(qrUrlResponse);
 
-    return {
-      sent: true,
-      qrUrl: qrUrlResponse,
-      issuedCredentials: issuedCredentials
-    };
+      responses.push({
+        sent: true,
+        qrUrl: qrUrlResponse,
+        issuedCredential: issuedCredential
+      });
+    }
 
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
     toast.error(`Error: ${errorMessage}`);
-    return { sent: false, error: errorMessage };
+    responses.push({ sent: false, error: errorMessage });
   } finally {
     setIsLoading(false);
   }
+
+  return responses;
 };
 
 const signedLabCredential = async (receiverDid: string) => {
@@ -98,7 +108,7 @@ const signedLabCredential = async (receiverDid: string) => {
       body: credential.body
     });
   }));
-  console.log("issuedCredentials:", issuedCredentials);
+
   return issuedCredentials;
 };
 

@@ -48,7 +48,7 @@ export interface PoolComponentProps {
 export interface IssueTestResultResponse {
   sent: boolean;
   qrUrl?: string;
-  issuedCredentials?: any[];
+  issuedCredential?: BloodTestCredential | CholesterolCredential | DiabetesMonitoringCredential;
   error?: string;
 }
 
@@ -114,7 +114,7 @@ export interface Contributor {
 
 // Credentials
 
-export interface BloodTestCredential {
+export type BloodTestCredential = {
   kind: "BloodTestCredential";
   id: string;
   name: string;
@@ -147,7 +147,7 @@ export interface BloodTestCredential {
   };
 }
 
-export interface CholesterolCredential {
+export type CholesterolCredential = {
   kind: "CholesterolCredential";
   id: string;
   name: string;
@@ -170,7 +170,7 @@ export interface CholesterolCredential {
   };
 }
 
-export interface DiabetesMonitoringCredential {
+export type DiabetesMonitoringCredential = {
   kind: "DiabetesMonitoringCredential";
   id: string;
   name: string;

@@ -50,8 +50,6 @@ const PoolTable: React.FC<PoolTableProps> = ({ pools }) => {
           </tbody>
         </table>
       </div>
-
-      {/* Pagination or other controls can be added here */}
     </div>
   );
 };
