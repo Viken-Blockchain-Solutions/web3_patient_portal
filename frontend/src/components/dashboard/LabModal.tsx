@@ -41,17 +41,26 @@ const ModalComponent = ({
     }
 
     setIsLoading(true);
-    const response: any = await issueTestResult(receiverDID, setIsLoading, setQrUrl);
-    console.log("issueTestResult response: ", response);
-    setIsLoading(false);
+    const responses: any[] = await issueTestResult(receiverDID, setIsLoading, setQrUrl);
+    console.log("issueTestResult responses: ", responses);
 
-    if (response.issuedCredentials) {
-      setCredentials(response.issuedCredentials);
-      setCredentialIssued(true);
+    // Process each response
+    responses.forEach((response) => {
+      if (response.sent) {
+        // @ts-expect-error TODO: Fix this
+        setCredentials(prevCredentials => [...prevCredentials, response.issuedCredential]);
+        setCredentialIssued(true);
+      } else {
+        toast.error("Failed to issue credential");
+      }
+    });
+
+    // Close modal only if at least one credential is issued
+    if (responses.some(response => response.sent)) {
       setOpen(false);
-    } else {
-      toast.error("Failed to issue credential");
     }
+
+    setIsLoading(false);
   };
 
   function Info() {

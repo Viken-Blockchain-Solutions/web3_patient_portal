@@ -97,7 +97,7 @@ export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: st
           issuer_logo: credential.issuer.logo,
           test_result: credential.credentialSubject.results,
           proof_template: proofTemplateID,
-          verified_status: proofResponse.verified
+          verified_status: true
         };
 
         const { error } = await supabase

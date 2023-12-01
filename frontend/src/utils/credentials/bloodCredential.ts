@@ -10,7 +10,6 @@ export function createBloodTestCredential(receiverDid: string) {
       persist: true,
       password: "1234",
       distribute: true,
-      algorithm: "dockbbs+",
       credential: {
         id: `https://creds-testnet.dock.io/${uuidv4()}`,
         name: "Blood Test Credential",
@@ -22,7 +21,7 @@ export function createBloodTestCredential(receiverDid: string) {
         issuer: {
           id: dockIssuerDid
         },
-        subject: {
+        credentialSubject: {
           id: receiverDid,
           testName: "General Blood Test",
           results: {
