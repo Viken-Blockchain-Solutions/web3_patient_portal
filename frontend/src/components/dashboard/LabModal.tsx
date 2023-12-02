@@ -41,18 +41,43 @@ const ModalComponent = ({
     }
 
     setIsLoading(true);
-    const response: any = await issueTestResult(receiverDID, setIsLoading, setQrUrl);
-    console.log("issueTestResult response: ", response);
-    setIsLoading(false);
+    const responses: any[] = await issueTestResult(receiverDID, setIsLoading, setQrUrl);
+    console.log("issueTestResult responses: ", responses);
 
-    if (response.issuedCredentials) {
-      setCredentials(response.issuedCredentials);
-      setCredentialIssued(true);
+    // Process each response
+    responses.forEach((response) => {
+      if (response.sent) {
+        // @ts-expect-error TODO: Fix this
+        setCredentials(prevCredentials => [...prevCredentials, response.issuedCredential]);
+        setCredentialIssued(true);
+      } else {
+        toast.error("Failed to issue credential");
+      }
+    });
+
+    // Close modal only if at least one credential is issued
+    if (responses.some(response => response.sent)) {
       setOpen(false);
-    } else {
-      toast.error("Failed to issue credential");
     }
+
+    setIsLoading(false);
   };
+
+  function Info() {
+    return (
+      <div className="font-bold">
+        Remember to turn on <b>Test mode</b> in the settings in Dock Wallet App
+      </div>
+    );
+  }
+
+  function showAlert() {
+    toast.info(<Info />, {
+      closeOnClick: true,
+      autoClose: false,
+      position: "bottom-center"
+    });
+  }
 
   return (
     <div className="mt-10 mx-auto container">
@@ -61,6 +86,7 @@ const ModalComponent = ({
         className="bg-green-600 border-1 py-4 px-4 text-white rounded-lg"
         onClick={() => {
           setOpen(true);
+          showAlert();
         }}
         disabled={isLoading}
       >

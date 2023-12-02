@@ -21,7 +21,7 @@ export function createCholesterolCredential(receiverDid: string) {
         issuer: {
           id: dockIssuerDid
         },
-        subject: {
+        credentialSubject: {
           id: receiverDid,
           testName: "Lipid Panel",
           results: {

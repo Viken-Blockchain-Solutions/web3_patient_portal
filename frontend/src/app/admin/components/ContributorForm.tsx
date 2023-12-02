@@ -11,8 +11,6 @@ type ContributorFormProps = {
 const ContributorForm: React.FC<ContributorFormProps> = ({ newContributor, handleInputChange, handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit} className="mb-4">
-      {/* Add form fields for each contributor attribute */}
-      {/* Example: contributor_did */}
       <div className="mb-4">
         <label htmlFor="contributor_did" className="block text-gray-700">Contributor DID</label>
         <input
@@ -26,7 +24,6 @@ const ContributorForm: React.FC<ContributorFormProps> = ({ newContributor, handl
           className="w-full px-3 py-2 border rounded-lg"
         />
       </div>
-      {/* Add more fields for other properties like name, phone_number, etc. */}
       <button
         type="submit"
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

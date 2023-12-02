@@ -22,7 +22,7 @@ export function createDiabetesCredential(receiverDid: string) {
         issuer: {
           id: dockIssuerDid
         },
-        subject: {
+        credentialSubject: {
           id: receiverDid,
           testName: "Diabetes Monitoring",
           results: {

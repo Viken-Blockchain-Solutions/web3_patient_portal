@@ -73,7 +73,7 @@ const ContributorsComponent: React.FC = () => {
     <div className="h-auto rounded-lg lg:col-span-2 p-4">
       <ContributorTable
         contributors={contributors}
-        setContributors={setContributors} // Pass setContributors to the ContributorTable
+        setContributors={setContributors}
       />
     </div>
   </div>
@@ -99,7 +99,7 @@ const ContributorsComponent: React.FC = () => {
         <div className="h-auto rounded-lg lg:col-span-2 p-4">
           <ContributorTable
             contributors={contributors}
-            setContributors={setContributors} // Pass setContributors to the ContributorTable
+            setContributors={setContributors}
           />
         </div>
       </div>
