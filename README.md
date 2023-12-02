@@ -9,7 +9,7 @@ We are excited to present our project as a submission for the [DIF Hackathon](ht
 ### What To Submit
 
 - [x] **Source Code Repository**: This is our public repository containing the source code.
-- [] **Demo Video**: Link to a demo video that walks through the application, its features, and how it solves the problem.
+- [x] **Demo Video**: Link to a demo video that walks through the application, its features, and how it solves the problem.
 - [x] **Access to Working Software**: Our platform is deployed and accessible for testing.
 - [x] **Submission Form**: All the required fields in the submission form are filled out.
 
