@@ -35,7 +35,7 @@ export default function ShareYourInfo() {
                 <span className="font-medium">Zero-Knowledge Proofs</span>
                 <br />
                 You can prove information about yourself without revealing the
-                data, supporting the proof.
+                data supporting the proof.
               </p>
             </div>
           </div>
@@ -48,8 +48,8 @@ export default function ShareYourInfo() {
             <p className="font-normal">
               <span className="font-medium">Contribute</span>
               <br />
-              You can easy colaborate by sharing a proof of identity.
-              Get rewards providing only the required data.
+              You can easily collaborate by sharing proof of identity.
+              Get rewards by providing only the required data.
             </p>
           </div>
         </section>
