@@ -16,7 +16,7 @@ export default function ResearchPools() {
           <br />
           and be part of groundbreaking medical discoveries.
           <br />
-          Your participation is encrypted, ensuring your privacy while allowing you to contribute to the advancement of medicine.
+          Your participation is encrypted, ensuring your privacy while allowing you to contribute to advancing medicine.
         </p>
       </div>
 
