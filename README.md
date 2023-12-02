@@ -10,30 +10,23 @@ We are excited to present our project as a submission for the [DIF Hackathon](ht
 
 - [x] **Source Code Repository**: This is our public repository containing the source code.
 - [] **Demo Video**: Link to a demo video that walks through the application, its features, and how it solves the problem.
-- [] **Access to Working Software**: Our platform is deployed and accessible for testing.
-- [] **Submission Form**: All the required fields in the submission form are filled out.
+- [x] **Access to Working Software**: Our platform is deployed and accessible for testing.
+- [x] **Submission Form**: All the required fields in the submission form are filled out.
 
 ### Requirements on What To Build
 
-- [] **Use of Decentralized Identity**: Our platform uses decentralized identities for both research institutes and patients.
+- [x] **Use of Decentralized Identity**: Our platform uses decentralized identities for both research institutes and patients.
 - [x] **Practical Utility**: Our platform has practical utility in the medical research field, allowing for a streamlined, secure, and transparent process.
 - [x] **Open Source**: The code for our platform is open-source and available in this repository.
 
 ## Features
 
-- Secure and transparent transactions
-- Easy-to-use interface for both research institutes and patients
-- Smart contract functionality for research funding
-- Compliance with FHIR for providing healthcare standards
+- Secure and transparent transactions.
+- Easy-to-use interface for users.
+- [ ] ToDo: Compliance with FHIR for providing healthcare standards
 
 ## Installation
-
-```bash
-git clone https://github.com/Viken-Blockchain-Solutions/web3_patient_portal.git
-cd web3_patient_portal
-npm install
-npm start
-```
+- [Installation Guide](/frontend/README.md)
 
 ## Usage
 
