@@ -8,9 +8,9 @@ export default function StartContributing() {
       <hr className="divider" />
 
       <p>
-                Contribute with Medical institutes, organizations, researches and more by providing your
+                Contribute to Medical institutes, organizations, researchers, and more by providing your
         <br />
-                Lab results as <span className="text-main">verifyable crendetials (VC)</span>
+                Lab results as <span className="text-main">verifiable credentials (VC)</span>
       </p>
     </div>
 
