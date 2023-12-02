@@ -6,6 +6,7 @@ import { Providers } from "./providers";
 import Navbar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { ToastContainer } from "react-toastify";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function RootLayout({
   children
@@ -22,6 +23,7 @@ export default function RootLayout({
             {children}
           </div>
           <Footer />
+          <Analytics />
         </Providers>
 
       </body>
