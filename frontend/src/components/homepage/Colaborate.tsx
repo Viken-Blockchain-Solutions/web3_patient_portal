@@ -7,7 +7,7 @@ export default function Colaborate() {
     <div className="p-5">
       <div className="text-center my-5 m-auto">
         <h1 className="text-4xl mb-3">
-                    Lets contribute together!
+                    Let`s contribute together!
         </h1>
         <hr className="divider" />
       </div>
