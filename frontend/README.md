@@ -24,15 +24,15 @@ This Next.js application serves as a comprehensive solution for secure credentia
 
 - Decentralized credentials verification via Dock Certs.
 - Next.js frontend, leveraging the "app-router" approach for enhanced scalability
-- Optional integration of NFC and Bluetooth technologies for heightened security
 - Direct issuance of Verifiable Credentials (VC) for lab test results to patients' wallets
+- Manual importing VC's for lab test results to patients' wallet
 
 ## Technology Stack
 
 - **Frontend**: Next.js
 - **Identity Management**: Dock Wallet
-- **Blockchain Interactions**: Web3
-- **Optional Technologies**: 
+- **Blockchain Interactions**: Dock testnet
+- **DID Technologies**: Creating DID's, issuing VC's, DidComm, Presentations,Proof-Requests.
 
 ## Getting Started
 
