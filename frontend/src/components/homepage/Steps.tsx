@@ -46,11 +46,11 @@ export default function Steps() {
           </div>
           <div className="p-4 bg-slate-100 rounded-lg max-w-sm">
             <p >
-              This is the first step to get your Idendity (DID)
+              This is the first step to get your Identity (DID)
               <br />
-              Once your App installed, you can start requesting Lab test as a Verifiable crendential (VC).
+              Once your App is installed, you can request a Lab test as a Verifiable Credential (VC).
               <br />
-              Scanning a QR code to add this crendential into your phone app.
+              Scanning a QR code to add this credential to your phone app.
             </p>
           </div>
           <hr className="divider" />
@@ -69,9 +69,9 @@ export default function Steps() {
           <Image className="mt-6 swing" src={Potion} height={120} width={120} sizes="100%" alt={"Potion"} />
           <div className="mt-5 p-4 bg-slate-100 rounded-lg max-w-xs">
             <p >
-              We provide a Laboratory page for you to request a Lab test result verifyable crendetial
+              We provide a Laboratory page for you to request a Lab test result verifiable credential
               <br />
-              You will use this crendential for contrubuting to Research Pool by just scanning a QR code
+              You will use this credential to contribute to the Research Pool by just scanning a QR code
             </p>
           </div>
           <hr className="divider" />
@@ -98,7 +98,7 @@ export default function Steps() {
 
           <div className="mt-5 p-4 bg-slate-100 rounded-lg max-w-xs">
             <p >
-              Use your Lab test verifyable credentials you get from the Lab page
+              Use your Lab test verifiable credentials you get from the Lab page
               <br />
               and start getting rewards for providing this data to research Pools.
             </p>
