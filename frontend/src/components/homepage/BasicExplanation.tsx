@@ -8,9 +8,9 @@ export default function BasicExplanation() {
         <h1 className="text-4xl mb-3">Contribute & Earn Rewards</h1>
         <hr className="divider" />
         <p className="mt-4" >
-                    We believe decentralized digital identity (DID) has the power to transform healthcare.
+                    We believe decentralized digital identity (DID) can transform healthcare.
           <br />
-                    Users can contribute to medical research by sharing lab results and earn rewards.
+                    Users can contribute to medical research by sharing lab results and earning rewards.
         </p>
 
       </div>
@@ -26,7 +26,7 @@ export default function BasicExplanation() {
           </h3>
           <div className="mt-5">
             <p className="bg-slate-100 rounded-lg p-3 w-fit">
-                            Decentralized identity is like having a digital ID card, but with a cool twist.
+                            Decentralized identity is like having a digital ID card but with a cool twist.
               <br />It´s called self-sovereign identity because you´re in charge.
               <br />Instead of a big organization holding your ID, you own and control it yourself.
             </p>
