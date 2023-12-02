@@ -14,11 +14,11 @@ export const addContribution = async (contribution: Contribution, setAlreadyCont
   }
 
   try {
-    const { error }: any = await supabase
+    const { data, error }: any = await supabase
       .from("new_contributions")
       .insert([contribution]);
     if (error) throw new Error(error.message);
-
+    console.log(data);
     console.log("addContribution data", contribution);
     return true;
   } catch (error) {

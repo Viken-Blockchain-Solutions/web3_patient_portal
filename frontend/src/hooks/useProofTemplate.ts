@@ -70,6 +70,7 @@ export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: st
 
     setProofResponse({ ...proofResponse, data: dataResponse, holderDID: holder, credentials: credentials });
     console.log("Data Response:", dataResponse);
+    console.log("credentials:", credentials);
     const credentialId = credentials.id as string;
 
     const { data: existingData, error: selectError } = await supabase
@@ -90,7 +91,7 @@ export const useProofTemplate = (proofTemplateID: string, setQrCodeUrl: (url: st
       for (const credential of credentials) {
         const contributionData: Contribution = {
           credential_id: credential.id as string,
-          contributor_did: credential.credentialSubject.id.split("did:key:")[1],
+          contributor_did: credential.credentialSubject.id,
           test_name: credential.credentialSubject.testName,
           issuer_id: credential.issuer.id,
           issuer_name: credential.issuer.name,
