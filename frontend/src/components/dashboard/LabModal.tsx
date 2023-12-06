@@ -1,7 +1,6 @@
-// frontend/src/components/dashboard/LabModal.tsx
 "use client";
 import { useState } from "react";
-import { handleAddContributor } from "@/db/contributors";
+import { handleAddContributor } from "../../../db/contributors";
 import { IdentificationIcon } from "@heroicons/react/24/outline";
 import { issueTestResult } from "../../utils/laboratoryUtils";
 import { userStore } from "../../../stores/appStore";
