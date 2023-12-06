@@ -1,6 +1,7 @@
 // frontend/src/components/dashboard/LabModal.tsx
 "use client";
 import { useState } from "react";
+import { handleAddContributor } from "@/db/contributors";
 import { IdentificationIcon } from "@heroicons/react/24/outline";
 import { issueTestResult } from "../../utils/laboratoryUtils";
 import { userStore } from "../../../stores/appStore";
@@ -38,6 +39,12 @@ const ModalComponent = ({
     if (receiverDID.trim() === "") {
       toast.error("DID cannot be empty");
       return;
+    }
+
+    try {
+      await handleAddContributor(receiverDID);
+    } catch (error) {
+      console.error("Error occurred:", error);
     }
 
     setIsLoading(true);
