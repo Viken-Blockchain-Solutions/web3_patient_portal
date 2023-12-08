@@ -19,9 +19,7 @@ export function createDiabetesCredential(receiverDid: string) {
           "VerifiableCredential",
           "DiabetesMonitoringCredential"
         ],
-        issuer: {
-          id: dockIssuerDid
-        },
+        issuer: dockIssuerDid,
         credentialSubject: {
           id: receiverDid,
           testName: "Diabetes Monitoring",
