@@ -18,9 +18,7 @@ export function createBloodTestCredential(receiverDid: string) {
           "VerifiableCredential",
           "BloodTestCredential"
         ],
-        issuer: {
-          id: dockIssuerDid
-        },
+        issuer: dockIssuerDid,
         credentialSubject: {
           id: receiverDid,
           testName: "General Blood Test",
