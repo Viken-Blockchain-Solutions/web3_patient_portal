@@ -2,7 +2,7 @@
 import React from "react";
 import { Contributor } from "../../../../types";
 import { supabase } from "../../../../db/supabaseClient";
-import { convertToCET } from "@/src/utils/tools";
+import { convertToCET } from "../../../../src/utils/tools";
 
 type ContributorTableProps = {
   contributors: Contributor[];
