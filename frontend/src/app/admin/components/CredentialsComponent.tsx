@@ -17,8 +17,9 @@ const CredentialsComponent: React.FC = () => {
         console.error("Error fetching data:", error);
         return;
       }
-      console.log(data);
-      setContributions(data || []);
+      setContributions(
+        (data || []).sort((a, b) => new Date(b.submitted_at).getTime() - new Date(a.submitted_at).getTime())
+      );
     };
 
     fetchContributions();
@@ -32,17 +33,37 @@ const CredentialsComponent: React.FC = () => {
   const totalPages = Math.ceil(contributions.length / itemsPerPage);
   const changePage = (pageNumber: number) => setCurrentPage(pageNumber);
 
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages > 0 ? totalPages : 1);
+    }
+  }, [totalPages, currentPage]);
+
   return (
     <div className="container mx-auto p-4">
+      {/* Pagination Controls */}
+      <div className="flex justify-end mt-4">
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => changePage(index + 1)}
+            className={`h-8 w-8 mx-1 rounded border border-gray-200 ${index + 1 === currentPage ? "bg-blue-600 text-white" : "bg-white text-gray-900"}`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
       <h1 className="text-lg font-bold text-center mb-4">Credentials</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead className="bg-gray-100">
-            {["Credential ID", "Contributor DID", "Pool ID", "Issuer ID", "Issuer Name", "Issuer Logo", "Test Name", "Test Result", "Submitted At", "Verified Status"].map((header) => (
-              <th key={header} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                {header}
-              </th>
-            ))}
+            <tr>
+              {["Credential ID", "Contributor DID", "Pool ID", "Issuer ID", "Issuer Name", "Issuer Logo", "Test Name", "Test Result", "Submitted At", "Verified Status"].map((header) => (
+                <th key={header} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  {header}
+                </th>
+              ))}
+            </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {currentItems.map((contribution, index) => (
@@ -61,19 +82,6 @@ const CredentialsComponent: React.FC = () => {
             ))}
           </tbody>
         </table>
-      </div>
-
-      {/* Pagination Controls */}
-      <div className="flex justify-end mt-4">
-        {[...Array(totalPages)].map((_, index) => (
-          <button
-            key={index + 1}
-            onClick={() => changePage(index + 1)}
-            className={`h-8 w-8 mx-1 rounded border border-gray-200 ${index + 1 === currentPage ? "bg-blue-600 text-white" : "bg-white text-gray-900"}`}
-          >
-            {index + 1}
-          </button>
-        ))}
       </div>
     </div>
   );
