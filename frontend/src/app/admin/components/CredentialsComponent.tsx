@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../../../db/supabaseClient";
 import { Contribution } from "../../../../types";
-import { truncateString } from "../../../utils/tools";
+import { convertToCET, truncateString } from "../../../utils/tools";
 
 const CredentialsComponent: React.FC = () => {
   const [contributions, setContributions] = useState<Contribution[]>([]);
@@ -17,8 +17,9 @@ const CredentialsComponent: React.FC = () => {
         console.error("Error fetching data:", error);
         return;
       }
-      console.log(data);
-      setContributions(data || []);
+      setContributions(
+        (data || []).sort((a, b) => new Date(b.submitted_at).getTime() - new Date(a.submitted_at).getTime())
+      );
     };
 
     fetchContributions();
@@ -32,37 +33,14 @@ const CredentialsComponent: React.FC = () => {
   const totalPages = Math.ceil(contributions.length / itemsPerPage);
   const changePage = (pageNumber: number) => setCurrentPage(pageNumber);
 
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages > 0 ? totalPages : 1);
+    }
+  }, [totalPages, currentPage]);
+
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-lg font-bold text-center mb-4">Credentials</h1>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-          <thead className="bg-gray-100">
-            {["Credential ID", "Contributor DID", "Pool ID", "Issuer ID", "Issuer Name", "Issuer Logo", "Test Name", "Test Result", "Submitted At", "Verified Status"].map((header) => (
-              <th key={header} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                {header}
-              </th>
-            ))}
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {currentItems.map((contribution, index) => (
-              <tr key={index} className="hover:bg-gray-50">
-                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{truncateString(contribution.credential_id)}</td>
-                <td className="px-4 py-2">{truncateString(contribution.contributor_did)}</td>
-                <td className="px-4 py-2">{truncateString(contribution.proof_template)}</td>
-                <td className="px-4 py-2">{truncateString(contribution.issuer_id)}</td>
-                <td className="px-4 py-2">{contribution.issuer_name}</td>
-                <td className="px-4 py-2"> {/* Image component if needed */}</td>
-                <td className="px-4 py-2">{contribution.test_name}</td>
-                <td className="px-4 py-2">{JSON.stringify(contribution.test_result)}</td>
-                <td className="px-4 py-2">{contribution.submitted_at}</td>
-                <td className="px-4 py-2">{contribution.verified_status ? "Yes" : "No"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
       {/* Pagination Controls */}
       <div className="flex justify-end mt-4">
         {[...Array(totalPages)].map((_, index) => (
@@ -74,6 +52,35 @@ const CredentialsComponent: React.FC = () => {
             {index + 1}
           </button>
         ))}
+      </div>
+      <h1 className="text-lg font-bold text-center mb-4">Credentials</h1>
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+          <thead className="bg-gray-100">
+            <tr>
+              {["Submitted At", "Credential ID", "Contributor DID", "Verified Status", "Test Name", "Test Result", "Proof Template", "Issuer ID", "Issuer Name"].map((header) => (
+                <th key={header} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {currentItems.map((contribution, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-4 py-2 w-fit">{convertToCET(contribution.submitted_at as string)}</td>
+                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{truncateString(contribution.credential_id)}</td>
+                <td className="px-4 py-2">{truncateString(contribution.contributor_did)}</td>
+                <td className="px-4 py-2">{contribution.verified_status ? "Yes" : "No"}</td>
+                <td className="px-4 py-2">{contribution.test_name}</td>
+                <td className="px-4 py-2">{JSON.stringify(contribution.test_result)}</td>
+                <td className="px-4 py-2">{truncateString(contribution.proof_template)}</td>
+                <td className="px-4 py-2">{truncateString(contribution.issuer_id)}</td>
+                <td className="px-4 py-2">{contribution.issuer_name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
