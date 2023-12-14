@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../../../db/supabaseClient";
 import { Contribution } from "../../../../types";
-import { truncateString } from "../../../utils/tools";
+import { convertToCET, truncateString } from "../../../utils/tools";
 
 const CredentialsComponent: React.FC = () => {
   const [contributions, setContributions] = useState<Contribution[]>([]);
@@ -58,7 +58,7 @@ const CredentialsComponent: React.FC = () => {
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead className="bg-gray-100">
             <tr>
-              {["Credential ID", "Contributor DID", "Pool ID", "Issuer ID", "Issuer Name", "Issuer Logo", "Test Name", "Test Result", "Submitted At", "Verified Status"].map((header) => (
+              {["Submitted At", "Credential ID", "Contributor DID", "Verified Status", "Test Name", "Test Result", "Proof Template", "Issuer ID", "Issuer Name"].map((header) => (
                 <th key={header} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                   {header}
                 </th>
@@ -68,16 +68,15 @@ const CredentialsComponent: React.FC = () => {
           <tbody className="divide-y divide-gray-200">
             {currentItems.map((contribution, index) => (
               <tr key={index} className="hover:bg-gray-50">
+                <td className="px-4 py-2 w-fit">{convertToCET(contribution.submitted_at as string)}</td>
                 <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{truncateString(contribution.credential_id)}</td>
                 <td className="px-4 py-2">{truncateString(contribution.contributor_did)}</td>
+                <td className="px-4 py-2">{contribution.verified_status ? "Yes" : "No"}</td>
+                <td className="px-4 py-2">{contribution.test_name}</td>
+                <td className="px-4 py-2">{JSON.stringify(contribution.test_result)}</td>
                 <td className="px-4 py-2">{truncateString(contribution.proof_template)}</td>
                 <td className="px-4 py-2">{truncateString(contribution.issuer_id)}</td>
                 <td className="px-4 py-2">{contribution.issuer_name}</td>
-                <td className="px-4 py-2"> {/* Image component if needed */}</td>
-                <td className="px-4 py-2">{contribution.test_name}</td>
-                <td className="px-4 py-2">{JSON.stringify(contribution.test_result)}</td>
-                <td className="px-4 py-2">{contribution.submitted_at}</td>
-                <td className="px-4 py-2">{contribution.verified_status ? "Yes" : "No"}</td>
               </tr>
             ))}
           </tbody>

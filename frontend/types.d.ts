@@ -101,6 +101,7 @@ export interface PoolModalProps {
 // Contributors
 
 export interface Contributor {
+  registration_date?: ReactNode;
   contributor_did: string;
   name?: string;
   phone_number?: string;

@@ -2,6 +2,7 @@
 import React from "react";
 import { Contributor } from "../../../../types";
 import { supabase } from "../../../../db/supabaseClient";
+import { convertToCET } from "@/src/utils/tools";
 
 type ContributorTableProps = {
   contributors: Contributor[];
@@ -23,7 +24,7 @@ const ContributorTable: React.FC<ContributorTableProps> = ({ contributors, setCo
     <div className="rounded-lg border border-gray-200">
       <div className="overflow-x-auto rounded-t-lg">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-          <thead className="bg-gray-100 ltr:text-left rtl:text-right">{["DID", "Name", "Phone Number", "Country", "Age", "Gender", "Medical Conditions", "Consent Given", "Registration Date"].map((header) => (
+          <thead className="bg-gray-100 ltr:text-left rtl:text-right">{["DID", "Registration Date", "Actions"].map((header) => (
             <th key={header} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
               {header}
             </th>
@@ -32,14 +33,8 @@ const ContributorTable: React.FC<ContributorTableProps> = ({ contributors, setCo
           <tbody className="divide-y divide-gray-200">
             {contributors.map((contributor, index) => (
               <tr key={index}>
-                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{contributor.contributor_did}</td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{contributor.name}</td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{contributor.phone_number}</td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{contributor.country}</td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{contributor.age}</td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{contributor.gender}</td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{contributor.medical_conditions}</td>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{contributor.consent_given ? "Yes" : "No"}</td>
+                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">did:key:{contributor.contributor_did}</td>
+                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{convertToCET(contributor.registration_date)}</td>
                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                   <button
                     onClick={() => deleteContributor(contributor.contributor_did)}

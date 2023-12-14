@@ -51,3 +51,26 @@ export const generateNonce = (): string => {
   const nonce = Math.floor(100000 + Math.random() * 900000);
   return nonce.toString();
 };
+
+/**
+ * Converts a UTC date-time string to a formatted CET date-time string.
+ *
+ * @param {string} utcDateTime - The UTC date-time string to convert.
+ * @return {string} The formatted date-time string in CET.
+ */
+export function convertToCET(utcDateTime: string): string {
+  const date = new Date(utcDateTime);
+
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "CET",
+    hour12: false
+  };
+  // Format the date to CET
+  const formatter = new Intl.DateTimeFormat("en-GB", options);
+  return formatter.format(date);
+}
