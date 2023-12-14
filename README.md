@@ -26,11 +26,12 @@ We are excited to present our project as a submission for the [DIF Hackathon](ht
 - [ ] ToDo: Compliance with FHIR for providing healthcare standards
 
 ## Installation
+
 - [Installation Guide](/frontend/README.md)
 
 ## Usage
 
-Detailed usage instructions can be found in our [User Guide](LINK_TO_USER_GUIDE).
+Detailed description and usage instructions can be found in our [User Guide](/docs/Medical_Research_Hub.md).
 
 ## Contributing
 
