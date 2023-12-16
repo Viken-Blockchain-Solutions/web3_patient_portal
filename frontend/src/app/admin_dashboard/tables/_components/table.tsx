@@ -77,7 +77,7 @@ export const TableComponent = () => {
               </TableCell>
               <TableCell>
                 {convertToCET(contributor.registration_date)}
-              </TableCell >
+              </TableCell>
               <TableCell className="text-right">
                 <button
                   onClick={() => deleteContributor(contributor.contributor_did)}
