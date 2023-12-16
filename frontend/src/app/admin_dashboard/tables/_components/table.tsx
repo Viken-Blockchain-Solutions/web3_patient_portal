@@ -4,14 +4,13 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow
-} from "@/components/ui/table";
-import { Contributor } from "@/types";
-import { supabase } from "@/db/supabaseClient";
-import { convertToCET } from "@/src/utils/tools";
+} from "../../../../../components/ui/table";
+import { Contributor } from "../../../../../types";
+import { supabase } from "../../../../../db/supabaseClient";
+import { convertToCET } from "../../../../../src/utils/tools";
 import { useEffect, useState } from "react";
 
 

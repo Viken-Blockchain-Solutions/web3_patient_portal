@@ -1,6 +1,6 @@
 // frontend/src/components/pools/ProofTemplateVerification.tsx
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { QRCodeGenerator } from "./QRCodeGenerator";
 import { useProofTemplate } from "../../hooks/useProofTemplate";

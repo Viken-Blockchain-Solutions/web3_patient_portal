@@ -24,10 +24,8 @@ import { Search } from "../../../components/search";
 import { MainNav } from "../../../components/main-nav";
 import TeamSwitcher from "../../../components/team-switcher";
 import { useEffect, useState } from "react";
-import { Contributor } from "@/types";
-import { supabase } from "@/db/supabaseClient";
-import { Contribution } from "../../../types";
-
+import { Contributor } from "../../../types";
+import { supabase } from "../../../db/supabaseClient";
 
 export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
@@ -88,6 +86,10 @@ export default function DashboardPage() {
 
     fetchPools();
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

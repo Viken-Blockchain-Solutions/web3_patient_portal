@@ -12,7 +12,7 @@ interface RecentContributionsProps {
 export function RecentContributions({ contributions }: RecentContributionsProps) {
   return (
     <div className="space-y-8">
-      {contributions.map((contribution, index) => 
+      {contributions.map((contribution, index) =>
         index < 5 && (
           <div className="flex items-center" key={contribution.id}>
             <Avatar className="h-9 w-9">
