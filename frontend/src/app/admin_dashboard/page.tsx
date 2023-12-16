@@ -18,7 +18,7 @@ import {
 
 import { CalendarDateRangePicker } from "../../../components/date-range-picker";
 import { Overview } from "../../../components/overview";
-import { RecentContributions, RecentSales } from "../../../components/recent-contributions";
+import { RecentContributions } from "../../../components/recent-contributions";
 import { UserNav } from "../../../components/user-nav";
 import { Search } from "../../../components/search";
 import { MainNav } from "../../../components/main-nav";
