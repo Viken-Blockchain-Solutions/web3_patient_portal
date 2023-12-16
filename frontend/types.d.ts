@@ -1,3 +1,4 @@
+declare module "lodash";
 
 export interface Contribution {
   credential_id: string;
