@@ -27,7 +27,7 @@ const AdminPoolsPage = async () => {
         />
         <StatsCard
           title="Most Popular Pool"
-          count={"N/A" || 0 }
+          count={0}
           subtitle="Total allocated funding on the platform"
           icon={dollarIcon}
         />
