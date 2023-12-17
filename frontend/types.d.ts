@@ -4,7 +4,7 @@ export interface Contribution {
   credential_id: string;
   contributor_did: string;
   test_name: string;
-  issuer_id: string;
+  issuer_id?: string | null;
   issuer_name: string;
   issuer_logo: string;
   test_result: object;

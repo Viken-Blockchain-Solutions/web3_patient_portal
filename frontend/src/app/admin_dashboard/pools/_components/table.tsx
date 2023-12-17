@@ -7,28 +7,27 @@ import {
   TableRow,
   TableHeader
 } from "../../../../../components/ui/table";
-import { getPoolsAction } from "../../../../../src/actions/get-pools-action";
+import { getPoolsAction } from "../../../../actions/pools-action";
 import { Pool } from "../../../../../types";
-import { convertToCET } from "../../../../../src/utils/tools";
+import { convertToCET } from "../../../../utils/tools";
 
 export const DashboardPoolsTable = async () => {
   const pools: any | [] = await getPoolsAction();
   return (
     <div>
       <Table>
-        <TableCaption>A list of the contributors.</TableCaption>
+        <TableCaption>The list of the pools.</TableCaption>
         <TableHeader className="bg-gray-50">
           <TableRow>
             <TableHead className="w-[100px]">PoolId</TableHead>
             <TableHead>Created at</TableHead>
             <TableHead className="text-right">Pool heading</TableHead>
-            <TableHead>Start</TableHead>
-            <TableHead>End</TableHead>
+            <TableHead className="text-right">Start</TableHead>
+            <TableHead className="text-right">End</TableHead>
             <TableHead className="text-right">Funding amount</TableHead>
-            <TableHead>Contributions amount</TableHead>
-            <TableHead>Proof template</TableHead>
-            <TableHead>Test name</TableHead>
-            <TableHead>Issuer name</TableHead>
+            <TableHead className="text-right">Proof-template</TableHead>
+            <TableHead className="text-center">Test name</TableHead>
+            <TableHead className="text-center">Issuer name</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -40,10 +39,7 @@ export const DashboardPoolsTable = async () => {
               <TableCell className="text-right">{pool.start_date}</TableCell>
               <TableCell className="text-right">{pool.end_date}</TableCell>
               <TableCell className="text-right">
-                {pool.currency_unit} {pool.funding_amount}
-              </TableCell>
-              <TableCell className="text-right">
-                {pool.contributions_amount}
+                {pool.currency_unit} {(pool.funding_amount * 1000).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 0 })}
               </TableCell>
               <TableCell className="text-right">
                 {pool.proof_template}

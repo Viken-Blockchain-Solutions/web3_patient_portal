@@ -10,7 +10,7 @@ import {
 } from "../../../../../components/ui/table";
 import { Contributor } from "../../../../../types";
 import { supabase } from "../../../../../db/supabaseClient";
-import { convertToCET } from "../../../../../src/utils/tools";
+import { convertToCET } from "../../../../utils/tools";
 import { useEffect, useState } from "react";
 
 
