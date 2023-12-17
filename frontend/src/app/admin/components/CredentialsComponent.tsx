@@ -75,7 +75,7 @@ const CredentialsComponent: React.FC = () => {
                 <td className="px-4 py-2">{contribution.test_name}</td>
                 <td className="px-4 py-2">{JSON.stringify(contribution.test_result)}</td>
                 <td className="px-4 py-2">{truncateString(contribution.proof_template)}</td>
-                <td className="px-4 py-2">{truncateString(contribution.issuer_id)}</td>
+                <td className="px-4 py-2">{truncateString(contribution?.issuer_id as string)}</td>
                 <td className="px-4 py-2">{contribution.issuer_name}</td>
               </tr>
             ))}
